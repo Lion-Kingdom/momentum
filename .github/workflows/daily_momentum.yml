@@ -1,0 +1,29 @@
+name: Run Daily Momentum Worker
+
+on:
+  schedule:
+    # Runs at 20:30 UTC (4:30 PM EDT - right after US market close) Mon-Fri
+    - cron: '30 20 * * 1-5'
+  workflow_dispatch: # Allows manual trigger anytime from GitHub UI / Mobile app
+
+jobs:
+  run-momentum:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy gspread requests yfinance
+
+      - name: Execute Script
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: python momentum_worker.py
