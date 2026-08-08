@@ -26,4 +26,6 @@ jobs:
       - name: Execute Script
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: python momentum_suite/momentum_revised.py
