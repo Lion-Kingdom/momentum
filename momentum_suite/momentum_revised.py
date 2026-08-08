@@ -8,6 +8,9 @@ import io
 import sys
 import os
 import json
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from typing import Optional
 
@@ -181,6 +184,95 @@ def export_to_google_sheets(df: pd.DataFrame):
     print("[INFO] Appended to 'Master_Ledger'.")
 
 
+def generate_deep_analysis(df: pd.DataFrame, sheet_url: str) -> str:
+    """Generate a text-based deep analysis report mapping phases to options spreads."""
+    total = len(df)
+    vol_alerts = len(df[df["Alert"] == "VOLATILITY"])
+    phases = df["Phase"].value_counts().to_dict()
+
+    # 1. Bull Call Spread (Debit) -> Strong Expansion, high momentum
+    bull_call = df[df["Phase"] == "Strong_Expansion"].sort_values(by="1M%", ascending=False)
+
+    # 2. Bull Put Spread (Credit) -> Pullback Reset / Regaining, buying the dip support
+    bull_put = df[df["Phase"].isin(["Pullback_Reset", "Regaining"])].sort_values(by="RSI", ascending=True)
+
+    # 3. Bear Call Spread (Credit) -> Exhausted Trap, fading overbought resistance
+    bear_call = df[df["Phase"] == "Exhausted_Trap"].sort_values(by="RSI", ascending=False)
+
+    # 4. Bear Put Spread (Debit) -> Losing Momentum Flush, trend breakdown
+    bear_put = df[df["Phase"] == "Losing_Momentum_Flush"].sort_values(by="5D%", ascending=True)
+
+    report = "📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT\n"
+    report += f"{'='*50}\n"
+    report += f"Total Tickers Scanned: {total}\n"
+    report += f"Volatility Alerts: {vol_alerts}\n\n"
+
+    report += "📈 PHASE BREADTH:\n"
+    for phase, count in phases.items():
+        report += f" - {phase}: {count}\n"
+
+    report += f"\n{'='*50}\n"
+    report += "🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES\n"
+    report += f"{'='*50}\n\n"
+
+    if not bull_call.empty:
+        t = bull_call.iloc[0]
+        report += "🟢 BULL CALL SPREAD (Debit - Upside Momentum)\n"
+        report += f"   ➤ Ticker: {t['Ticker']} | Price: ${t['Price']} | 1M: {t['1M%']}% | RSI: {t['RSI']}\n\n"
+
+    if not bull_put.empty:
+        t = bull_put.iloc[0]
+        report += "🛡️ BULL PUT SPREAD (Credit - Support Bounce)\n"
+        report += f"   ➤ Ticker: {t['Ticker']} | Price: ${t['Price']} | 5D: {t['5D%']}% | RSI: {t['RSI']}\n\n"
+
+    if not bear_call.empty:
+        t = bear_call.iloc[0]
+        report += "🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)\n"
+        report += f"   ➤ Ticker: {t['Ticker']} | Price: ${t['Price']} | 1D: {t['1D%']}% | RSI: {t['RSI']}\n\n"
+
+    if not bear_put.empty:
+        t = bear_put.iloc[0]
+        report += "📉 BEAR PUT SPREAD (Debit - Downtrend Flush)\n"
+        report += f"   ➤ Ticker: {t['Ticker']} | Price: ${t['Price']} | 5D: {t['5D%']}% | RSI: {t['RSI']}\n\n"
+
+    report += f"{'='*50}\n"
+    report += f"🔗 Google Sheet Access Link:\n{sheet_url}\n"
+
+    return report
+
+
+def send_email_report(report_body: str):
+    """Dispatch the analysis report via SMTP (Gmail or Hotmail/Outlook)."""
+    sender = os.getenv("EMAIL_USER")
+    pwd = os.getenv("EMAIL_PASS")
+    receiver = os.getenv("EMAIL_RECEIVER", sender) # Defaults to sending to yourself if not specified
+
+    if not sender or not pwd:
+        print("\n[WARNING] Email credentials not found in env vars. Skipping dispatch.")
+        return
+
+    # Automatically route to correct SMTP server based on email domain
+    smtp_server = "smtp.gmail.com" if "@gmail" in sender.lower() else "smtp-mail.outlook.com"
+    port = 587
+
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = receiver
+    msg['Subject'] = f"Momentum Suite Analysis & Top Spread Candidates - {datetime.now().strftime('%b %d, %Y')}"
+
+    msg.attach(MIMEText(report_body, 'plain'))
+
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.starttls()
+        server.login(sender, pwd)
+        server.send_message(msg)
+        server.quit()
+        print(f"[INFO] Analysis report successfully emailed to {receiver}")
+    except Exception as e:
+        print(f"[ERROR] Failed to send email: {e}")
+
+
 def run_worker():
     """Execute main pipeline."""
     sp500_tickers = fetch_sp500_tickers()
@@ -214,8 +306,15 @@ def run_worker():
 
     try:
         export_to_google_sheets(df)
+
+        # --- GENERATE & EMAIL REPORT ---
+        sheet_url = "https://docs.google.com/spreadsheets/d/19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0/edit"
+        report = generate_deep_analysis(df, sheet_url)
+        print("\n" + report)
+        send_email_report(report)
+
     except Exception as err:
-        print(f"\n[ERROR] Sheets Export Failed: {err}")
+        print(f"\n[ERROR] Sheets Export or Email Failed: {err}")
         if hasattr(err, "response") and hasattr(err.response, "text"):
             print(f"API Details: {err.response.text}")
 
