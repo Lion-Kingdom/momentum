@@ -68,10 +68,20 @@ def fetch_csv_etfs(filepath: str = ETF_CSV_PATH) -> list:
 def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[dict]:
     """Extract metrics and apply phase filters."""
     try:
-        df = data[ticker].dropna(subset=["Close"])
-        if len(df) < 50:
+        # 1. Safely handle multi-index yfinance output
+        if ticker not in data.columns.levels[0] if isinstance(data.columns, pd.MultiIndex) else ticker not in data:
             return None
-        close = df["Close"]
+
+        df = data[ticker].dropna(how="all")
+
+        # Ensure Close column exists and convert to Series
+        if "Close" not in df.columns:
+            return None
+
+        close = df["Close"].dropna()
+        if len(close) < 50:
+            return None
+
         curr_p = float(close.iloc[-1])
         sma20 = float(close.rolling(20).mean().iloc[-1])
         rsi = float(calculate_rsi(close).iloc[-1])
@@ -108,7 +118,7 @@ def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[di
             "Phase": phase,
             "Alert": "VOLATILITY" if abs(c1d) > 0.015 else "",
         }
-    except (IndexError, AttributeError, ValueError, KeyError):
+    except Exception:
         return None
 
 
