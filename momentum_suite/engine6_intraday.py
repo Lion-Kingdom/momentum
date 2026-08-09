@@ -185,19 +185,20 @@ def export_to_sheets(targets: List[Dict[str, Any]]):
 
 
 def generate_email_report(targets: List[Dict[str, Any]]) -> str:
-    """Builds the text snapshot email with TradingView export string."""
-    top5 = targets[:5]
-    tickers = [t["Ticker"] for t in top5]
+    """Builds the public intraday snapshot email report with pre-filled subscriber AI prompts."""
+    tickers = [t["Ticker"] for t in targets]
     tv_string = ",".join(tickers)
+    runner_count = len(targets)
 
     now_str = datetime.now().strftime("%b %d, %Y - %I:%M %p EDT")
 
-    report = f"⚡ ENGINE 6 INTRADAY SNAPSHOT ({now_str})\n"
+    # --- Clean Public Header ---
+    report = f"⚡ INTRADAY TRADING SNAPSHOT ({now_str})\n"
     report += f"{'='*50}\n\n"
 
-    report += "🎯 TOP 5 DAY TRADE RUNNERS\n"
+    report += f"🎯 TOP {runner_count} DAY TRADE RUNNERS\n"
     report += f"{'='*50}\n"
-    for i, t in enumerate(top5, 1):
+    for i, t in enumerate(targets, 1):
         report += (f"{i}. {t['Ticker']:<5} | Price: ${t['Live_Price']:<6} | "
                    f"Change: +{t['Change_%']}% | Vol: {t.get('Volume', 'N/A')}\n")
 
@@ -208,32 +209,74 @@ def generate_email_report(targets: List[Dict[str, Any]]) -> str:
 
     report += f"{'='*50}\n"
     report += f"🔗 Google Sheet Access Link:\n"
-    report += f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit\n"
+    report += f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit\n\n"
+
+    # --- AI PROMPTS & ACTION GUIDE FOR SUBSCRIBERS ---
+    report += f"{'='*50}\n"
+    report += "🤖 AI ANALYSIS CHEAT SHEET FOR SUBSCRIBERS\n"
+    report += f"{'='*50}\n"
+    report += "Copy any prompt below and paste it directly into ChatGPT or Gemini:\n\n"
+
+    report += "🔍 PROMPT 1: A++ Setup & Price Action Filter\n"
+    report += (
+        f"\"Act as an expert day trader. Review this watchlist: {tv_string}. "
+        f"Analyze current intraday price action on 5m and 15m timeframes. "
+        f"Identify forming A++ setups like micro pullbacks to moving averages or break of structure "
+        f"candles supported by surging volume. Discard choppy, range-bound tickers.\"\n\n"
+    )
+
+    report += "⚡ PROMPT 2: Momentum & Indicator Confluence\n"
+    report += (
+        f"\"Act as a technical analyst. Evaluate intraday momentum for: {tv_string}. "
+        f"Check for MACD bullish crossovers/divergence, CCI crossing above 0, and RSI showing "
+        f"relative strength (>50, non-exhausted). Rank tickers by multi-indicator confluence.\"\n\n"
+    )
+
+    report += "🎯 PROMPT 3: Precision Entry, Stop-Loss & Target Plan\n"
+    report += (
+        f"\"For the top setups in: {tv_string}, map out a simple trade plan. "
+        f"Identify a precise entry point on the setup trigger, a tight stop-loss below intraday "
+        f"support or the setup candle wick, and a logical take-profit target at resistance. "
+        f"Output as a clean table.\"\n"
+    )
 
     return report
 
 
-def send_email_snapshot(report_body: str):
-    """Sends intraday snapshot to Gmail."""
+def send_email_snapshot(report_body: str, runner_count: int = 0):
+    """Sends intraday snapshot to a mailing list via BCC."""
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
+
     if not sender or not pwd:
         logging.warning("⚠️ Email secrets not configured. Skipping email dispatch.")
         return
 
+    # Add your subscriber email addresses here
+    mailing_list = [
+        sender,  # Keeps you on the list
+        "new_being@hotmail.com",
+        "sdimi22@aol.com",
+        "lordruckus88@gmail.com",
+        "uroberts54@gmail.com"
+    ]
+
     msg = MIMEMultipart()
-    msg['From'] = sender
-    msg['To'] = sender
-    msg['Subject'] = f"⚡ Engine 6 Intraday Alert: Top 5 Runners ({datetime.now().strftime('%I:%M %p EDT')})"
+    msg['From'] = f'"Leon EL Cee" <{sender}>'
+    msg['To'] = sender  # Keeps subscriber list private via BCC
+
+    # --- Public-Facing Subject Line ---
+    msg['Subject'] = f"⚡ Intraday Trade Alert: Top {runner_count} Runners ({datetime.now().strftime('%I:%M %p EDT')})"
+
     msg.attach(MIMEText(report_body, 'plain'))
 
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender, pwd)
-        server.send_message(msg)
+        server.sendmail(sender, mailing_list, msg.as_string())
         server.quit()
-        logging.info("✅ Email snapshot successfully dispatched!")
+        logging.info("✅ Intraday snapshot successfully sent to %d subscribers!", len(mailing_list))
     except Exception as e:
         logging.error("❌ Email failed: %s", e)
 
@@ -255,7 +298,7 @@ def main():
     export_to_sheets(targets)
     report = generate_email_report(targets)
     print("\n" + report)
-    send_email_snapshot(report)
+    send_email_snapshot(report, len(targets))
 
 
 if __name__ == "__main__":
