@@ -53,6 +53,9 @@ def discover_engine6_targets() -> pd.DataFrame:
         dataframe: pd.DataFrame = screener.data_frames[1]
 
         if "Volume" in dataframe.columns:
+            # --- FIX: Strip the duplicated first letter from Finviz ---
+            dataframe["Ticker"] = dataframe["Ticker"].astype(str).str[1:]
+            # ----------------------------------------------------------
             dataframe["Volume"] = pd.to_numeric(
                 dataframe["Volume"].astype(str).str.replace(",", ""), errors="coerce"
             )
