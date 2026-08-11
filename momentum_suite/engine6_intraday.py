@@ -7,6 +7,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Any, Dict, List, Optional
+from zoneinfo import ZoneInfo
 
 import gspread
 import pandas as pd
@@ -184,16 +185,32 @@ def export_to_sheets(targets: List[Dict[str, Any]]):
     logging.info("✅ Logged %d targets to Google Sheets.", len(rows_to_add))
 
 
+def get_session_label(dt: datetime) -> str:
+    """Determines the market session label based on Eastern Time hour."""
+    hour = dt.hour
+    if hour < 9:
+        return "Pre-Market"
+    elif 9 <= hour < 12:
+        return "Mid-Morning"
+    elif 12 <= hour < 15:
+        return "Mid-Afternoon"
+    else:
+        return "Post-Market"
+
+
 def generate_email_report(targets: List[Dict[str, Any]]) -> str:
-    """Builds the public intraday snapshot email report with pre-filled subscriber AI prompts."""
+    """Builds the public intraday snapshot email report with dynamic session labeling."""
     tickers = [t["Ticker"] for t in targets]
     tv_string = ",".join(tickers)
     runner_count = len(targets)
 
-    now_str = datetime.now().strftime("%b %d, %Y - %I:%M %p EDT")
+    # Convert timestamp to Eastern Time and retrieve the session label
+    now_edt = datetime.now(ZoneInfo("America/New_York"))
+    session = get_session_label(now_edt)
+    now_str = now_edt.strftime("%b %d, %Y - %I:%M %p %Z")
 
-    # --- Clean Public Header ---
-    report = f"⚡ INTRADAY TRADING SNAPSHOT ({now_str})\n"
+    # --- Dynamic Session Header ---
+    report = f"⚡ {session.upper()} TRADING SNAPSHOT ({now_str})\n"
     report += f"{'='*50}\n\n"
 
     report += f"🎯 TOP {runner_count} DAY TRADE RUNNERS\n"
@@ -211,7 +228,7 @@ def generate_email_report(targets: List[Dict[str, Any]]) -> str:
     report += f"🔗 Google Sheet Access Link:\n"
     report += f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit\n\n"
 
-    # --- AI PROMPTS & ACTION GUIDE FOR SUBSCRIBERS ---
+    # --- AI PROMPTS CHEAT SHEET ---
     report += f"{'='*50}\n"
     report += "🤖 AI ANALYSIS CHEAT SHEET FOR SUBSCRIBERS\n"
     report += f"{'='*50}\n"
@@ -244,7 +261,7 @@ def generate_email_report(targets: List[Dict[str, Any]]) -> str:
 
 
 def send_email_snapshot(report_body: str, runner_count: int = 0):
-    """Sends intraday snapshot to a mailing list via BCC."""
+    """Sends intraday snapshot to subscribers with dynamic session subject lines."""
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
 
@@ -252,21 +269,24 @@ def send_email_snapshot(report_body: str, runner_count: int = 0):
         logging.warning("⚠️ Email secrets not configured. Skipping email dispatch.")
         return
 
-    # Add your subscriber email addresses here
     mailing_list = [
-        sender,  # Keeps you on the list
+        sender,
         "new_being@hotmail.com",
         "sdimi22@aol.com",
         "lordruckus88@gmail.com",
         "uroberts54@gmail.com"
     ]
 
+    now_edt = datetime.now(ZoneInfo("America/New_York"))
+    session = get_session_label(now_edt)
+    time_str = now_edt.strftime("%I:%M %p %Z")
+
     msg = MIMEMultipart()
     msg['From'] = f'"Leon EL Cee" <{sender}>'
-    msg['To'] = sender  # Keeps subscriber list private via BCC
+    msg['To'] = sender  # BCC routing for subscriber privacy
 
-    # --- Public-Facing Subject Line ---
-    msg['Subject'] = f"⚡ Intraday Trade Alert: Top {runner_count} Runners ({datetime.now().strftime('%I:%M %p EDT')})"
+    # --- Dynamic Subject Line with Session Label ---
+    msg['Subject'] = f"⚡ {session} Trade Alert: Top {runner_count} Runners ({time_str})"
 
     msg.attach(MIMEText(report_body, 'plain'))
 
@@ -276,7 +296,7 @@ def send_email_snapshot(report_body: str, runner_count: int = 0):
         server.login(sender, pwd)
         server.sendmail(sender, mailing_list, msg.as_string())
         server.quit()
-        logging.info("✅ Intraday snapshot successfully sent to %d subscribers!", len(mailing_list))
+        logging.info("✅ %s snapshot successfully sent to %d subscribers!", session, len(mailing_list))
     except Exception as e:
         logging.error("❌ Email failed: %s", e)
 
