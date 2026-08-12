@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs at ~7:25 AM, 10:25 AM, 1:25 PM, and 4:25 PM EDT (Mon-Fri)
     # Using minute '25' avoids the massive GitHub queue backlog at ':30'
-    - cron: '25 11,14,17,20 * * 1-5'
+    - cron: '25 11,14 * * 1-5'
   workflow_dispatch:
 
 jobs:
