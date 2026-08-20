@@ -1,20 +1,106 @@
-import os
 from datetime import datetime
 import numpy as np
 import pandas as pd
 import scipy.stats as si
 import yfinance as yf
+import os
+import json
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # --- BLACK-SCHOLES MATHEMATICAL ENGINE ---
 
 
-def bs_gamma(s, k, t, r, sigma):
-    """Calculates exact analytical Black-Scholes Gamma for an option."""
+def bs_gamma(s, k, t, r, sigma, q=0.015):
+    """Calculates exact analytical Black-Scholes-Merton Gamma accounting for dividend yield."""
     if t <= 0 or sigma <= 0 or s <= 0 or k <= 0:
         return 0
-    d1 = (np.log(s / k) + (r + 0.5 * sigma**2) * t) / (sigma * np.sqrt(t))
-    gamma = si.norm.pdf(d1) / (s * sigma * np.sqrt(t))
+    # Subtract q from the drift term in d1
+    d1 = (np.log(s / k) + (r - q + 0.5 * sigma**2) * t) / (sigma * np.sqrt(t))
+    # Multiply the numerator by the continuous dividend discount factor
+    gamma = (np.exp(-q * t) * si.norm.pdf(d1)) / (s * sigma * np.sqrt(t))
     return gamma
+
+
+def export_gex_to_sheets(gex_dataframe):
+    """Pushes the final GEX dataframe directly to a Google Sheet."""
+    try:
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        creds_dict = json.loads(os.environ["GCP_SA_KEY"])
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+        client = gspread.authorize(creds)
+
+        # REPLACE THIS WITH YOUR ACTUAL SPREADSHEET ID
+        spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
+
+        # Ensure you have a tab named "GEX_Report" created in your sheet
+        sheet = client.open_by_key(spreadsheet_id).worksheet("GEX_Report")
+
+        sheet.clear()
+        sheet.update([gex_dataframe.columns.values.tolist()] + gex_dataframe.values.tolist())
+        print("✅ GEX Report successfully pushed to Google Sheets!")
+    except Exception as e:
+        print(f"❌ Failed to push to Google Sheets: {e}")
+
+
+def send_email_gex_report(gex_dataframe):
+    """Emails the GEX targets to the subscriber group."""
+    sender = os.getenv("EMAIL_USER")
+    pwd = os.getenv("EMAIL_PASS")
+
+    if not sender or not pwd:
+        print("⚠️ Email secrets not configured. Skipping email dispatch.")
+        return
+
+    # Update your list with any new subscribers here
+    mailing_list = [
+        sender,
+        "new_being@hotmail.com",
+        "sdimi22@aol.com",
+        "lordruckus88@gmail.com",
+        "uroberts54@gmail.com"
+    ]
+
+    now_str = datetime.now().strftime("%b %d, %Y - %I:%M %p EDT")
+
+    msg = MIMEMultipart()
+    msg['From'] = f'"Leon EL Cee" <{sender}>'
+    msg['To'] = sender  # BCC routing
+    msg['Subject'] = f"🎯 Options floor-ceiling Gamma(GEX) Setup Report ({now_str})"
+
+    # Simple formatted email body
+    body = f"⚡ GEX PIPELINE SNAPSHOT ({now_str})\n"
+    body += f"{'='*50}\n\n"
+
+    # Create a clean string representation of the key columns
+    if not gex_dataframe.empty:
+        for _, row in gex_dataframe.iterrows():
+            body += f"🎯 {row['Ticker']} | {row['Timeframe']} | Signal: {row['Momentum_Signal']}\n"
+            body += f"   Strategy: {row['Confirmed_Strategy']}\n"
+            body += f"   Targets: {row['Target_Strikes']}\n"
+            body += f"   Regime: {row['Market_Regime']}\n\n"
+    else:
+        body += "No active GEX setups found for this session.\n\n"
+
+    body += f"{'='*50}\n"
+    body += f"🔗 Google Sheet Access Link:\n"
+    # REPLACE WITH YOUR SPREADSHEET ID BELOW
+    body += f"https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit\n"
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender, pwd)
+        server.sendmail(sender, mailing_list, msg.as_string())
+        server.quit()
+        print(f"✅ GEX snapshot successfully sent to {len(mailing_list)} subscribers!")
+    except Exception as e:
+        print(f"❌ Email failed: {e}")
 
 
 def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
@@ -211,6 +297,10 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
         print("\n" + "=" * 60)
         print(f"💾 Master Pipeline Log Saved Successfully: {master_filename}")
         print("=" * 60)
+
+        # --- NEW CODE: PUSH TO SHEETS AND SEND EMAIL ---
+        export_gex_to_sheets(master_df)
+        send_email_gex_report(master_df)
 
 
 if __name__ == "__main__":
