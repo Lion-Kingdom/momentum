@@ -304,6 +304,25 @@ def run_worker():
     )
     print(df.to_string(index=False))
 
+    # --- 🔌 MAP PHASES TO GEX PIPELINE SIGNALS ---
+    def map_phase_to_signal(phase):
+        if phase in ["Strong_Expansion"]:
+            return "Breakout"
+        elif phase in ["Pullback_Reset", "Regaining"]:
+            return "Bullish"
+        elif phase in ["Exhausted_Trap", "Losing_Momentum_Flush"]:
+            return "Bearish"
+        return "Neutral"
+
+    df_results = df.copy()
+    df_results["Momentum_Signal"] = df_results["Phase"].apply(map_phase_to_signal)
+
+    # Save locally for the GEX script to consume
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(script_dir, "momentum_signals.csv")
+    df_results.to_csv(output_path, index=False)
+    print(f"💾 Momentum signals exported for GEX pipeline to: {output_path}")
+
     try:
         export_to_google_sheets(df)
 
