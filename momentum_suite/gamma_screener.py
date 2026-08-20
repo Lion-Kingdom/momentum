@@ -146,6 +146,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
 
         try:
             ticker = yf.Ticker(ticker_symbol)
+            sector = ticker.info.get("sector", "Index/ETF")  # <-- NEW LINE
             try:
                 spot_price = ticker.history(period="1d")["Close"].iloc[-1]
             except (IndexError, KeyError, TypeError):
@@ -247,7 +248,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                     if not valid_puts.empty:
                         short_p = valid_puts.iloc[0]["strike"]
                         strategy = "Bull Put Credit Spread"
-                        targets = f"Short Put: ${short_p:,.2f}"
+                        targets = f"Short Put: ${short_p:,.2f}" # noqa
                         rationale = "Bullish momentum supported by Put Wall dealer floor."
 
                 elif mom_signal == "Bearish" and spot_price < call_wall_strike:
@@ -255,7 +256,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                     if not valid_calls.empty:
                         short_c = valid_calls.iloc[0]["strike"]
                         strategy = "Bear Call Credit Spread"
-                        targets = f"Short Call: ${short_c:,.2f}"
+                        targets = f"Short Call: ${short_c:,.2f}" # noqa
                         rationale = "Bearish momentum capped by Call Wall dealer ceiling."
 
                 elif mom_signal == "Breakout" and spot_price >= call_wall_strike * 0.995:
@@ -263,12 +264,26 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                     if not breakout_c.empty:
                         target_c = breakout_c.iloc[0]["strike"]
                         strategy = "Long Call Breakout"
-                        targets = f"Buy Strike: ${target_c:,.2f}"
+                        targets = f"Buy Strike: ${target_c:,.2f}" # noqa
                         rationale = "Momentum breakout confirming Call Wall short-squeeze."
+
+                # --- NEW CONVICTION LOGIC ---
+                conviction = "Standard"
+                if strategy != "Stand Aside (Conflicting Signals)":
+                    if mom_signal == "Breakout":
+                        conviction = "High"
+                    # Bullish and spot is within 2% of the put wall support
+                    elif mom_signal == "Bullish" and spot_price <= put_wall_strike * 1.02:
+                        conviction = "High"
+                    # Bearish and spot is within 2% of the call wall resistance
+                    elif mom_signal == "Bearish" and spot_price >= call_wall_strike * 0.98:
+                        conviction = "High"
 
                 master_results.append({
                     "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     "Ticker": ticker_symbol,
+                    "Sector": sector,                # <-- NEW COLUMN
+                    "Conviction": conviction,        # <-- NEW COLUMN
                     "Timeframe": bucket_label,
                     "Momentum_Signal": mom_signal,
                     "Market_Regime": regime,
@@ -283,7 +298,8 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                 })
 
                 print(f"      ✅ Verified -> {strategy} | Target: {targets}")
-                print(f"         Levels -> Floor (Put Wall): ${put_wall_strike:,.2f} | Ceiling (Call Wall): ${call_wall_strike:,.2f}")
+                print(f"         Levels -> Floor (Put Wall): ${put_wall_strike:,.2f} |" # noqa 
+                      f" Ceiling (Call Wall): ${call_wall_strike:,.2f}") # noqa
 
         except Exception as e:
             print(f"❌ Error processing {ticker_symbol}: {e}")
@@ -305,4 +321,3 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
 
 if __name__ == "__main__":
     process_pipeline_batch("momentum_suite/momentum_signals.csv")
-

@@ -245,7 +245,7 @@ def send_email_report(report_body: str):
     """Dispatch the analysis report via SMTP (Gmail or Hotmail/Outlook)."""
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
-    receiver = os.getenv("EMAIL_RECEIVER", sender) # Defaults to sending to yourself if not specified
+    receiver = os.getenv("EMAIL_RECEIVER", sender)  # Defaults to sending to yourself if not specified
 
     if not sender or not pwd:
         print("\n[WARNING] Email credentials not found in env vars. Skipping dispatch.")
@@ -324,7 +324,7 @@ def run_worker():
     print(f"💾 Momentum signals exported for GEX pipeline to: {output_path}")
 
     try:
-        export_to_google_sheets(df)
+        # export_to_google_sheets(df)  <-- COMMENT THIS OUT
 
         # --- GENERATE & EMAIL REPORT ---
         sheet_url = "https://docs.google.com/spreadsheets/d/19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0/edit"
