@@ -26,4 +26,6 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python momentum_suite/momentum_revised.py
+        run: |
+          python momentum_suite/momentum_revised.py
+          python momentum_suite/gamma_screener.py
