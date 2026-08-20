@@ -1,11 +1,9 @@
-name: Run Daily Momentum Worker
+name: Daily Momentum Scanner
 
 on:
-  schedule:
-    # Runs at 20:30 UTC (4:30 PM EDT - right after US market close) Mon-Fri
-    - cron: '30 20 * * 1-5'
-  workflow_dispatch: # Allows manual trigger anytime from GitHub UI / Mobile app
-
+  repository_dispatch:
+    types: [trigger-daily-momentum]
+  workflow_dispatch:
 jobs:
   run-momentum:
     runs-on: ubuntu-latest
