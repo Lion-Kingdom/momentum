@@ -236,7 +236,7 @@ def generate_deep_analysis(df: pd.DataFrame, sheet_url: str) -> str:
         report += f"   ➤ Ticker: {t['Ticker']} | Price: ${t['Price']} | 5D: {t['5D%']}% | RSI: {t['RSI']}\n\n"
 
     report += f"{'='*50}\n"
-    report += f"🔗 Google Sheet Access Link:\n{sheet_url}\n"
+    report += f"🔗 Google Sheet Access Link: \n{sheet_url}\n"
 
     return report
 

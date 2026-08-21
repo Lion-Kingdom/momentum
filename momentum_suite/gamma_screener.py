@@ -86,9 +86,9 @@ def send_email_gex_report(gex_dataframe):
         body += "No active GEX setups found for this session.\n\n"
 
     body += f"{'='*50}\n"
-    body += f"🔗 Google Sheet Access Link:\n"
+    body += f"🔗 Google Sheet Access Link: \n"
     # REPLACE WITH YOUR SPREADSHEET ID BELOW
-    body += f"https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit\n"
+    body += f"https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit\n" # noqa
 
     msg.attach(MIMEText(body, 'plain'))
 
@@ -257,7 +257,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                         short_c = valid_calls.iloc[0]["strike"]
                         strategy = "Bear Call Credit Spread"
                         targets = f"Short Call: ${short_c:,.2f}" # noqa
-                        rationale = "Bearish momentum capped by Call Wall dealer ceiling."
+                        rationale = "Bearish momentum capped by Call Wall dealer ceiling." # noqa
 
                 elif mom_signal == "Breakout" and spot_price >= call_wall_strike * 0.995:
                     breakout_c = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
@@ -265,7 +265,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                         target_c = breakout_c.iloc[0]["strike"]
                         strategy = "Long Call Breakout"
                         targets = f"Buy Strike: ${target_c:,.2f}" # noqa
-                        rationale = "Momentum breakout confirming Call Wall short-squeeze."
+                        rationale = "Momentum breakout confirming Call Wall short-squeeze." # noqa
 
                 # --- NEW CONVICTION LOGIC ---
                 conviction = "Standard"
