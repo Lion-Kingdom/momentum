@@ -88,7 +88,7 @@ def send_email_gex_report(gex_dataframe):
     body += f"{'='*50}\n"
     body += f"🔗 Google Sheet Access Link: \n"
     # REPLACE WITH YOUR SPREADSHEET ID BELOW
-    body += f"https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit\n" # noqa
+    body += f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit\n" # noqa
 
     msg.attach(MIMEText(body, 'plain'))
 
