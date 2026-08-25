@@ -241,7 +241,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                 regime = "POSITIVE GAMMA" if spot_price > flip_strike else "NEGATIVE GAMMA"
                 strategy = "Stand Aside (Conflicting Signals)"
                 targets = "N/A"
-                rationale = "Momentum signal does not align cleanly with structural walls."
+                rationale = "Momentum signal does not align cleanly with structural walls." # noqa
 
                 if mom_signal == "Bullish" and spot_price > put_wall_strike:
                     valid_puts = combined[combined["strike"] <= put_wall_strike].sort_values("strike", ascending=False)
@@ -249,7 +249,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                         short_p = valid_puts.iloc[0]["strike"]
                         strategy = "Bull Put Credit Spread"
                         targets = f"Short Put: ${short_p:,.2f}" # noqa
-                        rationale = "Bullish momentum supported by Put Wall dealer floor."
+                        rationale = "Bullish momentum supported by Put Wall dealer floor." # noqa
 
                 elif mom_signal == "Bearish" and spot_price < call_wall_strike:
                     valid_calls = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
@@ -259,13 +259,18 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                         targets = f"Short Call: ${short_c:,.2f}" # noqa
                         rationale = "Bearish momentum capped by Call Wall dealer ceiling." # noqa
 
-                elif mom_signal == "Breakout" and spot_price >= call_wall_strike * 0.995:
+                elif mom_signal == "Breakout" and spot_price >= call_wall_strike * 0.985:
                     breakout_c = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
                     if not breakout_c.empty:
                         target_c = breakout_c.iloc[0]["strike"]
-                        strategy = "Long Call Breakout"
+                    if regime == "NEGATIVE GAMMA":
+                        strategy = "High-Conviction Gamma Squeeze"
                         targets = f"Buy Strike: ${target_c:,.2f}" # noqa
-                        rationale = "Momentum breakout confirming Call Wall short-squeeze." # noqa
+                        rationale = "Breakout near Call Wall fueled by Negative Gamma dealer buying." # noqa
+                    else:
+                        strategy = "Stand Aside (Positive Gamma Pin)"
+                        targets = "N/A"
+                        rationale = "Spot approaching Call Wall but Positive Gamma will likely cap the move." # noqa
 
                 # --- NEW CONVICTION LOGIC ---
                 conviction = "Standard"
