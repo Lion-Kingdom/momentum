@@ -21,9 +21,10 @@ import requests
 import yfinance as yf
 
 # --- CONFIGURATION ---
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SPREADSHEET_NAME = "Daily_Momentum_Suite"
-JSON_KEY_PATH = "momentum_suite.json"
-ETF_CSV_PATH = "etfs.csv"
+JSON_KEY_PATH = os.path.join(SCRIPT_DIR, "momentum_suite.json")
+ETF_CSV_PATH = os.path.join(SCRIPT_DIR, "etfs.csv")
 
 
 def calculate_rsi(series: pd.Series, period: int = 14) -> pd.Series:
