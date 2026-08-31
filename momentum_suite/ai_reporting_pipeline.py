@@ -40,30 +40,45 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
-    """Passes the Gamma data to Gemini to generate a Deep Dive Market Report."""
+    """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
     
-    # Filter for interesting regimes to feed the prompt
-    negative_gamma = df[df['Market_Regime'] == 'NEGATIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling',
-                                                                  'Put_Wall_Floor', 'Confirmed_Strategy']]
-    positive_gamma = df[df['Market_Regime'] == 'POSITIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling',
-                                                                  'Put_Wall_Floor', 'Confirmed_Strategy']]
+    # 1. Filter out "Stand Aside" setups so we only pass actionable trades
+    active_df = df[~df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
+    stand_aside_df = df[df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
+    
+    # 2. Split active trades into regimes
+    negative_gamma = active_df[active_df['Market_Regime'] == 'NEGATIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
+    positive_gamma = active_df[active_df['Market_Regime'] == 'POSITIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
+    
+    # 3. Get a quick summary of the sidelines tickers
+    stand_aside_tickers = stand_aside_df['Ticker'].unique().tolist()
+    stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
     
     prompt = f"""
-    You are an expert quantitative market analyst. Please review the following end-of-day Gamma data and write a 'Deep Dive Market Report'.
+    You are an expert quantitative market analyst. Please review the following Gamma data and write our standard 'Deep Dive Market Report'.
     Focus on the implications of the Negative and Positive Gamma regimes, potential volatility squeezes, and the dealer positioning (Call Walls/Put Walls).
     
-    NEGATIVE GAMMA SETUPS (High Volatility Risk):
-    {negative_gamma.to_string(index=False)}
+    For the ACTIVE SETUPS provided below, you MUST explicitly output actionable trading intelligence. Do not provide vague summaries. You must include:
+    1. The exact Options Strategy structure recommended (e.g., Long Call, Bull Put Credit Spread, Bear Call Credit Spread).
+    2. The specific Strike Price placement relative to the Call Wall and Put Wall data provided.
+    3. The precise Delta parameters for the structure (e.g., Buy 0.30 Delta, Sell 0.15 Delta).
     
-    POSITIVE GAMMA SETUPS (Volatility Suppression / Pinning):
-    {positive_gamma.to_string(index=False)}
+    ACTIVE NEGATIVE GAMMA SETUPS (High Volatility Risk):
+    {negative_gamma.to_string(index=False) if not negative_gamma.empty else "No actionable negative gamma setups today."}
     
-    Format the report with clear headings, bullet points for actionable setups, and keep the tone professional and analytical.
+    ACTIVE POSITIVE GAMMA SETUPS (Volatility Suppression / Pinning):
+    {positive_gamma.to_string(index=False) if not positive_gamma.empty else "No actionable positive gamma setups today."}
+    
+    STAND ASIDE SUMMARY:
+    There are {len(stand_aside_tickers)} tickers exhibiting conflicting signals today (including: {stand_aside_sample}). 
+    Provide a single brief sentence acknowledging these are being avoided due to a lack of statistical edge. Do not analyze them individually.
+    
+    IMPORTANT - WATCHLIST EXPORT:
+    At the very bottom of the report, you MUST include a "Watchlist Export" section. This must be a clean, comma-separated list of ONLY the tickers from the ACTIVE SETUPS recommended above, so they can be copy-pasted into charting software.
     """
     
-    # Using the Gemini 1.5 Flash model for fast, cost-effective text generation
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(prompt)
     
