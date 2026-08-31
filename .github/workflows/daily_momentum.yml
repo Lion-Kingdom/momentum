@@ -31,6 +31,8 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python momentum_suite/momentum_revised.py
+          python momentum_suite/gamma_screener.py
+          python ai_reporting_pipeline.py
           
       - name: Commit and Push Updated CSV
         run: |
