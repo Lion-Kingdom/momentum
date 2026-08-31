@@ -4,9 +4,11 @@ on:
   repository_dispatch:
     types: [trigger-daily-momentum]
   workflow_dispatch:
+
 jobs:
   run-momentum:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,13 +21,15 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas numpy scipy gspread oauth2client requests yfinance pyfinviz lxml
-          
+          pip install pandas numpy scipy gspread oauth2client requests yfinance pyfinviz lxml google-generativeai
+
       - name: Execute Script
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python momentum_suite/momentum_revised.py
           python momentum_suite/gamma_screener.py
+          python ai_reporting_pipeline.py
