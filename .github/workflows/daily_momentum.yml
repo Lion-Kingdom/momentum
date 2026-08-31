@@ -30,6 +30,16 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python momentum_suite/momentum_revised.py
+          python momentum_suite/momentum_revised.py- 
+          
+      - name: Commit and Push Updated CSV
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add momentum_suite/unified_gex_momentum_master_log.csv
+          git commit -m "Automated update: Appended daily OHLCV and GEX data" || echo "No changes to commit"
+          git push
           python momentum_suite/gamma_screener.py
           python ai_reporting_pipeline.py
+
+      
