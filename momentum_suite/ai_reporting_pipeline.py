@@ -8,15 +8,16 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
 
-# --- 1. yfinance OHLCV Extraction ---
+# --- 1. yfinance OHLCV Extraction & Data Pruning ---
 def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
-    """Reads the master log, fetches latest OHLCV data for each ticker, and appends it."""
+    """Reads the master log, fetches latest OHLCV data, and enforces a 5-day retention policy."""
     print("Fetching OHLCV data...")
     df = pd.read_csv(master_csv_path)
     
     # Initialize new columns
-    df['Close'] = 0.0
-    df['Volume'] = 0
+    if 'Close' not in df.columns:
+        df['Close'] = 0.0
+        df['Volume'] = 0
     
     for index, row in df.iterrows():
         ticker = row['Ticker']
@@ -32,9 +33,16 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
         except Exception as e:
             print(f"Error fetching OHLCV for {ticker}: {e}")
             
-    # Save the updated dataframe
+    # --- 5-DAY ROLLING RETENTION LOGIC ---
+    print("Applying 5-day rolling data retention...")
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    cutoff = pd.Timestamp.now() - pd.Timedelta(days=5)
+    df = df[df['Timestamp'] >= cutoff]
+    # ---------------------------------------
+            
+    # Save the updated and pruned dataframe
     df.to_csv(master_csv_path, index=False)
-    print("OHLCV data appended successfully.")
+    print("OHLCV data appended and old records pruned successfully.")
     return df
 
 
