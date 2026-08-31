@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
+
 # --- 1. yfinance OHLCV Extraction ---
 def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     """Reads the master log, fetches latest OHLCV data for each ticker, and appends it."""
@@ -36,6 +37,7 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     print("OHLCV data appended successfully.")
     return df
 
+
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
     """Passes the Gamma data to Gemini to generate a Deep Dive Market Report."""
@@ -43,8 +45,10 @@ def generate_gemini_report(df):
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
     
     # Filter for interesting regimes to feed the prompt
-    negative_gamma = df[df['Market_Regime'] == 'NEGATIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
-    positive_gamma = df[df['Market_Regime'] == 'POSITIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
+    negative_gamma = df[df['Market_Regime'] == 'NEGATIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling',
+                                                                  'Put_Wall_Floor', 'Confirmed_Strategy']]
+    positive_gamma = df[df['Market_Regime'] == 'POSITIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling',
+                                                                  'Put_Wall_Floor', 'Confirmed_Strategy']]
     
     prompt = f"""
     You are an expert quantitative market analyst. Please review the following end-of-day Gamma data and write a 'Deep Dive Market Report'.
@@ -65,13 +69,14 @@ def generate_gemini_report(df):
     
     return response.text
 
+
 # --- 3. Email Delivery ---
 def send_email_report(report_content):
     """Sends the generated report via email using smtplib."""
     print("Dispatching email report...")
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
-    recipient = sender # Or add a list of recipients
+    recipient = sender  # Or add a list of recipients
     
     if not sender or not pwd:
         print("⚠️ Email secrets not configured. Skipping email dispatch.")
@@ -95,6 +100,7 @@ def send_email_report(report_content):
         print("✅ AI Report successfully delivered to inbox!")
     except Exception as e:
         print(f"❌ Email failed: {e}")
+
 
 if __name__ == "__main__":
     # 1. Update the CSV with yfinance data
