@@ -13,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 
 spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
 
+
 # --- BLACK-SCHOLES MATHEMATICAL ENGINE ---
 def bs_gamma(s, k, t, r, sigma, q=0.015):
     """Calculates exact analytical Black-Scholes-Merton Gamma accounting for dividend yield."""
@@ -32,9 +33,6 @@ def export_gex_to_sheets(gex_dataframe):
         creds_dict = json.loads(os.environ["GCP_SA_KEY"])
         creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
         client = gspread.authorize(creds)
-
-        # REPLACE THIS WITH YOUR ACTUAL SPREADSHEET ID
-        spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
 
         # Ensure you have a tab named "GEX_Report" created in your sheet
         sheet = client.open_by_key(spreadsheet_id).worksheet("GEX_Report")
