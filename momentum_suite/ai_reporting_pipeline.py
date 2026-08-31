@@ -1,6 +1,6 @@
 import pandas as pd
 import yfinance as yf
-import google.generativeai as genai
+from google import genai
 import smtplib
 import os
 from email.mime.text import MIMEText
@@ -50,8 +50,9 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 def generate_gemini_report(df):
     """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
-    genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-    
+    # --- NEW GENAI SDK SYNTAX ---
+    client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
     # 1. Filter out "Stand Aside" setups so we only pass actionable trades
     active_df = df[~df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
     stand_aside_df = df[df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
@@ -86,9 +87,11 @@ def generate_gemini_report(df):
     IMPORTANT - WATCHLIST EXPORT:
     At the very bottom of the report, you MUST include a "Watchlist Export" section. This must be a clean, comma-separated list of ONLY the tickers from the ACTIVE SETUPS recommended above, so they can be copy-pasted into charting software.
     """
-    
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(prompt)
+
+    response = client.models.generate_content(
+        model='gemini-1.5-flash',
+        contents=prompt
+    )
     
     return response.text
 
