@@ -32,7 +32,7 @@ jobs:
         run: |
           python momentum_suite/momentum_revised.py
           python momentum_suite/gamma_screener.py
-          python ai_reporting_pipeline.py
+          python momentum_suite/ai_reporting_pipeline.py
           
       - name: Commit and Push Updated CSV
         run: |
