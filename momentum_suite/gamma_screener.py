@@ -11,9 +11,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
+
 # --- BLACK-SCHOLES MATHEMATICAL ENGINE ---
-
-
 def bs_gamma(s, k, t, r, sigma, q=0.015):
     """Calculates exact analytical Black-Scholes-Merton Gamma accounting for dividend yield."""
     if t <= 0 or sigma <= 0 or s <= 0 or k <= 0:
