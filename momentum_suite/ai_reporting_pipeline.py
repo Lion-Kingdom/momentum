@@ -126,13 +126,11 @@ def send_email_report(report_content):
 
 
 if __name__ == "__main__":
-    # 1. Update the CSV with yfinance data
-    updated_df = append_ohlcv_data("unified_gex_momentum_master_log.csv")
+    # 1. Update the CSV with yfinance data (ADDED THE FOLDER PATH HERE)
+    updated_df = append_ohlcv_data("momentum_suite/unified_gex_momentum_master_log.csv")
     
     # 2. Generate the report with Gemini
     ai_report = generate_gemini_report(updated_df)
-    print("\n--- GENERATED REPORT PREVIEW ---\n")
-    print(ai_report)
     
     # 3. Send the email
     send_email_report(ai_report)
