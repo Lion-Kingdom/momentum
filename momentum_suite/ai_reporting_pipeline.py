@@ -3,6 +3,7 @@ import yfinance as yf
 from google import genai
 import smtplib
 import os
+import time  # <--- ADD THIS
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
@@ -54,7 +55,30 @@ def generate_gemini_report(df):
     # --- ADD THIS LINE RIGHT HERE ---
     report_data = df.to_markdown(index=False)
     # --- NEW GENAI SDK SYNTAX ---
+    # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+    
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model='gemini-3.6-flash',
+                contents=prompt
+            )
+            return response.text
+            
+        except Exception as e:
+            error_msg = str(e)
+            if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
+                if attempt < max_retries - 1:
+                    print(f"⚠️ Google API busy. Retrying in 30 seconds... (Attempt {attempt + 1}/{max_retries})")
+                    time.sleep(30)
+                else:
+                    print("❌ Max retries reached. Google AI servers are currently down.")
+                    raise e
+            else:
+                # If it's a different kind of error, crash and report it immediately
+                raise e
 
     # 1. Filter out "Stand Aside" setups so we only pass actionable trades
     active_df = df[~df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
