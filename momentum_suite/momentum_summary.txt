@@ -1,0 +1,28 @@
+📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
+==================================================
+Total Tickers Scanned: 74
+Volatility Alerts: 37
+
+📈 PHASE BREADTH:
+ - Strong_Expansion: 41
+ - Pullback_Reset: 12
+ - Regaining: 10
+ - Consolidating: 9
+ - Losing_Momentum_Flush: 2
+
+==================================================
+🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
+==================================================
+
+🟢 BULL CALL SPREAD (Debit - Upside Momentum)
+   ➤ Ticker: MPC | Price: $379.38 | 1M: 23.9% | RSI: 75.4
+
+🛡️ BULL PUT SPREAD (Credit - Support Bounce)
+   ➤ Ticker: PM | Price: $189.33 | 5D: -2.37% | RSI: 50.1
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: BIIB | Price: $213.6 | 5D: -3.25% | RSI: 51.6
+
+==================================================
+🔗 Google Sheet Access Link: 
+https://docs.google.com/spreadsheets/d/19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0/edit
