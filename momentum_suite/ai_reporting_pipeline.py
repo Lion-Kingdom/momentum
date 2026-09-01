@@ -66,26 +66,52 @@ def generate_gemini_report(df):
     stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
     
     prompt = f"""
-    You are an expert quantitative market analyst. Please review the following Gamma data and write our standard 'Deep Dive Market Report'.
-    Focus on the implications of the Negative and Positive Gamma regimes, potential volatility squeezes, and the dealer positioning (Call Walls/Put Walls).
+    You are the elite quantitative AI engine for 'The Precision Trader' platform. 
+    Your audience consists of retail options traders who want highly visual, easy-to-read, and actionable trade setups. 
+    Do NOT use overly complex institutional jargon (e.g., GEX, dealer delta-hedging, gamma regimes, pinning). 
+    Instead, translate the quantitative data into aggressive, high-energy, momentum-based terminology (e.g., "High-Conviction Breakouts", "Support Zones", "Momentum Squeezes").
+
+    Here is the daily filtered data:
+    {report_data}
+
+    Format the email EXACTLY like this using Markdown:
+
+    # 🎯 The Precision Trader: Daily Action Plan
+    Write a 2-3 sentence punchy, high-energy market overview based on the data. Mention that all tickers below have already passed our strict technical gauntlet (trading above key moving averages with strong RSI momentum) before even reaching this list.
+
+    ---
+
+    ## 🔥 High-Conviction Setups
+    If there are no actionable setups today, state: "The engine is flat today. No tickers met our strict criteria. We protect capital and wait for the perfect pitch."
     
-    For the ACTIVE SETUPS provided below, you MUST explicitly output actionable trading intelligence. Do not provide vague summaries. You must include:
-    1. The exact Options Strategy structure recommended (e.g., Long Call, Bull Put Credit Spread, Bear Call Credit Spread).
-    2. The specific Strike Price placement relative to the Call Wall and Put Wall data provided.
-    3. The precise Delta parameters for the structure (e.g., Buy 0.30 Delta, Sell 0.15 Delta).
-    
-    ACTIVE NEGATIVE GAMMA SETUPS (High Volatility Risk):
-    {negative_gamma.to_string(index=False) if not negative_gamma.empty else "No actionable negative gamma setups today."}
-    
-    ACTIVE POSITIVE GAMMA SETUPS (Volatility Suppression / Pinning):
-    {positive_gamma.to_string(index=False) if not positive_gamma.empty else "No actionable positive gamma setups today."}
-    
-    STAND ASIDE SUMMARY:
-    There are {len(stand_aside_tickers)} tickers exhibiting conflicting signals today (including: {stand_aside_sample}). 
-    Provide a single brief sentence acknowledging these are being avoided due to a lack of statistical edge. Do not analyze them individually.
-    
-    IMPORTANT - WATCHLIST EXPORT:
-    At the very bottom of the report, you MUST include a "Watchlist Export" section. This must be a clean, comma-separated list of ONLY the tickers from the ACTIVE SETUPS recommended above, so they can be copy-pasted into charting software.
+    If there ARE setups, create a clean Markdown table with these columns:
+    | Ticker | Current Price | Structural Support | Upside Target | Momentum Profile |
+    (Fill in the table using the data provided. Use plain English for the momentum profile, e.g., "Bullish Breakout").
+
+    ---
+
+    ## 🛠️ The Options Playbook
+    For each ticker identified above, provide 3 actionable options strategies based on the current price and support/resistance levels. Format it beautifully:
+
+    ### [TICKER SYMBOL] - Options Strategies
+    *Why we like it:* (1 sentence explaining the technical strength and breakout potential).
+    *   **Conservative Play (Income Generation):** Suggest a credit spread (e.g., Bull Put Spread). Name the strikes based on the structural support level.
+    *   **Aggressive Play (Directional Spread):** Suggest a debit spread (e.g., Call Debit Spread). Name the strikes targeting the upside target.
+    *   **Ultra Aggressive (Swing Trade):** Suggest a direct Long Call or Long Put for maximum leverage and momentum capture. Name the specific strike and logic.
+
+    ---
+
+    ## 🛡️ Precision Risk Management & Execution Rules
+    (Include exactly these rules word-for-word to guide our subscribers):
+    *   **Position Sizing:** Never risk more than **10%** of your dedicated options account on a single play (e.g., max $500 risk on a $5k account). When trading naked Long Calls/Puts, target premiums under **$5.00** (absolute max of $8.00).
+    *   **Time Horizon:** We are hunting for momentum breakouts. If the breakout does not trigger within **1 to 4 days max**, cut the trade. Time decay is the enemy.
+    *   **Take Profit:** Secure gains at **50% to 70%** on all Credit and Debit Spreads.
+    *   **Stop Loss (Strict!):** Set automatic hard stops at **15% to 30%**. If you take a heavier Long Call/Put closer to the $8.00 max, tighten that stop loss strictly to **20%**. 
+
+    ---
+
+    ## 📉 Charting Watchlist (Export)
+    Provide ONLY a comma-separated list of the active tickers (e.g., AAPL, TSLA, OKE) so subscribers can easily copy and paste them into ThinkOrSwim or TradingView. If none, write "NONE".
     """
 
     response = client.models.generate_content(
