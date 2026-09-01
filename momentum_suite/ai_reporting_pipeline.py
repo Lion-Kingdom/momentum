@@ -50,6 +50,9 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 def generate_gemini_report(df):
     """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
+    
+    # --- ADD THIS LINE RIGHT HERE ---
+    report_data = df.to_markdown(index=False)
     # --- NEW GENAI SDK SYNTAX ---
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
