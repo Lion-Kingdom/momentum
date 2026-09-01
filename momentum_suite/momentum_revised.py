@@ -326,12 +326,19 @@ def run_worker():
 
     try:
         # export_to_google_sheets(df)  <-- COMMENT THIS OUT
-
-        # --- GENERATE & EMAIL REPORT ---
+        
+        # --- GENERATE REPORT ---
         sheet_url = "https://docs.google.com/spreadsheets/d/19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0/edit"
         report = generate_deep_analysis(df, sheet_url)
         print("\n" + report)
-        send_email_report(report)
+        
+        # send_email_report(report)  <--- COMMENT THIS OUT SO IT DOESN'T SEND
+        
+        # --- NEW: SAVE TEXT TO FILE FOR THE AI SCRIPT TO GRAB ---
+        report_path = os.path.join(script_dir, "momentum_summary.txt")
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write(report)
+        print(f"💾 Momentum text report saved to {report_path}")
 
     except Exception as err:
         print(f"\n[ERROR] Sheets Export or Email Failed: {err}")
