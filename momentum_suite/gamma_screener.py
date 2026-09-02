@@ -56,10 +56,7 @@ def send_email_gex_report(gex_dataframe):
     # Update your list with any new subscribers here
     mailing_list = [
         sender,
-        "new_being@hotmail.com",
-        "sdimi22@aol.com",
-        "lordruckus88@gmail.com",
-        "uroberts54@gmail.com"
+        "new_being@hotmail.com"
     ]
 
     now_str = datetime.now().strftime("%b %d, %Y - %I:%M %p EDT")
