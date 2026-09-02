@@ -156,7 +156,7 @@ def send_email_report(report_content):
     msg['To'] = recipient
     msg['Subject'] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
     
-   msg.attach(MIMEText(report_content, 'html'))
+    msg.attach(MIMEText(report_content, 'html'))
     
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -183,15 +183,15 @@ if __name__ == "__main__":
     except FileNotFoundError:
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
         
-   # 4. Merge them: AI Card at top, raw stats cleanly formatted in monospace below
-final_master_report = f"""
-{ai_report}
-<br><hr style="border: 1px solid #333;"><br>
-<div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
-    <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
-    <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
-</div>
-"""
+    # 4. Merge them: AI Card at top, raw stats cleanly formatted in monospace below
+        final_master_report = f"""
+    {ai_report}
+    <br><hr style="border: 1px solid #333;"><br>
+    <div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
+        <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
+        <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
+    </div>
+    """
     
     # 5. Send the ONE final combined email
     send_email_report(final_master_report)
