@@ -74,9 +74,8 @@ def generate_gemini_report(df):
     stand_aside_tickers = stand_aside_df['Ticker'].unique().tolist()
     stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
     
-    prompt = f"""
+   prompt = f"""
     You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data. 
-    Your audience consists of retail options traders who want highly visual, easy-to-read, and actionable trade setups.
     
     CRITICAL SCREENING RULES:
     You MUST prioritize and extract any ticker, especially ETFs and Indexes, that meet the following criteria:
@@ -86,41 +85,32 @@ def generate_gemini_report(df):
     Here is the daily filtered data:
     {report_data}
 
-    Format the final output STRICTLY as a clean, plain-text email. DO NOT USE MARKDOWN TAGS (no '#' or '**'). Use ALL CAPS for headers, clean dividers, and bullet points so it reads like a premium text-based financial news card.
-
-    Follow this exact structure:
-
-    🎯 THE PRECISION TRADER: DAILY ACTION PLAN
-    (Write a 2-3 sentence punchy, high-energy market overview based on the data. Mention that all tickers below have passed our strict technical gauntlet before reaching this list.)
+    Format the final output STRICTLY as raw HTML. DO NOT wrap the output in markdown code blocks (e.g., no ```html). Just output the raw HTML tags. 
     
-    ------------------------------------------------------------
-    🔥 HIGH-CONVICTION SETUPS
-    (If there are no actionable setups today, state: "The engine is flat today. No tickers met our strict criteria. We protect capital and wait for the perfect pitch.")
-    
-    (If there ARE setups, list them cleanly like this):
-    TICKER: [Ticker] | PRICE: [Current Price] | SUPPORT: [Structural Support] | TARGET: [Upside Target] | PROFILE: [Momentum Profile]
+    Design Requirements (Inline CSS):
+    - Background: Wrap the entire email in a container with a dark gray background (#121212) and padding.
+    - Card: Create a main inner container (the "Trade Card") with a white or off-white background (#F9F9F9), dark text (#111111), rounded corners (8px), and a subtle box shadow.
+    - Typography: Use a modern sans-serif font family (Arial, Helvetica, sans-serif).
+    - Tables: When displaying data (like the High-Conviction Setups), use an HTML <table> with a dark header row, bold text, and alternating light gray rows.
+    - Highlights: Use bold text and gold (#D4AF37) or green (#2E7D32) font colors to highlight key strike prices and target zones.
 
-    ------------------------------------------------------------
-    🛠️ THE OPTIONS PLAYBOOK
-    (For each ticker identified above, provide 3 actionable options strategies)
-    
-    [TICKER SYMBOL] - OPTIONS STRATEGIES
-    Why we like it: (1 sentence explaining the technical strength)
-    
-    > Conservative Play (Income Generation): (Suggest a credit spread. Name strikes)
-    > Aggressive Play (Directional Spread): (Suggest a debit spread. Name strikes)
-    > Ultra Aggressive (Swing Trade): (Suggest a direct Long Call or Put. Name strikes)
+    Follow this exact content structure inside the HTML:
 
-    ------------------------------------------------------------
-    🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES
-    - Position Sizing: Never risk more than 10% of your dedicated options account on a single play. Target naked premiums under $5.00 (max $8.00).
-    - Time Horizon: We hunt momentum breakouts. If it doesn't trigger within 1 to 4 days max, cut the trade. Time decay is the enemy.
-    - Take Profit: Secure gains at 50% to 70% on all Credit and Debit Spreads.
-    - Stop Loss (Strict!): Set automatic hard stops at 15% to 30%. Tighten naked options strictly to 20%.
+    1. 🎯 THE PRECISION TRADER: DAILY ACTION PLAN (Use an H2 or H1 tag, centered, maybe with a dark background banner)
+    Write a 2-3 sentence punchy, high-energy market overview based on the data.
 
-    ------------------------------------------------------------
-    📉 CHARTING WATCHLIST (EXPORT)
-    (Provide ONLY a comma-separated list of the active tickers. If none, write "NONE".)
+    2. 🔥 HIGH-CONVICTION SETUPS (H3 tag)
+    (If there are no actionable setups today, state: "The engine is flat today...")
+    (If there ARE setups, output a clean HTML table with these columns: Ticker, Current Price, Structural Support, Upside Target, Momentum Profile).
+
+    3. 🛠️ THE OPTIONS PLAYBOOK (H3 tag)
+    (For each ticker, create a clean visual block with 3 actionable options strategies: Conservative, Aggressive, Ultra Aggressive. Use bullet points or styled div boxes).
+
+    4. 🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES (H3 tag)
+    (Include our strict rules: Position Sizing (max 10%), Time Horizon (1-4 days), Take Profit (50-70%), Stop Loss (15-30%)).
+
+    5. 📉 CHARTING WATCHLIST (H3 tag)
+    (Comma-separated list of active tickers).
     """
     # --- NEW GENAI SDK SYNTAX ---
     # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
@@ -168,7 +158,7 @@ def send_email_report(report_content):
     msg['To'] = recipient
     msg['Subject'] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
     
-    msg.attach(MIMEText(report_content, 'plain'))
+   msg.attach(MIMEText(report_content, 'html'))
     
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -195,8 +185,15 @@ if __name__ == "__main__":
     except FileNotFoundError:
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
         
-    # 4. Merge them: AI Intelligence Playbook AT THE TOP, Full Stats/Spreads AT THE BOTTOM
-    final_master_report = f"{ai_report}\n\n{'-'*60}\n\n{momentum_stats}"
+   # 4. Merge them: AI Card at top, raw stats cleanly formatted in monospace below
+final_master_report = f"""
+{ai_report}
+<br><hr style="border: 1px solid #333;"><br>
+<div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
+    <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
+    <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
+</div>
+"""
     
     # 5. Send the ONE final combined email
     send_email_report(final_master_report)
