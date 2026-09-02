@@ -3,11 +3,10 @@ import yfinance as yf
 from google import genai
 import smtplib
 import os
-import time  # <--- ADD THIS
+import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
-
 
 # --- 1. yfinance OHLCV Extraction & Data Pruning ---
 def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
@@ -24,14 +23,13 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 
     for index, row in df.iterrows():
         ticker = row['Ticker']
-        # Handle index tickers for yfinance
+        # Handle index tickers for yfinance (including XSP)
         yf_ticker = f"^{ticker}" if ticker in ["SPX", "XSP", "NDX", "RUT", "VIX"] and not ticker.startswith("^") else ticker
         
         try:
             stock = yf.Ticker(yf_ticker)
             # Pull 5 days of history to ensure we get a clean latest candle
             hist = stock.history(period="5d")
-            
             if not hist.empty:
                 df.at[index, 'Open'] = round(hist['Open'].iloc[-1], 2)
                 df.at[index, 'High'] = round(hist['High'].iloc[-1], 2)
@@ -40,49 +38,36 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
                 df.at[index, 'Volume'] = int(hist['Volume'].iloc[-1])
         except Exception as e:
             print(f"Error fetching OHLCV for {ticker}: {e}")
-            
+
     # --- 5-DAY ROLLING RETENTION LOGIC ---
     print("Applying 5-day rolling data retention...")
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
     cutoff = pd.Timestamp.now() - pd.Timedelta(days=5)
     df = df[df['Timestamp'] >= cutoff]
-    # ---------------------------------------
-            
+    
     # Save the updated and pruned dataframe
     df.to_csv(master_csv_path, index=False)
     print("OHLCV data appended and old records pruned successfully.")
     return df
-
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
     """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
     
-    # --- ADD THIS LINE RIGHT HERE ---
     report_data = df.to_markdown(index=False)
     
-    # 1. Filter out "Stand Aside" setups so we only pass actionable trades
-    active_df = df[~df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
-    stand_aside_df = df[df['Confirmed_Strategy'].str.contains("Stand Aside", na=False)]
-    
-    # 2. Split active trades into regimes
-    negative_gamma = active_df[active_df['Market_Regime'] == 'NEGATIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
-    positive_gamma = active_df[active_df['Market_Regime'] == 'POSITIVE GAMMA'][['Ticker', 'Close', 'Call_Wall_Ceiling', 'Put_Wall_Floor', 'Confirmed_Strategy']]
-    
-    # 3. Get a quick summary of the sidelines tickers
-    stand_aside_tickers = stand_aside_df['Ticker'].unique().tolist()
-    stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
-    
     prompt = f"""
-    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data. 
+    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data.
     
     CRITICAL SCREENING RULES:
-    You MUST prioritize and extract any ticker, especially ETFs and Indexes, that meet the following criteria:
+    You MUST prioritize and extract any ticker, especially ETFs and Indexes (like SPX, XSP, NDX, RUT), that meet the following criteria:
     1. The Gamma Squeeze: If the row explicitly states 'High-Conviction Gamma Squeeze' or 'Negative Gamma', it MUST be featured in the 'High-Conviction Setups' section. Do not output a flat day if this condition exists.
     2. The 'Before It Happens' Setup: Analyze the OHLCV data against the Call Wall. If a ticker is operating in 'Negative Gamma' and the 'Close' price is within 1.5% of the 'Call_Wall_Ceiling', flag it as 'Approaching Squeeze Trigger'.
+
     Here is the daily filtered data:
     {report_data}
+
     Format the final output STRICTLY as raw HTML. DO NOT wrap the output in markdown code blocks (e.g., no ```html). Just output the raw HTML tags. 
     
     Design Requirements (Inline CSS):
@@ -110,19 +95,17 @@ def generate_gemini_report(df):
     5. 📉 CHARTING WATCHLIST (H3 tag)
     (Comma-separated list of active tickers).
     """
-    # --- NEW GENAI SDK SYNTAX ---
+
     # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
-    
     max_retries = 3
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-3.6-flash',
+                model='gemini-2.5-flash',
                 contents=prompt
             )
             return response.text
-            
         except Exception as e:
             error_msg = str(e)
             if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
@@ -133,9 +116,7 @@ def generate_gemini_report(df):
                     print("❌ Max retries reached. Google AI servers are currently down.")
                     raise e
             else:
-                # If it's a different kind of error, crash and report it immediately
                 raise e
-    
 
 # --- 3. Email Delivery ---
 def send_email_report(report_content):
@@ -143,7 +124,9 @@ def send_email_report(report_content):
     print("Dispatching email report...")
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
-    recipient = sender  # Or add a list of recipients
+    
+    # Restrict to safe solo testing for now
+    recipients = [sender] 
     
     if not sender or not pwd:
         print("⚠️ Email secrets not configured. Skipping email dispatch.")
@@ -151,26 +134,25 @@ def send_email_report(report_content):
 
     now_str = datetime.now().strftime("%b %d, %Y")
     
-    msg = MIMEMultipart()
-    msg['From'] = sender
-    msg['To'] = recipient
-    msg['Subject'] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
-    
-    msg.attach(MIMEText(report_content, 'html'))
-    
-    try:
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(sender, pwd)
-        server.sendmail(sender, recipient, msg.as_string())
-        server.quit()
-        print("✅ AI Report successfully delivered to inbox!")
-    except Exception as e:
-        print(f"❌ Email failed: {e}")
-
+    for recipient in recipients:
+        msg = MIMEMultipart()
+        msg['From'] = sender
+        msg['To'] = recipient
+        msg['Subject'] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
+        msg.attach(MIMEText(report_content, 'html'))
+        
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(sender, pwd)
+            server.sendmail(sender, recipient, msg.as_string())
+            server.quit()
+            print(f"✅ AI Report successfully delivered to {recipient}!")
+        except Exception as e:
+            print(f"❌ Email failed for {recipient}: {e}")
 
 if __name__ == "__main__":
-    # 1. Update the CSV with yfinance data
+    # 1. Update the CSV with yfinance data (including XSP)
     updated_df = append_ohlcv_data("momentum_suite/unified_gex_momentum_master_log.csv")
     
     # 2. Generate the report with Gemini
@@ -183,16 +165,19 @@ if __name__ == "__main__":
     except FileNotFoundError:
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
         
-    # 4. Merge them: AI Card at top, raw stats cleanly formatted in monospace below
+    # 4. Merge them inside a centered master container so everything stays balanced
     final_master_report = f"""
-    {ai_report}
-    <br><hr style="border: 1px solid #333;"><br>
-    <div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
-        <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
-        <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
+    <div style="background-color: #121212; padding: 20px; width: 100%;">
+        <div style="max-width: 650px; margin: 0 auto;">
+            {ai_report}
+            <br><hr style="border: 1px solid #333;"><br>
+            <div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
+                <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
+                <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
+            </div>
+        </div>
     </div>
     """
     
     # 5. Send the ONE final combined email
     send_email_report(final_master_report)
-  
