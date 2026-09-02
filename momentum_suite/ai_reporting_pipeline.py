@@ -102,10 +102,9 @@ def generate_gemini_report(df):
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
-            )
-            return response.text
+            model='gemini-3.6-flash',
+            contents=prompt
+        )
         except Exception as e:
             error_msg = str(e)
             if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
