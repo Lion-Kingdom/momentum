@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 74
-Volatility Alerts: 37
+Total Tickers Scanned: 72
+Volatility Alerts: 41
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 41
- - Pullback_Reset: 12
- - Regaining: 10
- - Consolidating: 9
+ - Regaining: 11
+ - Pullback_Reset: 10
+ - Consolidating: 8
  - Losing_Momentum_Flush: 2
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 37
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MPC | Price: $379.38 | 1M: 23.9% | RSI: 75.4
+   ➤ Ticker: MPC | Price: $383.0 | 1M: 25.09% | RSI: 76.5
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PM | Price: $189.33 | 5D: -2.37% | RSI: 50.1
+   ➤ Ticker: LABU | Price: $300.7 | 5D: -10.38% | RSI: 53.1
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: BIIB | Price: $213.6 | 5D: -3.25% | RSI: 51.6
+   ➤ Ticker: FCX | Price: $72.47 | 5D: -9.31% | RSI: 53.3
 
 ==================================================
 🔗 Google Sheet Access Link: 
