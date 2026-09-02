@@ -1,11 +1,11 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 84
+Total Tickers Scanned: 83
 Volatility Alerts: 48
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 53
- - Regaining: 20
+ - Regaining: 19
  - Consolidating: 7
  - Pullback_Reset: 3
  - Exhausted_Trap: 1
