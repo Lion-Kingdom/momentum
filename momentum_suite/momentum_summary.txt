@@ -1,27 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 72
+Total Tickers Scanned: 88
 Volatility Alerts: 41
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 41
- - Regaining: 11
- - Pullback_Reset: 10
- - Consolidating: 8
- - Losing_Momentum_Flush: 2
+ - Strong_Expansion: 59
+ - Regaining: 17
+ - Consolidating: 6
+ - Pullback_Reset: 5
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MPC | Price: $383.0 | 1M: 25.09% | RSI: 76.5
+   ➤ Ticker: APA | Price: $44.81 | 1M: 25.17% | RSI: 69.0
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: LABU | Price: $300.7 | 5D: -10.38% | RSI: 53.1
+   ➤ Ticker: DRAM | Price: $55.9 | 5D: -0.88% | RSI: 50.2
 
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: FCX | Price: $72.47 | 5D: -9.31% | RSI: 53.3
+🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
+   ➤ Ticker: MPC | Price: $388.92 | 1D: 1.55% | RSI: 78.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
