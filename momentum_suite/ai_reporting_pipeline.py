@@ -15,11 +15,13 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     print("Fetching OHLCV data...")
     df = pd.read_csv(master_csv_path)
     
-    # Initialize new columns
-    if 'Close' not in df.columns:
-        df['Close'] = 0.0
+    # Initialize new columns for full OHLCV
+    for col in ['Open', 'High', 'Low', 'Close']:
+        if col not in df.columns:
+            df[col] = 0.0
+    if 'Volume' not in df.columns:
         df['Volume'] = 0
-    
+
     for index, row in df.iterrows():
         ticker = row['Ticker']
         # Handle index tickers for yfinance
@@ -27,10 +29,15 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
         
         try:
             stock = yf.Ticker(yf_ticker)
-            hist = stock.history(period="1d")
+            # Pull 5 days of history to ensure we get a clean latest candle
+            hist = stock.history(period="5d")
+            
             if not hist.empty:
-                df.at[index, 'Close'] = hist['Close'].iloc[-1]
-                df.at[index, 'Volume'] = hist['Volume'].iloc[-1]
+                df.at[index, 'Open'] = round(hist['Open'].iloc[-1], 2)
+                df.at[index, 'High'] = round(hist['High'].iloc[-1], 2)
+                df.at[index, 'Low'] = round(hist['Low'].iloc[-1], 2)
+                df.at[index, 'Close'] = round(hist['Close'].iloc[-1], 2)
+                df.at[index, 'Volume'] = int(hist['Volume'].iloc[-1])
         except Exception as e:
             print(f"Error fetching OHLCV for {ticker}: {e}")
             
