@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 88
-Volatility Alerts: 41
+Total Tickers Scanned: 84
+Volatility Alerts: 48
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 59
- - Regaining: 17
- - Consolidating: 6
- - Pullback_Reset: 5
+ - Strong_Expansion: 53
+ - Regaining: 20
+ - Consolidating: 7
+ - Pullback_Reset: 3
  - Exhausted_Trap: 1
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 41
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: APA | Price: $44.81 | 1M: 25.17% | RSI: 69.0
+   ➤ Ticker: PSX | Price: $256.09 | 1M: 25.04% | RSI: 77.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DRAM | Price: $55.9 | 5D: -0.88% | RSI: 50.2
+   ➤ Ticker: DRAM | Price: $56.21 | 5D: -0.32% | RSI: 50.8
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $388.92 | 1D: 1.55% | RSI: 78.2
+   ➤ Ticker: APH | Price: $160.08 | 1D: 101.93% | RSI: 89.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
