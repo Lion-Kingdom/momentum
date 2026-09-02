@@ -74,17 +74,15 @@ def generate_gemini_report(df):
     stand_aside_tickers = stand_aside_df['Ticker'].unique().tolist()
     stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
     
-   prompt = f"""
+    prompt = f"""
     You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data. 
     
     CRITICAL SCREENING RULES:
     You MUST prioritize and extract any ticker, especially ETFs and Indexes, that meet the following criteria:
     1. The Gamma Squeeze: If the row explicitly states 'High-Conviction Gamma Squeeze' or 'Negative Gamma', it MUST be featured in the 'High-Conviction Setups' section. Do not output a flat day if this condition exists.
     2. The 'Before It Happens' Setup: Analyze the OHLCV data against the Call Wall. If a ticker is operating in 'Negative Gamma' and the 'Close' price is within 1.5% of the 'Call_Wall_Ceiling', flag it as 'Approaching Squeeze Trigger'.
-
     Here is the daily filtered data:
     {report_data}
-
     Format the final output STRICTLY as raw HTML. DO NOT wrap the output in markdown code blocks (e.g., no ```html). Just output the raw HTML tags. 
     
     Design Requirements (Inline CSS):
