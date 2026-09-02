@@ -75,52 +75,52 @@ def generate_gemini_report(df):
     stand_aside_sample = ", ".join(stand_aside_tickers[:10]) + ("..." if len(stand_aside_tickers) > 10 else "")
     
     prompt = f"""
-    You are the elite quantitative AI engine for 'The Precision Trader' platform. 
-    Your audience consists of retail options traders who want highly visual, easy-to-read, and actionable trade setups. 
-    Do NOT use overly complex institutional jargon (e.g., GEX, dealer delta-hedging, gamma regimes, pinning). 
-    Instead, translate the quantitative data into aggressive, high-energy, momentum-based terminology (e.g., "High-Conviction Breakouts", "Support Zones", "Momentum Squeezes").
+    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data. 
+    Your audience consists of retail options traders who want highly visual, easy-to-read, and actionable trade setups.
+    
+    CRITICAL SCREENING RULES:
+    You MUST prioritize and extract any ticker, especially ETFs and Indexes, that meet the following criteria:
+    1. The Gamma Squeeze: If the row explicitly states 'High-Conviction Gamma Squeeze' or 'Negative Gamma', it MUST be featured in the 'High-Conviction Setups' section. Do not output a flat day if this condition exists.
+    2. The 'Before It Happens' Setup: Analyze the OHLCV data against the Call Wall. If a ticker is operating in 'Negative Gamma' and the 'Close' price is within 1.5% of the 'Call_Wall_Ceiling', flag it as 'Approaching Squeeze Trigger'.
 
     Here is the daily filtered data:
     {report_data}
 
-    Format the email EXACTLY like this using Markdown:
+    Format the final output STRICTLY as a clean, plain-text email. DO NOT USE MARKDOWN TAGS (no '#' or '**'). Use ALL CAPS for headers, clean dividers, and bullet points so it reads like a premium text-based financial news card.
 
-    # 🎯 The Precision Trader: Daily Action Plan
-    Write a 2-3 sentence punchy, high-energy market overview based on the data. Mention that all tickers below have already passed our strict technical gauntlet (trading above key moving averages with strong RSI momentum) before even reaching this list.
+    Follow this exact structure:
 
-    ---
-
-    ## 🔥 High-Conviction Setups
-    If there are no actionable setups today, state: "The engine is flat today. No tickers met our strict criteria. We protect capital and wait for the perfect pitch."
+    🎯 THE PRECISION TRADER: DAILY ACTION PLAN
+    (Write a 2-3 sentence punchy, high-energy market overview based on the data. Mention that all tickers below have passed our strict technical gauntlet before reaching this list.)
     
-    If there ARE setups, create a clean Markdown table with these columns:
-    | Ticker | Current Price | Structural Support | Upside Target | Momentum Profile |
-    (Fill in the table using the data provided. Use plain English for the momentum profile, e.g., "Bullish Breakout").
+    ------------------------------------------------------------
+    🔥 HIGH-CONVICTION SETUPS
+    (If there are no actionable setups today, state: "The engine is flat today. No tickers met our strict criteria. We protect capital and wait for the perfect pitch.")
+    
+    (If there ARE setups, list them cleanly like this):
+    TICKER: [Ticker] | PRICE: [Current Price] | SUPPORT: [Structural Support] | TARGET: [Upside Target] | PROFILE: [Momentum Profile]
 
-    ---
+    ------------------------------------------------------------
+    🛠️ THE OPTIONS PLAYBOOK
+    (For each ticker identified above, provide 3 actionable options strategies)
+    
+    [TICKER SYMBOL] - OPTIONS STRATEGIES
+    Why we like it: (1 sentence explaining the technical strength)
+    
+    > Conservative Play (Income Generation): (Suggest a credit spread. Name strikes)
+    > Aggressive Play (Directional Spread): (Suggest a debit spread. Name strikes)
+    > Ultra Aggressive (Swing Trade): (Suggest a direct Long Call or Put. Name strikes)
 
-    ## 🛠️ The Options Playbook
-    For each ticker identified above, provide 3 actionable options strategies based on the current price and support/resistance levels. Format it beautifully:
+    ------------------------------------------------------------
+    🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES
+    - Position Sizing: Never risk more than 10% of your dedicated options account on a single play. Target naked premiums under $5.00 (max $8.00).
+    - Time Horizon: We hunt momentum breakouts. If it doesn't trigger within 1 to 4 days max, cut the trade. Time decay is the enemy.
+    - Take Profit: Secure gains at 50% to 70% on all Credit and Debit Spreads.
+    - Stop Loss (Strict!): Set automatic hard stops at 15% to 30%. Tighten naked options strictly to 20%.
 
-    ### [TICKER SYMBOL] - Options Strategies
-    *Why we like it:* (1 sentence explaining the technical strength and breakout potential).
-    *   **Conservative Play (Income Generation):** Suggest a credit spread (e.g., Bull Put Spread). Name the strikes based on the structural support level.
-    *   **Aggressive Play (Directional Spread):** Suggest a debit spread (e.g., Call Debit Spread). Name the strikes targeting the upside target.
-    *   **Ultra Aggressive (Swing Trade):** Suggest a direct Long Call or Long Put for maximum leverage and momentum capture. Name the specific strike and logic.
-
-    ---
-
-    ## 🛡️ Precision Risk Management & Execution Rules
-    (Include exactly these rules word-for-word to guide our subscribers):
-    *   **Position Sizing:** Never risk more than **10%** of your dedicated options account on a single play (e.g., max $500 risk on a $5k account). When trading naked Long Calls/Puts, target premiums under **$5.00** (absolute max of $8.00).
-    *   **Time Horizon:** We are hunting for momentum breakouts. If the breakout does not trigger within **1 to 4 days max**, cut the trade. Time decay is the enemy.
-    *   **Take Profit:** Secure gains at **50% to 70%** on all Credit and Debit Spreads.
-    *   **Stop Loss (Strict!):** Set automatic hard stops at **15% to 30%**. If you take a heavier Long Call/Put closer to the $8.00 max, tighten that stop loss strictly to **20%**. 
-
-    ---
-
-    ## 📉 Charting Watchlist (Export)
-    Provide ONLY a comma-separated list of the active tickers (e.g., AAPL, TSLA, OKE) so subscribers can easily copy and paste them into ThinkOrSwim or TradingView. If none, write "NONE".
+    ------------------------------------------------------------
+    📉 CHARTING WATCHLIST (EXPORT)
+    (Provide ONLY a comma-separated list of the active tickers. If none, write "NONE".)
     """
     # --- NEW GENAI SDK SYNTAX ---
     # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
