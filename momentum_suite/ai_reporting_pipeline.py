@@ -25,7 +25,7 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     for index, row in df.iterrows():
         ticker = row['Ticker']
         # Handle index tickers for yfinance
-        yf_ticker = f"^{ticker}" if ticker in ["SPX", "NDX", "RUT", "VIX"] and not ticker.startswith("^") else ticker
+        yf_ticker = f"^{ticker}" if ticker in ["SPX", "XSP", "NDX", "RUT", "VIX"] and not ticker.startswith("^") else ticker
         
         try:
             stock = yf.Ticker(yf_ticker)
