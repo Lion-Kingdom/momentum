@@ -184,7 +184,7 @@ if __name__ == "__main__":
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
         
     # 4. Merge them: AI Card at top, raw stats cleanly formatted in monospace below
-        final_master_report = f"""
+    final_master_report = f"""
     {ai_report}
     <br><hr style="border: 1px solid #333;"><br>
     <div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
