@@ -55,7 +55,8 @@ def generate_gemini_report(df):
     """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
     
-    report_data = df.to_markdown(index=False)
+    # FIX: Use to_csv() so the model gets clean, comma-delimited key-value data it can easily parse
+    report_data = df.to_csv(index=False)
     
     prompt = f"""
     You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data.
