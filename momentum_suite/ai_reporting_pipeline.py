@@ -141,7 +141,7 @@ def send_email_report(report_content):
     pwd = os.getenv("EMAIL_PASS")
     
     # Restrict to safe solo testing for now
-    recipients = [sender] 
+    recipients = [sender, "new_being@hotmail.com"] 
     
     if not sender or not pwd:
         print("⚠️ Email secrets not configured. Skipping email dispatch.")
