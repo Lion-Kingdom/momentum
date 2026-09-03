@@ -78,65 +78,77 @@ def generate_gemini_report(df):
         filtered_df = df.tail(20)
 
     report_data = filtered_df.to_csv(index=False)
+    
+    print(f"DEBUG: summary_telemetry length: {len(summary_telemetry)}")
 
     prompt = f"""
-    ### SPECIFICATION CONTRACT (Behavior-Driven Reporting)
-
-    # SCENARIO 1: Directional Gamma Squeezes Present
-    GIVEN the input dataset contains tickers with 'Negative Gamma' or 'Gamma Squeeze'
-    WHEN generating '🔥 HIGH-CON VICTION SETUPS'
-    THEN list each ticker, its Spot Price, Call Wall, and Target Strike.
-
-    # SCENARIO 2: Spread Candidates Present
-    GIVEN the input dataset contains 'TOP OPTIONS SPREAD STRATEGY CANDIDATES' (Bull Call, Bull Put, Bear Put, Bear Call, Iron Condor)
-    WHEN generating '🛠️ THE OPTIONS PLAYBOOK'
-    THEN extract every identified candidate (e.g. HOOD, IBKR, LABU), state its exact Strategy, Price, RSI, and performance metric, and define a practical 2-strike bracket.
-
-    # SCENARIO 3: Negative Fallback Guardrail
-    GIVEN the input dataset has AT LEAST ONE ticker in Scenario 1 OR Scenario 2
-    WHEN generating any section of the report
-    THEN DO NOT write "The engine is flat", "zero actionable signals", or "No options structures qualified".
-    ONLY output "The engine is flat" IF AND ONLY IF both Scenario 1 and Scenario 2 contain zero tickers.
-
-    # SCENARIO 4: Watchlist Sync
-    GIVEN all tickers extracted in Scenario 1 and Scenario 2
-    WHEN generating '📉 CHARTING WATCHLIST'
-    THEN list each extracted ticker and its primary key level.
+    You are the lead quantitative trading analyst for 'The Precision Trader'. 
+    Evaluate the provided input telemetry and CSV market data to generate our daily intelligence report.
+    Output strictly raw HTML code without markdown fences (no ```html blocks).
 
     ---
-    ### INPUT DATA:
+    ### INPUT TELEMETRY & DATA:
     {summary_telemetry}
 
     {report_data}
     ---
 
-    Format the final output STRICTLY as raw HTML...
-    (Keep your existing HTML design instructions here)
+    ### OPERATIONAL CONTRACT & RULES:
+    1. SPREAD CANDIDATE MANDATE:
+       Extract every ticker identified under 'TOP OPTIONS SPREAD STRATEGY CANDIDATES' in the telemetry (e.g., HOOD, IBKR, LABU). 
+       You MUST detail their specific setups:
+       - Bull Call Spreads (Debit / Momentum)
+       - Bull Put Spreads (Credit / Support)
+       - Bear Put Spreads (Debit / Flush)
+       - Any Iron Condor / Neutral Range structures
 
-    Design Requirements (Inline CSS):
-    - Background: Wrap the entire email in a container with a dark gray background (#121212) and padding.
-    - Card: Create a main inner container (the "Trade Card") with a white or off-white background (#F9F9F9), dark text (#111111), rounded corners (8px), and a subtle box shadow.
-    - Typography: Use a modern sans-serif font family (Arial, Helvetica, sans-serif).
-    - Tables: When displaying data (like the High-Conviction Setups), use an HTML <table> with a dark header row, bold text, and alternating light gray rows.
-    - Highlights: Use bold text and gold (#D4AF37) or green (#2E7D32) font colors to highlight key strike prices and target zones.
+    2. ANTI-FLAT ENFORCEMENT:
+       Actionable spread setups and active breadth metrics exist in the data above. 
+       You are STRICTLY FORBIDDEN from outputting:
+       - "The engine is flat today..."
+       - "zero actionable gamma anomalies"
+       - "No options structures qualified for execution today"
+       - "None (Engine is flat)"
 
-    Follow this exact content structure inside the HTML:
+    3. HIGH-CONVICTION ADAPTATION:
+       If pure directional 'Negative Gamma' squeeze signals are absent, use the leading spread setups (HOOD, IBKR, LABU) to populate the High-Conviction table and explain why their momentum/structure qualifies them for tactical execution.
 
-    1. 🎯 THE PRECISION TRADER: DAILY ACTION PLAN (Use an H2 or H1 tag, centered, maybe with a dark background banner)
-    Write a 2-3 sentence punchy, high-energy market overview based on the data.
+    ### HTML DESIGN & STYLING SPECIFICATIONS:
+    - Container: Outer container with dark gray background (#121212) and 20px padding.
+    - Card: Inner wrapper ("Trade Card") with off-white/light gray background (#F9F9F9), dark text (#111111), border-radius of 8px, padding of 24px, and a subtle box shadow.
+    - Typography: Clean sans-serif font family (Arial, Helvetica, sans-serif) with high-contrast text.
+    - Tables: Clean HTML <table> with full width, dark slate header (#1E1E1E) with white bold text, alternating row shading (#FFFFFF and #F0F0F0), and cell padding of 10px.
+    - Accents: Use bold text and gold (#D4AF37) or deep green (#2E7D32) for key strike levels, entry triggers, and target zones.
 
-    2. 🔥 HIGH-CONVICTION SETUPS (H3 tag)
-    (If there are no actionable setups today, state: "The engine is flat today...")
-    (If there ARE setups, output a clean HTML table with these columns: Ticker, Current Price, Structural Support, Upside Target, Momentum Profile).
+    ### REPORT STRUCTURE (Follow this exact order):
 
-    3. 🛠️ THE OPTIONS PLAYBOOK (H3 tag)
-    (For each ticker, create a clean visual block with 3 actionable options strategies: Conservative, Aggressive, Ultra Aggressive. Use bullet points or styled div boxes).
+    1. 🎯 THE PRECISION TRADER: DAILY ACTION PLAN
+     - Center-aligned H2 header.
+     - 2-3 sentence executive market summary derived from the phase breadth and volatility alert count in the telemetry.
 
-    4. 🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES (H3 tag)
-    (Include our strict rules: Position Sizing (max 10%), Time Horizon (1-4 days), Take Profit (50-70%), Stop Loss (15-30%)).
+    2. 🔥 HIGH-CONVICTION SETUPS
+     - H3 header.
+     - HTML table containing the primary candidates (HOOD, IBKR, LABU) with columns:
+       Ticker | Strategy / Focus | Spot / Close | Key Pivot / Level | Technical Context
 
-    5. 📉 CHARTING WATCHLIST (H3 tag)
-    (Comma-separated list of active tickers).
+    3. 🛠️ THE OPTIONS PLAYBOOK
+     - H3 header.
+     - For EACH extracted ticker, provide an individual visual block/card detailing:
+       * Strategy Type (e.g., Bull  Call Debit Spread, Bull Put Credit Spread)
+       * Setup Trigger (Price, RSI, 1M/5D momentum stats from the data)
+       * Execution Plan: Define a realistic 2-strike bracket (Long Strike / Short Strike) and target expiry window (1-4 DTE or weekly).
+
+    4. 🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES
+     - H3 header.
+     - Standard execution guardrails:
+       * Position Sizing: Max 10% portfolio capital per trade setup.
+       * Time Horizon: 1-4 days tactical execution window.
+       * Profit Target: Systematic scale-out at 50% - 70% return on risk/premium.
+       q* Stop Loss Trigger: Hard deck cutoff at 15% - 30% drawdown.
+
+    5. 📉 CHARTING WATCHLIST
+     - H3 header.
+     - Bulleted or comma-separated list of the active tickers with their critical structural ceiling and floor levels.
     """
 
     # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
