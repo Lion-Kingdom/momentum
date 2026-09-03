@@ -80,21 +80,38 @@ def generate_gemini_report(df):
     report_data = filtered_df.to_csv(index=False)
 
     prompt = f"""
-    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the options CSV data and the daily momentum telemetry provided below.
+    ### SPECIFICATION CONTRACT (Behavior-Driven Reporting)
 
-    --- RAW GEX & OHLCV CSV DATA ---
-    {report_data}
+    # SCENARIO 1: Directional Gamma Squeezes Present
+    GIVEN the input dataset contains tickers with 'Negative Gamma' or 'Gamma Squeeze'
+    WHEN generating '🔥 HIGH-CON VICTION SETUPS'
+    THEN list each ticker, its Spot Price, Call Wall, and Target Strike.
 
-    --- DAILY MOMENTUM & SPREAD TELEMETRY ---
+    # SCENARIO 2: Spread Candidates Present
+    GIVEN the input dataset contains 'TOP OPTIONS SPREAD STRATEGY CANDIDATES' (Bull Call, Bull Put, Bear Put, Bear Call, Iron Condor)
+    WHEN generating '🛠️ THE OPTIONS PLAYBOOK'
+    THEN extract every identified candidate (e.g. HOOD, IBKR, LABU), state its exact Strategy, Price, RSI, and performance metric, and define a practical 2-strike bracket.
+
+    # SCENARIO 3: Negative Fallback Guardrail
+    GIVEN the input dataset has AT LEAST ONE ticker in Scenario 1 OR Scenario 2
+    WHEN generating any section of the report
+    THEN DO NOT write "The engine is flat", "zero actionable signals", or "No options structures qualified".
+    ONLY output "The engine is flat" IF AND ONLY IF both Scenario 1 and Scenario 2 contain zero tickers.
+
+    # SCENARIO 4: Watchlist Sync
+    GIVEN all tickers extracted in Scenario 1 and Scenario 2
+    WHEN generating '📉 CHARTING WATCHLIST'
+    THEN list each extracted ticker and its primary key level.
+
+    ---
+    ### INPUT DATA:
     {summary_telemetry}
 
-    CRITICAL RULES:
-    1. NEVER declare the engine flat if ANY candidates appear in either the CSV or the Telemetry (e.g., HOOD, IBKR, LABU, Bull Call Spreads, Bull Put Spreads, or Bear Put Spreads).
-    2. If there are no directional Gamma Squeezes, pivot to '🛠️ THE OPTIONS PLAYBOOK' and present the Spread Strategy Candidates (Bull Call, Bull Put, Bear Put, Iron Condors) with their tickers, prices, and phase/RSI context.
-    3. Build an HTML table for '🔥 HIGH-CONVICTION SETUPS & ACTIVE SPREADS' showing Ticker, Strategy/Regime, Price, and Key Metrics.
-    4. Output raw HTML only.
-    
-    # ... rest of your API call and return statement ...
+    {report_data}
+    ---
+
+    Format the final response strictly as raw HTML matching the established card design.
+    """
 
     Format the final output STRICTLY as raw HTML...
     (Keep your existing HTML design instructions here)
