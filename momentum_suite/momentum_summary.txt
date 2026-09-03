@@ -1,23 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 83
-Volatility Alerts: 47
+Total Tickers Scanned: 103
+Volatility Alerts: 35
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 53
- - Regaining: 20
- - Consolidating: 7
- - Pullback_Reset: 3
+ - Strong_Expansion: 59
+ - Consolidating: 20
+ - Regaining: 14
+ - Pullback_Reset: 8
+ - Losing_Momentum_Flush: 1
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: PSX | Price: $256.09 | 1M: 25.04% | RSI: 77.1
+   ➤ Ticker: HOOD | Price: $123.93 | 1M: 33.55% | RSI: 68.5
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DRAM | Price: $56.21 | 5D: -0.32% | RSI: 50.8
+   ➤ Ticker: GS | Price: $1032.69 | 5D: -0.3% | RSI: 50.6
+
+🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
+   ➤ Ticker: MPC | Price: $391.5 | 1D: 1.16% | RSI: 78.9
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: LABU | Price: $303.27 | 5D: -8.44% | RSI: 53.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
