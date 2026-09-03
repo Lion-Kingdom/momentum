@@ -151,7 +151,7 @@ def send_email_report(report_content):
     
     for recipient in recipients:
         msg = MIMEMultipart()
-        msg['From'] = sender
+        msg['From'] = f'"Leon EL Cee" <{sender}>'
         msg['To'] = recipient
         msg['Subject'] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
         msg.attach(MIMEText(report_content, 'html'))
