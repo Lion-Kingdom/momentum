@@ -60,9 +60,11 @@ def generate_gemini_report(df):
 
     # 1. FILTER FIRST: Only keep rows that are actual high-conviction squeezes or negative gamma setups
     # (Adjust these column names to match whatever exact flags your engine writes to the CSV)
+    # Search for the target phrases inside both the Momentum_Signal and Market_Regime columns
     filtered_df = df[
-        df['Signal_Type'].str.contains('Gamma Squeeze|Negative Gamma|Breakout', case=False, na=False)
-    ]
+        df['Momentum_Signal'].str.contains('Gamma Squeeze|Breakout', case=False, na=False) |
+        df['Market_Regime'].str.contains('Negative Gamma', case=False, na=False)
+        ]
     
     # Fallback: if the filter is too tight and returns empty, pass the head so it doesn't crash
     if filtered_df.empty:
