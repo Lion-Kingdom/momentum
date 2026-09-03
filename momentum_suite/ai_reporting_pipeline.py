@@ -52,11 +52,21 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
-    """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
+   """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
     
-    # FIX: Use to_csv() so the model gets clean, comma-delimited key-value data it can easily parse
-    report_data = df.to_csv(index=False)
+    # 1. FILTER FIRST: Only keep rows that are actual high-conviction squeezes or negative gamma setups
+    # (Adjust these column names to match whatever exact flags your engine writes to the CSV)
+    filtered_df = df[
+        df['Signal_Type'].str.contains('Gamma Squeeze|Negative Gamma|Breakout', case=False, na=False)
+    ]
+    
+    # Fallback: if the filter is too tight and returns empty, pass the head so it doesn't crash
+    if filtered_df.empty:
+        filtered_df = df.head(15)
+
+    # 2. Convert ONLY the filtered rows to CSV
+    report_data = filtered_df.to_csv(index=False)
     
     prompt = f"""
     You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data.
