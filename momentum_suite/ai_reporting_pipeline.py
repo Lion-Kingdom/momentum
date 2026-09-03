@@ -110,9 +110,6 @@ def generate_gemini_report(df):
     {report_data}
     ---
 
-    Format the final response strictly as raw HTML matching the established card design.
-    """
-
     Format the final output STRICTLY as raw HTML...
     (Keep your existing HTML design instructions here)
 
