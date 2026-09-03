@@ -1,14 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 84
-Volatility Alerts: 48
+Total Tickers Scanned: 83
+Volatility Alerts: 47
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 53
  - Regaining: 20
  - Consolidating: 7
  - Pullback_Reset: 3
- - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
@@ -19,9 +18,6 @@ Volatility Alerts: 48
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
    ➤ Ticker: DRAM | Price: $56.21 | 5D: -0.32% | RSI: 50.8
-
-🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: APH | Price: $160.08 | 1D: 101.93% | RSI: 89.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
