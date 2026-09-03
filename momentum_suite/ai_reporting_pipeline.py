@@ -55,35 +55,46 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
-    """ Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
+    """Passes filtered Gamma data and raw momentum telemetry to Gemini."""
     print("Generating Gemini Deep Dive Report...")
 
-    # 1. FILTER FIRST: Only keep rows that are actual high-conviction squeezes or negative gamma setups
-       # Pass Squeezes AND Spread Strategies to the AI
+    # 1. Read the summary text file if it exists
+    summary_telemetry = ""
+    try:
+        with open("momentum_summary.txt", "r") as f:
+            summary_telemetry = f.read()
+    except Exception as e:
+        print(f"Could not read momentum_summary.txt: {e}")
+
+    # 2. Filter DF across Signal, Regime, Strategy, or pull top active rows
     filtered_df = df[
-        df['Momentum_Signal'].str.contains('Gamma Squeeze|Breakout', case=False, na=False) |
-        df['Market_Regime'].str.contains('Negative Gamma', case=False, na=False) |
-        df['Confirmed_Strategy'].str.contains('Squeeze|Spread|Condor', case=False, na=False)
+        df['Momentum_Signal'].astype(str).str.contains('Gamma Squeeze|Breakout', case=False, na=False) |
+        df['Market_Regime'].astype(str).str.contains('Negative Gamma', case=False, na=False) |
+        df['Confirmed_Strategy'].astype(str).str.contains('Squeeze|Spread|Condor', case=False, na=False)
     ]
-
     
-    # Fallback: if the filter is too tight and returns empty, pass the head so it doesn't crash
+    # If the filter yields no rows, fall back to the last 20 rows rather than passing nothing
     if filtered_df.empty:
-        filtered_df = df.head(15)
+        filtered_df = df.tail(20)
 
-    # 2. Convert ONLY the filtered rows to CSV
     report_data = filtered_df.to_csv(index=False)
-    
+
     prompt = f"""
-    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options and OHLCV CSV data.
+    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the options CSV data and the daily momentum telemetry provided below.
 
-    CRITICAL SCREENING RULES:
-    1. The Gamma Squeeze: Extract any ticker where the regime is Negative Gamma or explicitly labeled as a Gamma Squeeze. Feature these in the 'High-Conviction Setups' section.
-    2. The Premium Collection (Spreads): If the data contains Credit Spreads, Debit Spreads, or Iron Condors (e.g., Bull Put, Bear Call), you MUST create a section titled '🛠️ TACTICAL SPREAD SETUPS'. List the tickers, their strikes/walls, and the strategy.
-    3. NEVER say the engine is flat if there are spread candidates or squeezes present in the data.
-
-    Here is the live telemetry and OHLCV data:
+    --- RAW GEX & OHLCV CSV DATA ---
     {report_data}
+
+    --- DAILY MOMENTUM & SPREAD TELEMETRY ---
+    {summary_telemetry}
+
+    CRITICAL RULES:
+    1. NEVER declare the engine flat if ANY candidates appear in either the CSV or the Telemetry (e.g., HOOD, IBKR, LABU, Bull Call Spreads, Bull Put Spreads, or Bear Put Spreads).
+    2. If there are no directional Gamma Squeezes, pivot to '🛠️ THE OPTIONS PLAYBOOK' and present the Spread Strategy Candidates (Bull Call, Bull Put, Bear Put, Iron Condors) with their tickers, prices, and phase/RSI context.
+    3. Build an HTML table for '🔥 HIGH-CONVICTION SETUPS & ACTIVE SPREADS' showing Ticker, Strategy/Regime, Price, and Key Metrics.
+    4. Output raw HTML only.
+    
+    # ... rest of your API call and return statement ...
 
     Format the final output STRICTLY as raw HTML...
     (Keep your existing HTML design instructions here)
