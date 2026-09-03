@@ -59,12 +59,13 @@ def generate_gemini_report(df):
     print("Generating Gemini Deep Dive Report...")
 
     # 1. FILTER FIRST: Only keep rows that are actual high-conviction squeezes or negative gamma setups
-    # (Adjust these column names to match whatever exact flags your engine writes to the CSV)
-    # Search for the target phrases inside both the Momentum_Signal and Market_Regime columns
+       # Pass Squeezes AND Spread Strategies to the AI
     filtered_df = df[
         df['Momentum_Signal'].str.contains('Gamma Squeeze|Breakout', case=False, na=False) |
-        df['Market_Regime'].str.contains('Negative Gamma', case=False, na=False)
-        ]
+        df['Market_Regime'].str.contains('Negative Gamma', case=False, na=False) |
+        df['Confirmed_Strategy'].str.contains('Squeeze|Spread|Condor', case=False, na=False)
+    ]
+
     
     # Fallback: if the filter is too tight and returns empty, pass the head so it doesn't crash
     if filtered_df.empty:
