@@ -112,9 +112,15 @@ def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[di
         if phase == "Consolidating" and c1m < 0.10:
             return None
 
+        # Grab intraday price and volume metrics alongside your phase filters
         return {
             "Ticker": ticker,
             "Price": round(curr_p, 2),
+            "Open": round(float(df["Open"].iloc[-1]), 2),
+            "High": round(float(df["High"].iloc[-1]), 2),
+            "Low": round(float(df["Low"].iloc[-1]), 2),
+            "Close": round(curr_p, 2),
+            "Volume": int(df["Volume"].iloc[-1]),
             "1D%": round(c1d * 100, 2),
             "5D%": round(c5d * 100, 2),
             "1M%": round(c1m * 100, 2),
