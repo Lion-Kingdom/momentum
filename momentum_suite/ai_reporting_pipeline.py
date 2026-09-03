@@ -52,7 +52,7 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
-   """Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
+    """ Passes the filtered Gamma data to Gemini to generate a Deep Dive Market Report."""
     print("Generating Gemini Deep Dive Report...")
     
     # 1. FILTER FIRST: Only keep rows that are actual high-conviction squeezes or negative gamma setups
