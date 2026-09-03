@@ -75,18 +75,19 @@ def generate_gemini_report(df):
     report_data = filtered_df.to_csv(index=False)
     
     prompt = f"""
-    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options CSV data.
-    
-    CRITICAL SCREENING RULES:
-    You MUST prioritize and extract any ticker, especially ETFs and Indexes (like SPX, XSP, NDX, RUT), that meet the following criteria:
-    1. The Gamma Squeeze: If the row explicitly states 'High-Conviction Gamma Squeeze' or 'Negative Gamma', it MUST be featured in the 'High-Conviction Setups' section. Do not output a flat day if this condition exists.
-    2. The 'Before It Happens' Setup: Analyze the OHLCV data against the Call Wall. If a ticker is operating in 'Negative Gamma' and the 'Close' price is within 1.5% of the 'Call_Wall_Ceiling', flag it as 'Approaching Squeeze Trigger'.
+    You are the lead quantitative analyst for 'The Precision Trader'. Analyze the provided options and OHLCV CSV data.
 
-    Here is the daily filtered data:
+    CRITICAL SCREENING RULES:
+    1. The Gamma Squeeze: Extract any ticker where the regime is Negative Gamma or explicitly labeled as a Gamma Squeeze. Feature these in the 'High-Conviction Setups' section.
+    2. The Premium Collection (Spreads): If the data contains Credit Spreads, Debit Spreads, or Iron Condors (e.g., Bull Put, Bear Call), you MUST create a section titled '🛠️ TACTICAL SPREAD SETUPS'. List the tickers, their strikes/walls, and the strategy.
+    3. NEVER say the engine is flat if there are spread candidates or squeezes present in the data.
+
+    Here is the live telemetry and OHLCV data:
     {report_data}
 
-    Format the final output STRICTLY as raw HTML. DO NOT wrap the output in markdown code blocks (e.g., no ```html). Just output the raw HTML tags. 
-    
+    Format the final output STRICTLY as raw HTML...
+    (Keep your existing HTML design instructions here)
+
     Design Requirements (Inline CSS):
     - Background: Wrap the entire email in a container with a dark gray background (#121212) and padding.
     - Card: Create a main inner container (the "Trade Card") with a white or off-white background (#F9F9F9), dark text (#111111), rounded corners (8px), and a subtle box shadow.
