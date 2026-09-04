@@ -315,8 +315,8 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
         print("=" * 60)
 
         # --- NEW CODE: PUSH TO SHEETS AND SEND EMAIL ---
-        export_gex_to_sheets(master_df)
-        send_email_gex_report(master_df)
+        # export_gex_to_sheets(master_df)
+        # send_email_gex_report(master_df)
 
 
 if __name__ == "__main__":
