@@ -34,9 +34,20 @@ def classify_actionable_setups(df):
         put_wall = row['Put_Wall_Floor']
         call_wall = row['Call_Wall_Ceiling']
 
-        tag = "No Clear Setup"
+        # 1. FALLBACK: Catch "Everything Else" & High Conviction Outliers!
+        momentum = str(row.get('Momentum_Signal', ''))
+        regime = str(row.get('Market_Regime', ''))
+        
+        if "High-Conviction" in regime or "High-Conviction" in momentum:
+            tag = f"🔥 HIGH CONVICTION OUTLIER: {regime if 'High-Conviction' in regime else momentum}"
+        elif regime and regime != 'nan':
+            tag = f"QUANT SIGNAL: {regime}"
+        elif momentum and momentum != 'nan':
+            tag = f"QUANT SIGNAL: {momentum}"
+        else:
+            tag = "MOMENTUM PLAY"
 
-        # 0 DTE DAY TRADE LOGIC (Indices Only)
+        # 2. 0 DTE DAY TRADE LOGIC (Overwrites fallback only if perfect match)
         if t in zero_dte_tickers:
             if l > (put_wall * 1.005) and h < (call_wall * 0.995):
                 tag = "0 DTE RANGE CHOP (Sell Iron Condor)"
@@ -49,7 +60,7 @@ def classify_actionable_setups(df):
             elif c <= put_wall:
                 tag = "0 DTE FLOOR FLUSH (Buy Put Debit Spread)"
 
-        # 4-7 DAY SWING LOGIC (Everything Else)
+        # 3. 4-7 DAY SWING LOGIC (Overwrites fallback only if perfect match)
         else:
             if l <= (put_wall * 1.015) and c > put_wall and c > o:
                 tag = "SWING: BULL BOUNCE (Sell Bull Put Spread)"
@@ -65,7 +76,9 @@ def classify_actionable_setups(df):
         strategy_tags.append(tag)
 
     df['Actionable_Strategy'] = strategy_tags
-    return df[df['Actionable_Strategy'] != "No Clear Setup"]
+    
+    # CRITICAL: We return ALL rows. Nothing gets deleted!
+    return df
     
 def export_gex_to_sheets(gex_dataframe):
     """Pushes the fully enriched dataframe directly to a Google Sheet."""
@@ -140,11 +153,9 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
-    """Generates the final HTML report, bypassing AI if the market is flat."""
-    print("Classifying Setups via V2 Python Logic...")
+    """Generates the final HTML report, bypassing AI if the market is truly flat."""
     
-      
-    # 1. THE FLAT MARKET BYPASS
+    # THE FLAT MARKET BYPASS (Only triggers if the scanner itself found 0 tickers)
     if df.empty:
         print("Market is flat. No actionable setups found. Bypassing AI API.")
         return """
@@ -159,9 +170,9 @@ def generate_gemini_report(df):
         </div>
         """
 
-    # 3. IF WE HAVE SETUPS, PREP THE DATA FOR GEMINI
+    # IF WE HAVE SETUPS, PREP THE DATA FOR GEMINI
     report_data = df.to_csv(index=False)
-    
+
     # Load Telemetry for the Breadth Summary
     summary_telemetry = ""
     candidate_paths = [
@@ -173,9 +184,9 @@ def generate_gemini_report(df):
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as f:
                 summary_telemetry = f.read().strip()
-            print(f"FOUND summary telemetry at: {path}")
             break
-    # 4. THE V2 SIMPLIFIED AI PROMPT
+            
+        # 4. THE V2 SIMPLIFIED AI PROMPT
     prompt = f"""
     You are the quantitative trading analyst for 'The Precision Trader'. 
     Take the Pre-Classified Python data below and format it into our daily HTML report.
