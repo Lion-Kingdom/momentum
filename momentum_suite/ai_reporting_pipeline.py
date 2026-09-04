@@ -82,73 +82,70 @@ def generate_gemini_report(df):
     print(f"DEBUG: summary_telemetry length: {len(summary_telemetry)}")
 
     prompt = f"""
-    You are the lead quantitative trading analyst for 'The Precision Trader'. 
-    Evaluate the provided input telemetry and CSV market data to generate our daily intelligence report.
-    Output strictly raw HTML code without markdown fences (no ```html blocks).
+    You are the quantitative trading analyst for 'The Precision Trader'. 
+    Evaluate the live input telemetry and CSV market data below.
+    You MUST derive all tickers, prices, and metrics strictly from the input data provided. 
+    DO NOT hallucinate ticker names, historical prices, or default values.
 
     ---
-    ### INPUT TELEMETRY & DATA:
+    ### RAW INPUT DATA:
     {summary_telemetry}
 
     {report_data}
     ---
 
-    ### OPERATIONAL CONTRACT & RULES:
-    1. SPREAD CANDIDATE MANDATE:
-       Extract every ticker identified under 'TOP OPTIONS SPREAD STRATEGY CANDIDATES' in the telemetry (e.g., HOOD, IBKR, LABU). 
-       You MUST detail their specific setups:
-       - Bull Call Spreads (Debit / Momentum)
-       - Bull Put Spreads (Credit / Support)
-       - Bear Put Spreads (Debit / Flush)
-       - Any Iron Condor / Neutral Range structures
+    ### OPERATIONAL CONTRACT & SELECTION HIERARCHY:
 
-    2. ANTI-FLAT ENFORCEMENT:
-       Actionable spread setups and active breadth metrics exist in the data above. 
-       You are STRICTLY FORBIDDEN from outputting:
-       - "The engine is flat today..."
-       - "zero actionable gamma anomalies"
-       - "No options structures qualified for execution today"
-       - "None (Engine is flat)"
+    1. STRICT DATA BINDING:
+       - Every ticker, spot price, RSI, and percentage change used in the report MUST match the input data exactly.
+       - If a ticker is listed at $124.72, use $124.72. Construct all option strike brackets within ±2% to 5% of that actual spot price.
 
-    3. HIGH-CONVICTION ADAPTATION:
-       If pure directional 'Negative Gamma' squeeze signals are absent, use the leading spread setups (HOOD, IBKR, LABU) to populate the High-Conviction table and explain why their momentum/structure qualifies them for tactical execution.
+    2. TIERED SETUP SELECTION:
+       - PRIMARY (High-Conviction Directional): If any ticker has an explicit 'Negative Gamma' regime or 'Gamma Squeeze', feature it in Section 2.
+       - SECONDARY (Strong Expansion Fallback): If zero pure Gamma Squeezes exist, DO NOT report the engine as flat. Inspect the phase breadth (e.g., Strong_Expansion pool) or the spread candidates. Select the top relative strength leaders and elevate them to the High-Conviction table with their key support/resistance levels.
+       - TERTIARY (Tactical Options Spreads): You MUST always provide credit and debit spread plays under Section 3:
+         * Bullish Bias: Bull Put Credit Spread (Support defense) or Bull Call Debit Spread.
+         * Bearish Bias: Bear Call Credit Spread (Resistance ceiling) or Bear Put Debit Spread.
+         * Neutral / Sideways: Iron Condor or Range-Bound Credit Spread.
 
-    ### HTML DESIGN & STYLING SPECIFICATIONS:
-    - Container: Outer container with dark gray background (#121212) and 20px padding.
-    - Card: Inner wrapper ("Trade Card") with off-white/light gray background (#F9F9F9), dark text (#111111), border-radius of 8px, padding of 24px, and a subtle box shadow.
-    - Typography: Clean sans-serif font family (Arial, Helvetica, sans-serif) with high-contrast text.
-    - Tables: Clean HTML <table> with full width, dark slate header (#1E1E1E) with white bold text, alternating row shading (#FFFFFF and #F0F0F0), and cell padding of 10px.
-    - Accents: Use bold text and gold (#D4AF37) or deep green (#2E7D32) for key strike levels, entry triggers, and target zones.
+    3. FORBIDDEN OUTPUTS:
+       - NEVER write "The engine is flat", "zero actionable signals", or "No options structures qualified". The market always offers a directional spread or a premium-selling setup across the scanned universe.
 
-    ### REPORT STRUCTURE (Follow this exact order):
+    ---
+    ### HTML DESIGN & STYLING:
+    - Wrapper: Outer dark container (#121212) with 20px padding.
+    - Card: Inner container (#F9F9F9), dark text (#111111), 8px border-radius, 24px padding, subtle drop shadow.
+    - Tables: Full width <table>, dark slate header (#1E1E1E) with bold white text, alternating rows (#FFFFFF and #F0F0F0), cell padding 10px.
+    - Highlights: Gold (#D4AF37) or deep green (#2E7D32) for strike levels and entry zones.
+
+    ---
+    ### REPORT STRUCTURE:
 
     1. 🎯 THE PRECISION TRADER: DAILY ACTION PLAN
-     - Center-aligned H2 header.
-     - 2-3 sentence executive market summary derived from the phase breadth and volatility alert count in the telemetry.
+       - H2 header, centered.
+       - Executive summary breaking down active breadth (total scanned, count of Strong_Expansion vs Pullback, volatility alerts) and defining today's structural trading posture.
 
     2. 🔥 HIGH-CONVICTION SETUPS
-     - H3 header.
-     - HTML table containing the primary candidates (HOOD, IBKR, LABU) with columns:
-       Ticker | Strategy / Focus | Spot / Close | Key Pivot / Level | Technical Context
+       - H3 header.
+       - HTML Table with columns:
+         Ticker | Regime / Phase | Spot Price | Primary Structural Level | Conviction Rationale
+       - Populated with Tier 1 squeezes, or Tier 2 expansion leaders if Tier 1 is absent.
 
-    3. 🛠️ THE OPTIONS PLAYBOOK
-     - H3 header.
-     - For EACH extracted ticker, provide an individual visual block/card detailing:
-       * Strategy Type (e.g., Bull  Call Debit Spread, Bull Put Credit Spread)
-       * Setup Trigger (Price, RSI, 1M/5D momentum stats from the data)
-       * Execution Plan: Define a realistic 2-strike bracket (Long Strike / Short Strike) and target expiry window (1-4 DTE or weekly).
+    3. 🛠️ THE OPTIONS PLAYBOOK (ALWAYS POPULATED)
+       - H3 header.
+       - Create individual cards/blocks for at least 3 distinct spread candidates from the data:
+         * Card 1: Bullish Spread (e.g., Bull Call Debit or Bull Put Credit)
+         * Card 2: Bearish / Hedge Spread (e.g., Bear Call Credit or Bear Put Debit)
+         * Card 3: Neutral / Volatility Harvest (Iron Condor or defined credit wing)
+       - For each, provide: Spot Price, RSI/Momentum context, Long Strike, Short Strike, Expiry Horizon (1-4 DTE), and Net Target Credit/Debit.
 
     4. 🛡️ PRECISION RISK MANAGEMENT & EXECUTION RULES
-     - H3 header.
-     - Standard execution guardrails:
-       * Position Sizing: Max 10% portfolio capital per trade setup.
-       * Time Horizon: 1-4 days tactical execution window.
-       * Profit Target: Systematic scale-out at 50% - 70% return on risk/premium.
-       q* Stop Loss Trigger: Hard deck cutoff at 15% - 30% drawdown.
+       - H3 header.
+       - Position Sizing (max 10%), Time Horizon (1-4 days), Profit Target (50%-70%), Stop Loss (15%-30%).
 
     5. 📉 CHARTING WATCHLIST
-     - H3 header.
-     - Bulleted or comma-separated list of the active tickers with their critical structural ceiling and floor levels.
+       - H3 header.
+       - Bulleted list of active candidate tickers with their critical structural ceilings and floors.
     """
 
     # --- BULLETPROOF API CALL WITH AUTO-RETRY ---
