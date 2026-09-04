@@ -180,32 +180,34 @@ def generate_gemini_report(df):
     
     # 5. CALL THE API
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
-    try:
-        response = client.models.generate_content(
-            model='gemini-3.6-flash',
-            contents=prompt,
-        )
-        return response.text
-    except Exception as e:
-        print(f"Error calling Gemini: {e}")
-        return f"<h2>Error generating AI report: {e}</h2>"
-        # Clean up any stray "None" or rogue tags at the top
-        clean_html = response.text.strip()
-        if clean_html.startswith("None"):
-            clean_html = clean_html[4:].strip()
+    
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model='gemini-3.6-flash',
+                contents=prompt,
+            )
+            
+            # Clean up any stray "None" or rogue tags at the top
+            clean_html = response.text.strip()
+            if clean_html.startswith("None"):
+                clean_html = clean_html[4:].strip()
             return clean_html
-    except Exception as e:
-        error_msg = str(e)
-        if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
-            if attempt < max_retries - 1:
-                print(f"⚠️ Google API busy. Retrying in 30 seconds... (Attempt {attempt + 1}/{max_retries})")
-                time.sleep(30)
+            
+        except Exception as e:
+            error_msg = str(e)
+            if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
+                if attempt < max_retries - 1:
+                    print(f"⚠️ Google API busy. Retrying in 30 seconds... (Attempt {attempt + 1}/{max_retries})")
+                    time.sleep(30)
+                else:
+                    print("❌ Max retries reached. Google AI servers are currently down.")
+                    return f"<h2>Error generating AI report: API unavailable.</h2>"
             else:
-                print("❌ Max retries reached. Google AI servers are currently down.")
-                raise e
-            else:
-                raise e
-
+                print(f"Error calling Gemini: {e}")
+                return f"<h2>Error generating AI report: {e}</h2>"
+    
 
 # --- 3. Email Delivery ---
 def send_email_report(report_content):
