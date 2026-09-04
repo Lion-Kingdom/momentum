@@ -113,7 +113,8 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
         print("❌ Error: Momentum CSV must contain 'Ticker' and 'Momentum_Signal' columns.")
         return
 
-    active_targets = df_momentum[df_momentum["Momentum_Signal"].isin(["Bullish", "Bearish", "Breakout"])]
+    # Keep the rows that have ANY valid string in the Momentum_Signal column
+    active_targets = df_momentum[df_momentum["Momentum_Signal"].notna()]
 
     if active_targets.empty:
         print("⚠️ No active momentum signals found to process in GEX engine.")
