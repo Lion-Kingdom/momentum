@@ -1,1 +1,1 @@
-Timestamp,Ticker,Timeframe,Momentum_Signal,Market_Regime,Spot_Price,Target_Expiry,Actual_DTE,Call_Wall_Ceiling,Put_Wall_Floor,Gamma_Flip,Confirmed_Strategy,Target_Strikes,Close,Volume,Open,High,Low
+Timestamp,Ticker,Timeframe,Momentum_Signal,Market_Regime,Spot_Price,Target_Expiry,Actual_DTE,Call_Wall_Ceiling,Put_Wall_Floor,Gamma_Flip,Confirmed_Strategy,Target_Strikes,Close,Volume,Open,High,Low,Actionable_Strategy
