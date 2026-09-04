@@ -189,20 +189,20 @@ def generate_gemini_report(df):
     except Exception as e:
         print(f"Error calling Gemini: {e}")
         return f"<h2>Error generating AI report: {e}</h2>"
-            # Clean up any stray "None" or rogue tags at the top
-            clean_html = response.text.strip()
-            if clean_html.startswith("None"):
-                clean_html = clean_html[4:].strip()
+        # Clean up any stray "None" or rogue tags at the top
+        clean_html = response.text.strip()
+        if clean_html.startswith("None"):
+            clean_html = clean_html[4:].strip()
             return clean_html
-        except Exception as e:
-            error_msg = str(e)
-            if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
-                if attempt < max_retries - 1:
-                    print(f"⚠️ Google API busy. Retrying in 30 seconds... (Attempt {attempt + 1}/{max_retries})")
-                    time.sleep(30)
-                else:
-                    print("❌ Max retries reached. Google AI servers are currently down.")
-                    raise e
+    except Exception as e:
+        error_msg = str(e)
+        if "503" in error_msg or "429" in error_msg or "UNAVAILABLE" in error_msg:
+            if attempt < max_retries - 1:
+                print(f"⚠️ Google API busy. Retrying in 30 seconds... (Attempt {attempt + 1}/{max_retries})")
+                time.sleep(30)
+            else:
+                print("❌ Max retries reached. Google AI servers are currently down.")
+                raise e
             else:
                 raise e
 
