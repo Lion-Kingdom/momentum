@@ -61,6 +61,7 @@ def classify_actionable_setups(df):
 
     df['Actionable_Strategy'] = strategy_tags
     return df[df['Actionable_Strategy'] != "No Clear Setup"]
+
 # --- 1. yfinance OHLCV Extraction & Data Pruning ---
 def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     """Reads the master log, fetches latest OHLCV data, and enforces a 5-day retention policy."""
@@ -99,22 +100,24 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     cutoff = pd.Timestamp.now() - pd.Timedelta(days=5)
     df = df[df['Timestamp'] >= cutoff]
     
-    # Save the updated and pruned dataframe
-    df.to_csv(master_csv_path, index=False)
-    print("OHLCV data appended and old records pruned successfully.")
-    return df
+    # NEW: Classify the setups BEFORE saving the CSV so the column is permanently added
+    print("Tagging strategies for master ledger...")
+    df = classify_actionable_setups(df)
 
+    # Save the updated, pruned, and classified dataframe
+    df.to_csv(master_csv_path, index=False)
+    print("OHLCV data appended, setups classified, and old records pruned successfully.")
+    
+    return df
 
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
     """Generates the final HTML report, bypassing AI if the market is flat."""
     print("Classifying Setups via V2 Python Logic...")
     
-    # 1. Run the data through our new V2 Python classifier
-    actionable_df = classify_actionable_setups(df)
-    
-    # 2. THE FLAT MARKET BYPASS
-    if actionable_df.empty:
+      
+    # 1. THE FLAT MARKET BYPASS
+    if df.empty:
         print("Market is flat. No actionable setups found. Bypassing AI API.")
         return """
         <div style="background-color: #121212; padding: 20px; font-family: Arial, sans-serif;">
@@ -129,7 +132,7 @@ def generate_gemini_report(df):
         """
 
     # 3. IF WE HAVE SETUPS, PREP THE DATA FOR GEMINI
-    report_data = actionable_df.to_csv(index=False)
+    report_data = df.to_csv(index=False)
     
     # Load Telemetry for the Breadth Summary
     summary_telemetry = ""
