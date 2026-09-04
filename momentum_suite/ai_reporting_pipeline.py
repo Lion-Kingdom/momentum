@@ -112,10 +112,10 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
         except Exception as e:
             print(f"Error fetching OHLCV for {ticker}: {e}")
 
-    # --- 5-DAY ROLLING RETENTION LOGIC ---
+    # --- 5-DAY ROLLING RETENTION LOGIC (UTC-Safe) ---
     print("Applying 5-day rolling data retention...")
-    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
-    cutoff = pd.Timestamp.now() - pd.Timedelta(days=5)
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'], errors='coerce', utc=True)
+    cutoff = pd.Timestamp.now(tz='UTC') - pd.Timedelta(days=5)
     df = df[df['Timestamp'] >= cutoff]
     
     # NEW: Classify the setups BEFORE saving the CSV
