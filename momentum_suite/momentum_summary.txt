@@ -1,27 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 97
-Volatility Alerts: 35
+Total Tickers Scanned: 65
+Volatility Alerts: 13
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 56
- - Consolidating: 22
- - Regaining: 12
- - Pullback_Reset: 5
- - Losing_Momentum_Flush: 2
+ - Strong_Expansion: 29
+ - Consolidating: 23
+ - Pullback_Reset: 8
+ - Regaining: 3
+ - Exhausted_Trap: 1
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: HOOD | Price: $124.72 | 1M: 34.4% | RSI: 68.9
+   ➤ Ticker: SNDK | Price: $1688.06 | 1M: 34.12% | RSI: 59.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: IBKR | Price: $92.95 | 5D: -3.64% | RSI: 51.0
+   ➤ Ticker: BEN | Price: $34.63 | 5D: -0.06% | RSI: 56.4
+
+🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
+   ➤ Ticker: MPC | Price: $389.64 | 1D: 0.5% | RSI: 78.5
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: LABU | Price: $305.86 | 5D: -7.66% | RSI: 54.1
+   ➤ Ticker: CRWD | Price: $211.84 | 5D: -3.0% | RSI: 52.6
 
 ==================================================
 🔗 Google Sheet Access Link: 
