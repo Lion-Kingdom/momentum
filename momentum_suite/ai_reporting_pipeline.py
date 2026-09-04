@@ -1,13 +1,18 @@
 import pandas as pd
 import numpy as np
 import yfinance as yf
-from google import genai
 import smtplib
 import os
 import time
+import json
+import gspread
+from google import genai
+from oauth2client.service_account import ServiceAccountCredentials
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+
+spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
 
 # ==========================================
 # 1. PASTE THE CLASSIFIER HERE
@@ -61,6 +66,26 @@ def classify_actionable_setups(df):
 
     df['Actionable_Strategy'] = strategy_tags
     return df[df['Actionable_Strategy'] != "No Clear Setup"]
+    
+def export_gex_to_sheets(gex_dataframe):
+    """Pushes the fully enriched dataframe directly to a Google Sheet."""
+    try:
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        creds_dict = json.loads(os.environ["GCP_SA_KEY"])
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+        client = gspread.authorize(creds)
+        
+        sheet = client.open_by_key(spreadsheet_id).worksheet("GEX_Report")
+        sheet.clear()
+        
+        # We fill NaNs with empty strings to prevent Google Sheets from crashing
+        clean_df = gex_dataframe.fillna("")
+        sheet.update([clean_df.columns.values.tolist()] + clean_df.values.tolist())
+        
+        print("✅ Enriched V2 GEX Master Log successfully pushed to Google Sheets!")
+    except Exception as e:
+        print(f"❌ Failed to push to Google Sheets: {e}")
+
 
 # --- 1. yfinance OHLCV Extraction & Data Pruning ---
 def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
@@ -100,7 +125,7 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     cutoff = pd.Timestamp.now() - pd.Timedelta(days=5)
     df = df[df['Timestamp'] >= cutoff]
     
-    # NEW: Classify the setups BEFORE saving the CSV so the column is permanently added
+    # NEW: Classify the setups BEFORE saving the CSV
     print("Tagging strategies for master ledger...")
     df = classify_actionable_setups(df)
 
@@ -108,8 +133,11 @@ def append_ohlcv_data(master_csv_path="unified_gex_momentum_master_log.csv"):
     df.to_csv(master_csv_path, index=False)
     print("OHLCV data appended, setups classified, and old records pruned successfully.")
     
+    # 🚀 NEW: Push the fully enriched dataframe to Google Sheets!
+    export_gex_to_sheets(df)
+    
     return df
-
+    
 # --- 2. Gemini API Reporting ---
 def generate_gemini_report(df):
     """Generates the final HTML report, bypassing AI if the market is flat."""
