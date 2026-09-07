@@ -1,105 +1,107 @@
-Timestamp,Ticker,Sector,Conviction,Timeframe,Momentum_Signal,Market_Regime,Spot_Price,Target_Expiry,Actual_DTE,Call_Wall_Ceiling,Put_Wall_Floor,Gamma_Flip,Confirmed_Strategy,Target_Strikes
-2026-09-07 22:47:34,ADM,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,84.61,2026-09-18,11,85.0,77.5,84.61,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:34,ADM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,84.61,2026-10-16,39,90.0,75.0,84.61,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:16,APA,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,42.77,2026-09-11,4,45.0,38.0,40.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:16,APA,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,42.77,2026-10-02,25,47.0,44.0,44.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:02,ARKK,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,86.22,2026-09-11,4,90.0,82.0,83.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:26,BBY,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,90.27,2026-09-11,4,90.0,88.0,88.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:26,BBY,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,90.27,2026-10-02,25,90.0,80.0,90.27,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:29,BEN,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,34.73,2026-09-18,11,34.0,30.0,33.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:29,BEN,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,34.73,2026-10-16,39,34.0,32.0,34.73,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:25,BNY,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,164.84,2026-09-18,11,170.0,160.0,155.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:25,BNY,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,164.84,2026-10-16,39,170.0,165.0,160.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:12,CF,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,133.35,2026-09-11,4,140.0,129.0,126.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:12,CF,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,133.35,2026-10-02,25,145.0,140.0,133.35,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:09,CME,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,281.29,2026-09-11,4,295.0,270.0,275.0,Bull Put Credit Spread,Short Put: $270.00
-2026-09-07 22:47:09,CME,Moomoo Default,Standard,~28 DTE,Bullish,NEGATIVE GAMMA,281.29,2026-10-02,25,260.0,235.0,281.29,Bull Put Credit Spread,Short Put: $235.00
-2026-09-07 22:46:40,COP,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,134.26,2026-09-11,4,138.0,135.0,135.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:40,COP,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,134.26,2026-10-02,25,121.0,128.0,134.26,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:35,CVX,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,208.6,2026-09-11,4,215.0,195.0,207.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:35,CVX,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,208.6,2026-10-02,25,215.0,200.0,200.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:32,DE,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,693.53,2026-09-11,4,665.0,660.0,660.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:21,DELL,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,524.14,2026-09-11,4,500.0,420.0,500.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:27,DG,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,133.21,2026-09-11,4,131.0,125.0,127.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:27,DG,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,133.21,2026-10-02,25,120.0,112.0,133.21,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:28,DLTR,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,131.42,2026-09-11,4,134.0,122.0,133.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:28,DLTR,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,131.42,2026-10-02,25,132.0,119.0,131.42,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:28,DRAM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,59.69,2026-10-09,32,70.0,49.0,59.69,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:04,DVN,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,48.06,2026-09-11,4,48.0,47.0,47.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:04,DVN,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,48.06,2026-10-02,25,51.0,48.0,48.06,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:31,ECHO,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,89.8,2026-09-11,4,91.0,98.0,86.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:31,ECHO,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,89.8,2026-10-02,25,100.0,90.0,88.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:27,EEM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,68.7,2026-10-02,25,68.0,61.0,68.7,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:29,EFA,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,108.35,2026-09-11,4,108.0,104.0,107.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:29,EFA,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,108.35,2026-10-02,25,107.0,105.0,105.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:25,EL,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,103.86,2026-09-11,4,105.0,97.0,100.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:25,EL,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,103.86,2026-10-02,25,110.0,96.0,103.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:48:01,F,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,14.62,2026-09-11,4,14.5,14.0,14.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:48:01,F,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,14.62,2026-10-02,25,15.0,14.5,14.62,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:18,GDX,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,99.26,2026-09-11,4,99.0,92.0,98.0,Bull Put Credit Spread,Short Put: $92.00
-2026-09-07 22:46:37,GILD,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,150.995,2026-09-11,4,160.0,149.0,142.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:37,GILD,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,150.995,2026-10-02,25,157.5,142.0,145.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:32,GM,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,87.76,2026-09-11,4,90.0,82.0,85.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:32,GM,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,87.76,2026-10-02,25,90.0,80.0,83.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:13,GS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1038.61,2026-09-11,4,1070.0,970.0,1035.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:13,GS,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1038.61,2026-10-02,25,1135.0,1000.0,1038.61,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:12,GWW,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1324.49,2026-09-18,11,1360.0,1320.0,1300.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:12,GWW,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,1324.49,2026-10-16,39,1380.0,1230.0,1250.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:05,HAL,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,37.07,2026-09-11,4,38.0,36.0,36.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:05,HAL,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,37.07,2026-10-02,25,38.0,34.0,37.07,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:14,HOOD,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,122.11,2026-09-11,4,125.0,113.0,116.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:30,HPQ,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,32.64,2026-09-11,4,32.0,30.0,31.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:30,HPQ,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,32.64,2026-10-02,25,35.0,30.0,32.64,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:10,IFF,Moomoo Default,Standard,~7 DTE,Bullish,NEGATIVE GAMMA,86.35,2026-09-18,11,82.5,75.0,86.35,Bull Put Credit Spread,Short Put: $75.00
-2026-09-07 22:47:10,IFF,Moomoo Default,Standard,~28 DTE,Bullish,NEGATIVE GAMMA,86.35,2026-10-16,39,90.0,82.5,87.5,Bull Put Credit Spread,Short Put: $82.50
-2026-09-07 22:46:34,IQV,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,267.77,2026-09-18,11,280.0,250.0,260.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:34,IQV,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,267.77,2026-10-16,39,280.0,260.0,260.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:24,JBHT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,273.77,2026-09-18,11,300.0,240.0,270.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:24,JBHT,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,273.77,2026-10-16,39,330.0,270.0,280.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:33,LABU,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,303.55,2026-09-11,4,275.0,247.5,287.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:06,MPC,Moomoo Default,Standard,~7 DTE,Bearish,NEGATIVE GAMMA,388.9,2026-09-18,11,370.0,340.0,388.9,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:06,MPC,Moomoo Default,Standard,~28 DTE,Bearish,NEGATIVE GAMMA,388.9,2026-10-16,39,360.0,320.0,388.9,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:38,MRK,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,150.33,2026-09-11,4,145.0,150.0,143.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:11,MRNA,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,145.55,2026-09-11,4,155.0,80.0,140.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:20,MS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,217.72,2026-09-11,4,222.5,207.5,212.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:20,MS,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,217.72,2026-10-02,25,230.0,210.0,210.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:20,MU,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,1016.59,2026-09-11,4,1000.0,830.0,1016.59,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:20,MU,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1016.59,2026-10-02,25,1100.0,830.0,1016.59,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:13,NEM,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,128.09,2026-09-11,4,120.0,130.0,125.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:13,NEM,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,128.09,2026-10-02,25,134.0,129.0,129.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:23,NTRS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,186.63,2026-09-18,11,190.0,190.0,180.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:19,NVDA,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,230.36,2026-09-14,7,230.0,220.0,225.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:19,NVDA,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,230.36,2026-10-02,25,250.0,200.0,220.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:17,PSX,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,255.09,2026-09-11,4,257.5,252.5,240.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:15,QQQ,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,718.96,2026-09-11,4,740.0,705.0,712.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:15,QQQ,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,718.96,2026-09-30,23,740.0,705.0,705.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:41,RVTY,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,130.22,2026-09-18,11,130.0,130.0,130.22,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:41,RVTY,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,130.22,2026-10-16,39,110.0,125.0,130.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:17,SJM,Moomoo Default,Standard,~7 DTE,Bearish,POSITIVE GAMMA,126.08,2026-09-18,11,125.0,130.0,125.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:17,SJM,Moomoo Default,Standard,~28 DTE,Bearish,NEGATIVE GAMMA,126.08,2026-10-16,39,130.0,130.0,126.08,Bear Call Credit Spread,Short Call: $130.00
-2026-09-07 22:47:36,SLB,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,57.51,2026-09-11,4,59.0,54.0,55.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:36,SLB,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,57.51,2026-10-02,25,58.0,54.0,57.51,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:19,SNDK,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1740.0,2026-09-11,4,1800.0,1000.0,1650.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:19,SNDK,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1740.0,2026-09-25,18,1800.0,1200.0,1740.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:42,SOLV,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,91.69,2026-09-18,11,90.0,90.0,91.69,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:42,SOLV,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,91.69,2026-10-16,39,90.0,75.0,91.69,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:21,STT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,194.26,2026-09-18,11,165.0,180.0,185.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:21,STT,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,194.26,2026-10-16,39,190.0,190.0,185.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:26,TGT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,164.44,2026-09-11,4,165.0,160.0,160.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:26,TGT,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,164.44,2026-10-02,25,165.0,150.0,155.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:07,TMO,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,613.78,2026-09-11,4,650.0,560.0,607.5,Bull Put Credit Spread,Short Put: $560.00
-2026-09-07 22:46:39,USO,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,141.96,2026-09-16,9,148.0,122.0,141.96,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:39,USO,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,141.96,2026-10-02,25,150.0,135.0,135.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:16,VLO,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,370.72,2026-09-11,4,380.0,345.0,362.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:16,VLO,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,370.72,2026-10-02,25,405.0,375.0,370.72,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:22,VRT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,280.53,2026-09-11,4,277.5,235.0,267.5,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:22,VRT,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,280.53,2026-10-02,25,310.0,235.0,280.53,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:10,VRTX,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,546.12,2026-09-11,4,560.0,550.0,530.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:11,WBD,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,28.25,2026-09-11,4,30.0,28.0,27.0,Bull Put Credit Spread,Short Put: $28.00
-2026-09-07 22:47:30,WFC,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,89.97,2026-09-11,4,90.0,87.0,87.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:35,WMB,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,74.15,2026-09-11,4,75.0,70.0,72.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:35,WMB,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,74.15,2026-10-02,25,75.0,70.0,70.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:03,XLE,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,64.06,2026-09-14,7,66.0,65.0,64.06,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:47:22,XLK,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,187.28,2026-09-11,4,195.0,180.0,186.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:36,XOP,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,190.71,2026-09-11,4,207.5,185.0,184.0,Stand Aside (Conflicting Signals),N/A
-2026-09-07 22:46:36,XOP,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,190.71,2026-10-02,25,186.0,171.0,190.71,Stand Aside (Conflicting Signals),N/A
+Timestamp,Ticker,Sector,Conviction,Timeframe,Momentum_Signal,Market_Regime,Spot_Price,Target_Expiry,Actual_DTE,Call_Wall_Ceiling,Put_Wall_Floor,Gamma_Flip,Confirmed_Strategy,Target_Strikes,Open,High,Low,Close,Volume,Actionable_Strategy
+2026-09-07 23:00:22,ADM,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,84.61,2026-09-18,11,85.0,77.5,84.61,Stand Aside (Conflicting Signals),,83.67,85.05,83.01,84.61,2362900,QUANT SIGNAL: Breakout
+2026-09-07 23:00:22,ADM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,84.61,2026-10-16,39,90.0,75.0,84.61,Stand Aside (Conflicting Signals),,83.67,85.05,83.01,84.61,2362900,QUANT SIGNAL: Breakout
+2026-09-07 23:00:27,AES,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,14.79,2026-09-18,11,15.0,15.0,14.79,Stand Aside (Conflicting Signals),,14.79,14.81,14.78,14.79,4341100,QUANT SIGNAL: Breakout
+2026-09-07 23:00:27,AES,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,14.79,2026-10-16,39,15.0,15.0,14.79,Stand Aside (Conflicting Signals),,14.79,14.81,14.78,14.79,4341100,QUANT SIGNAL: Breakout
+2026-09-07 22:58:58,APA,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,42.77,2026-09-11,4,45.0,38.0,40.5,Stand Aside (Conflicting Signals),,43.68,43.81,42.73,42.77,4224600,QUANT SIGNAL: Neutral
+2026-09-07 22:58:58,APA,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,42.77,2026-10-02,25,47.0,44.0,44.0,Stand Aside (Conflicting Signals),,43.68,43.81,42.73,42.77,4224600,QUANT SIGNAL: Neutral
+2026-09-07 22:59:27,ARKK,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,86.22,2026-09-11,4,90.0,82.0,83.5,Stand Aside (Conflicting Signals),,85.9,86.54,85.8,86.22,3450700,QUANT SIGNAL: Neutral
+2026-09-07 22:59:09,BBY,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,90.27,2026-09-11,4,90.0,88.0,88.0,Stand Aside (Conflicting Signals),,87.48,90.82,87.13,90.27,3954700,QUANT SIGNAL: Breakout
+2026-09-07 22:59:09,BBY,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,90.27,2026-10-02,25,90.0,80.0,90.27,Stand Aside (Conflicting Signals),,87.48,90.82,87.13,90.27,3954700,QUANT SIGNAL: Breakout
+2026-09-07 22:59:12,BEN,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,34.73,2026-09-18,11,34.0,30.0,33.0,Stand Aside (Conflicting Signals),,33.43,35.1,33.43,34.73,4847200,QUANT SIGNAL: Breakout
+2026-09-07 22:59:12,BEN,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,34.73,2026-10-16,39,34.0,32.0,34.73,Stand Aside (Conflicting Signals),,33.43,35.1,33.43,34.73,4847200,QUANT SIGNAL: Breakout
+2026-09-07 23:00:14,BNY,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,164.84,2026-09-18,11,170.0,160.0,155.0,Stand Aside (Conflicting Signals),,163.58,165.84,163.58,164.84,2367100,QUANT SIGNAL: Breakout
+2026-09-07 23:00:14,BNY,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,164.84,2026-10-16,39,170.0,165.0,160.0,Stand Aside (Conflicting Signals),,163.58,165.84,163.58,164.84,2367100,QUANT SIGNAL: Breakout
+2026-09-07 22:58:54,CF,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,133.35,2026-09-11,4,140.0,129.0,126.0,Stand Aside (Conflicting Signals),,135.43,135.97,131.64,133.35,2662100,QUANT SIGNAL: Neutral
+2026-09-07 22:58:54,CF,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,133.35,2026-10-02,25,145.0,140.0,133.35,Stand Aside (Conflicting Signals),,135.43,135.97,131.64,133.35,2662100,QUANT SIGNAL: Neutral
+2026-09-07 22:59:23,COP,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,134.26,2026-09-11,4,138.0,135.0,135.0,Stand Aside (Conflicting Signals),,134.6,135.42,132.57,134.26,5496100,QUANT SIGNAL: Neutral
+2026-09-07 22:59:23,COP,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,134.26,2026-10-02,25,121.0,128.0,134.26,Stand Aside (Conflicting Signals),,134.6,135.42,132.57,134.26,5496100,QUANT SIGNAL: Neutral
+2026-09-07 22:59:26,CTVA,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,87.86,2026-09-18,11,90.0,75.0,87.86,Stand Aside (Conflicting Signals),,87.64,88.21,86.64,87.86,4274300,QUANT SIGNAL: Neutral
+2026-09-07 22:59:26,CTVA,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,87.86,2026-10-16,39,100.0,75.0,87.86,Stand Aside (Conflicting Signals),,87.64,88.21,86.64,87.86,4274300,QUANT SIGNAL: Neutral
+2026-09-07 22:59:18,CVX,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,208.6,2026-09-11,4,215.0,195.0,207.5,Stand Aside (Conflicting Signals),,209.51,209.86,207.12,208.6,5458400,QUANT SIGNAL: Neutral
+2026-09-07 22:59:18,CVX,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,208.6,2026-10-02,25,215.0,200.0,200.0,Stand Aside (Conflicting Signals),,209.51,209.86,207.12,208.6,5458400,QUANT SIGNAL: Neutral
+2026-09-07 22:59:14,DE,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,693.53,2026-09-11,4,665.0,660.0,660.0,Stand Aside (Conflicting Signals),,692.03,702.45,690.83,693.53,1053800,QUANT SIGNAL: Neutral
+2026-09-07 22:59:04,DELL,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,524.14,2026-09-11,4,500.0,420.0,500.0,Stand Aside (Conflicting Signals),,513.78,534.99,510.15,524.14,11108300,QUANT SIGNAL: Breakout
+2026-09-07 23:00:16,DG,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,133.21,2026-09-11,4,131.0,125.0,127.0,Stand Aside (Conflicting Signals),,131.81,133.63,130.77,133.21,1709600,QUANT SIGNAL: Breakout
+2026-09-07 23:00:16,DG,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,133.21,2026-10-02,25,120.0,112.0,133.21,Stand Aside (Conflicting Signals),,131.81,133.63,130.77,133.21,1709600,QUANT SIGNAL: Breakout
+2026-09-07 23:00:17,DLTR,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,131.42,2026-09-11,4,134.0,122.0,133.0,Stand Aside (Conflicting Signals),,130.9,133.06,130.88,131.42,1209900,QUANT SIGNAL: Breakout
+2026-09-07 23:00:17,DLTR,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,131.42,2026-10-02,25,132.0,119.0,131.42,Stand Aside (Conflicting Signals),,130.9,133.06,130.88,131.42,1209900,QUANT SIGNAL: Breakout
+2026-09-07 22:59:11,DRAM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,59.69,2026-10-09,32,70.0,49.0,59.69,Stand Aside (Conflicting Signals),,56.92,59.79,56.74,59.69,40806600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:30,DVN,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,48.06,2026-09-11,4,48.0,47.0,47.5,Stand Aside (Conflicting Signals),,48.4,48.44,47.45,48.06,8841700,QUANT SIGNAL: Neutral
+2026-09-07 22:59:30,DVN,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,48.06,2026-10-02,25,51.0,48.0,48.06,Stand Aside (Conflicting Signals),,48.4,48.44,47.45,48.06,8841700,QUANT SIGNAL: Neutral
+2026-09-07 23:00:20,ECHO,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,89.8,2026-09-11,4,91.0,98.0,86.0,Stand Aside (Conflicting Signals),,89.45,90.23,88.64,89.8,2433400,QUANT SIGNAL: Breakout
+2026-09-07 23:00:20,ECHO,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,89.8,2026-10-02,25,100.0,90.0,88.0,Stand Aside (Conflicting Signals),,89.45,90.23,88.64,89.8,2433400,QUANT SIGNAL: Breakout
+2026-09-07 22:59:10,EEM,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,68.7,2026-10-02,25,68.0,61.0,68.7,Stand Aside (Conflicting Signals),,67.73,68.73,67.73,68.7,22132500,QUANT SIGNAL: Breakout
+2026-09-07 23:00:18,EFA,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,108.35,2026-09-11,4,108.0,104.0,107.0,Stand Aside (Conflicting Signals),,107.85,108.58,107.85,108.35,5730300,QUANT SIGNAL: Breakout
+2026-09-07 23:00:18,EFA,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,108.35,2026-10-02,25,107.0,105.0,105.0,Stand Aside (Conflicting Signals),,107.85,108.58,107.85,108.35,5730300,QUANT SIGNAL: Breakout
+2026-09-07 22:59:07,EL,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,103.86,2026-09-11,4,105.0,97.0,100.0,Stand Aside (Conflicting Signals),,100.51,104.18,100.45,103.86,4712900,QUANT SIGNAL: Breakout
+2026-09-07 22:59:07,EL,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,103.86,2026-10-02,25,110.0,96.0,103.0,Stand Aside (Conflicting Signals),,100.51,104.18,100.45,103.86,4712900,QUANT SIGNAL: Breakout
+2026-09-07 23:00:28,F,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,14.62,2026-09-11,4,14.5,14.0,14.0,Stand Aside (Conflicting Signals),,14.38,14.64,14.3,14.62,39243000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:28,F,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,14.62,2026-10-02,25,15.0,14.5,14.62,Stand Aside (Conflicting Signals),,14.38,14.64,14.3,14.62,39243000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:00,GDX,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,99.26,2026-09-11,4,99.0,92.0,98.0,Bull Put Credit Spread,Short Put: $92.00,98.75,100.1,98.01,99.26,21521700,QUANT SIGNAL: Bullish
+2026-09-07 22:59:20,GILD,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,150.995,2026-09-11,4,160.0,149.0,142.0,Stand Aside (Conflicting Signals),,149.23,151.19,149.23,151.0,6181300,QUANT SIGNAL: Neutral
+2026-09-07 22:59:20,GILD,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,150.995,2026-10-02,25,157.5,142.0,145.0,Stand Aside (Conflicting Signals),,149.23,151.19,149.23,151.0,6181300,QUANT SIGNAL: Neutral
+2026-09-07 23:00:21,GM,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,87.76,2026-09-11,4,90.0,82.0,85.0,Stand Aside (Conflicting Signals),,86.41,87.76,85.69,87.76,5440300,QUANT SIGNAL: Breakout
+2026-09-07 23:00:21,GM,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,87.76,2026-10-02,25,90.0,80.0,83.0,Stand Aside (Conflicting Signals),,86.41,87.76,85.69,87.76,5440300,QUANT SIGNAL: Breakout
+2026-09-07 23:00:04,GS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1038.61,2026-09-11,4,1070.0,970.0,1035.0,Stand Aside (Conflicting Signals),,1031.09,1041.2,1024.63,1038.61,1429000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:04,GS,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1038.61,2026-10-02,25,1135.0,1000.0,1038.61,Stand Aside (Conflicting Signals),,1031.09,1041.2,1024.63,1038.61,1429000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:03,GWW,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1324.49,2026-09-18,11,1360.0,1320.0,1300.0,Stand Aside (Conflicting Signals),,1312.66,1330.62,1312.52,1324.49,175400,QUANT SIGNAL: Breakout
+2026-09-07 23:00:03,GWW,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,1324.49,2026-10-16,39,1380.0,1230.0,1250.0,Stand Aside (Conflicting Signals),,1312.66,1330.62,1312.52,1324.49,175400,QUANT SIGNAL: Breakout
+2026-09-07 22:59:31,HAL,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,37.07,2026-09-11,4,38.0,36.0,36.5,Stand Aside (Conflicting Signals),,36.9,37.46,36.89,37.07,12547000,QUANT SIGNAL: Neutral
+2026-09-07 22:59:31,HAL,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,37.07,2026-10-02,25,38.0,34.0,37.07,Stand Aside (Conflicting Signals),,36.9,37.46,36.89,37.07,12547000,QUANT SIGNAL: Neutral
+2026-09-07 22:58:57,HOOD,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,122.11,2026-09-11,4,125.0,113.0,116.0,Stand Aside (Conflicting Signals),,120.47,124.7,119.82,122.11,23675800,QUANT SIGNAL: Neutral
+2026-09-07 22:59:13,HPQ,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,32.64,2026-09-11,4,32.0,30.0,31.5,Stand Aside (Conflicting Signals),,31.95,32.78,31.63,32.64,13302000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:13,HPQ,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,32.64,2026-10-02,25,35.0,30.0,32.64,Stand Aside (Conflicting Signals),,31.95,32.78,31.63,32.64,13302000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:16,IQV,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,267.77,2026-09-18,11,280.0,250.0,260.0,Stand Aside (Conflicting Signals),,268.48,271.8,262.6,267.77,1197800,QUANT SIGNAL: Neutral
+2026-09-07 22:59:16,IQV,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,267.77,2026-10-16,39,280.0,260.0,260.0,Stand Aside (Conflicting Signals),,268.48,271.8,262.6,267.77,1197800,QUANT SIGNAL: Neutral
+2026-09-07 23:00:26,IVZ,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,33.07,2026-09-18,11,36.0,33.0,32.0,Stand Aside (Conflicting Signals),,32.32,33.34,32.3,33.07,2860600,QUANT SIGNAL: Breakout
+2026-09-07 23:00:26,IVZ,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,33.07,2026-10-16,39,30.0,30.0,33.07,Stand Aside (Conflicting Signals),,32.32,33.34,32.3,33.07,2860600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:06,JBHT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,273.77,2026-09-18,11,300.0,240.0,270.0,Stand Aside (Conflicting Signals),,265.68,274.08,265.49,273.77,860000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:06,JBHT,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,273.77,2026-10-16,39,330.0,270.0,280.0,Stand Aside (Conflicting Signals),,265.68,274.08,265.49,273.77,860000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:15,LABU,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,303.55,2026-09-11,4,275.0,247.5,287.5,Stand Aside (Conflicting Signals),,299.6,305.73,296.0,303.55,185100,QUANT SIGNAL: Neutral
+2026-09-07 22:59:32,MPC,Moomoo Default,Standard,~7 DTE,Bearish,NEGATIVE GAMMA,388.9,2026-09-18,11,370.0,340.0,388.9,Stand Aside (Conflicting Signals),,386.1,391.0,379.1,388.9,1874700,QUANT SIGNAL: Bearish
+2026-09-07 22:59:32,MPC,Moomoo Default,Standard,~28 DTE,Bearish,NEGATIVE GAMMA,388.9,2026-10-16,39,360.0,320.0,388.9,Stand Aside (Conflicting Signals),,386.1,391.0,379.1,388.9,1874700,QUANT SIGNAL: Bearish
+2026-09-07 22:59:21,MRK,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,150.33,2026-09-11,4,145.0,150.0,143.0,Stand Aside (Conflicting Signals),,150.83,152.22,150.09,150.33,4395400,QUANT SIGNAL: Neutral
+2026-09-07 22:58:53,MRNA,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,145.55,2026-09-11,4,155.0,80.0,140.0,Stand Aside (Conflicting Signals),,153.62,154.69,141.52,145.55,14933900,QUANT SIGNAL: Neutral
+2026-09-07 23:00:10,MS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,217.72,2026-09-11,4,222.5,207.5,212.5,Stand Aside (Conflicting Signals),,215.64,218.22,214.31,217.72,3132000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:10,MS,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,217.72,2026-10-02,25,230.0,210.0,210.0,Stand Aside (Conflicting Signals),,215.64,218.22,214.31,217.72,3132000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:02,MU,Moomoo Default,High,~7 DTE,Breakout,NEGATIVE GAMMA,1016.59,2026-09-11,4,1000.0,830.0,1016.59,Stand Aside (Conflicting Signals),,971.34,1017.77,969.0,1016.59,35116600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:02,MU,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1016.59,2026-10-02,25,1100.0,830.0,1016.59,Stand Aside (Conflicting Signals),,971.34,1017.77,969.0,1016.59,35116600,QUANT SIGNAL: Breakout
+2026-09-07 22:58:55,NEM,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,128.09,2026-09-11,4,120.0,130.0,125.0,Stand Aside (Conflicting Signals),,126.25,128.86,126.07,128.09,5745900,QUANT SIGNAL: Neutral
+2026-09-07 22:58:55,NEM,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,128.09,2026-10-02,25,134.0,129.0,129.0,Stand Aside (Conflicting Signals),,126.25,128.86,126.07,128.09,5745900,QUANT SIGNAL: Neutral
+2026-09-07 23:00:13,NTRS,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,186.63,2026-09-18,11,190.0,190.0,180.0,Stand Aside (Conflicting Signals),,184.87,188.14,181.15,186.63,785400,QUANT SIGNAL: Breakout
+2026-09-07 23:00:09,NVDA,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,230.36,2026-09-14,7,230.0,220.0,225.0,Stand Aside (Conflicting Signals),,231.09,234.76,229.63,230.36,134946800,QUANT SIGNAL: Breakout
+2026-09-07 23:00:09,NVDA,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,230.36,2026-10-02,25,250.0,200.0,220.0,Stand Aside (Conflicting Signals),,231.09,234.76,229.63,230.36,134946800,QUANT SIGNAL: Breakout
+2026-09-07 23:00:08,PSX,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,255.09,2026-09-11,4,257.5,252.5,240.0,Stand Aside (Conflicting Signals),,251.78,256.98,248.0,255.09,2285000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:05,QQQ,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,718.96,2026-09-11,4,740.0,705.0,712.0,Stand Aside (Conflicting Signals),,719.35,721.86,716.56,718.96,32784600,QUANT SIGNAL: Breakout
+2026-09-07 23:00:05,QQQ,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,718.96,2026-09-30,23,740.0,705.0,705.0,Stand Aside (Conflicting Signals),,719.35,721.86,716.56,718.96,32784600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:24,RVTY,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,130.22,2026-09-18,11,130.0,130.0,130.22,Stand Aside (Conflicting Signals),,130.03,131.7,129.56,130.22,1175200,QUANT SIGNAL: Neutral
+2026-09-07 22:59:24,RVTY,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,130.22,2026-10-16,39,110.0,125.0,130.0,Stand Aside (Conflicting Signals),,130.03,131.7,129.56,130.22,1175200,QUANT SIGNAL: Neutral
+2026-09-07 22:58:59,SJM,Moomoo Default,Standard,~7 DTE,Bearish,POSITIVE GAMMA,126.08,2026-09-18,11,125.0,130.0,125.0,Stand Aside (Conflicting Signals),,127.98,128.86,126.01,126.08,1111100,QUANT SIGNAL: Bearish
+2026-09-07 22:58:59,SJM,Moomoo Default,Standard,~28 DTE,Bearish,NEGATIVE GAMMA,126.08,2026-10-16,39,130.0,130.0,126.08,Bear Call Credit Spread,Short Call: $130.00,127.98,128.86,126.01,126.08,1111100,QUANT SIGNAL: Bearish
+2026-09-07 23:00:25,SLB,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,57.51,2026-09-11,4,59.0,54.0,55.0,Stand Aside (Conflicting Signals),,57.0,57.55,56.24,57.51,7609700,QUANT SIGNAL: Breakout
+2026-09-07 23:00:25,SLB,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,57.51,2026-10-02,25,58.0,54.0,57.51,Stand Aside (Conflicting Signals),,57.0,57.55,56.24,57.51,7609700,QUANT SIGNAL: Breakout
+2026-09-07 22:59:01,SNDK,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,1740.0,2026-09-11,4,1800.0,1000.0,1650.0,Stand Aside (Conflicting Signals),,1586.0,1740.0,1581.0,1740.0,16487100,QUANT SIGNAL: Breakout
+2026-09-07 22:59:01,SNDK,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,1740.0,2026-09-25,18,1800.0,1200.0,1740.0,Stand Aside (Conflicting Signals),,1586.0,1740.0,1581.0,1740.0,16487100,QUANT SIGNAL: Breakout
+2026-09-07 22:59:25,SOLV,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,91.69,2026-09-18,11,90.0,90.0,91.69,Stand Aside (Conflicting Signals),,91.4,92.28,91.38,91.69,576300,QUANT SIGNAL: Neutral
+2026-09-07 22:59:25,SOLV,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,91.69,2026-10-16,39,90.0,75.0,91.69,Stand Aside (Conflicting Signals),,91.4,92.28,91.38,91.69,576300,QUANT SIGNAL: Neutral
+2026-09-07 23:00:11,STT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,194.26,2026-09-18,11,165.0,180.0,185.0,Stand Aside (Conflicting Signals),,192.13,195.4,192.13,194.26,1127400,QUANT SIGNAL: Breakout
+2026-09-07 23:00:11,STT,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,194.26,2026-10-16,39,190.0,190.0,185.0,Stand Aside (Conflicting Signals),,192.13,195.4,192.13,194.26,1127400,QUANT SIGNAL: Breakout
+2026-09-07 23:00:15,TGT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,164.44,2026-09-11,4,165.0,160.0,160.0,Stand Aside (Conflicting Signals),,163.62,164.82,162.75,164.44,2865600,QUANT SIGNAL: Breakout
+2026-09-07 23:00:15,TGT,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,164.44,2026-10-02,25,165.0,150.0,155.0,Stand Aside (Conflicting Signals),,163.62,164.82,162.75,164.44,2865600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:33,TMO,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,613.78,2026-09-11,4,650.0,560.0,607.5,Bull Put Credit Spread,Short Put: $560.00,608.58,615.74,605.53,613.78,1228900,QUANT SIGNAL: Bullish
+2026-09-07 22:59:22,USO,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,141.96,2026-09-16,9,148.0,122.0,141.96,Stand Aside (Conflicting Signals),,140.15,143.03,138.01,141.96,3696400,QUANT SIGNAL: Neutral
+2026-09-07 22:59:22,USO,Moomoo Default,Standard,~28 DTE,Neutral,POSITIVE GAMMA,141.96,2026-10-02,25,150.0,135.0,135.0,Stand Aside (Conflicting Signals),,140.15,143.03,138.01,141.96,3696400,QUANT SIGNAL: Neutral
+2026-09-07 23:00:06,VLO,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,370.72,2026-09-11,4,380.0,345.0,362.5,Stand Aside (Conflicting Signals),,368.5,372.34,360.31,370.72,2849000,QUANT SIGNAL: Breakout
+2026-09-07 23:00:06,VLO,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,370.72,2026-10-02,25,405.0,375.0,370.72,Stand Aside (Conflicting Signals),,368.5,372.34,360.31,370.72,2849000,QUANT SIGNAL: Breakout
+2026-09-07 22:59:05,VRT,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,280.53,2026-09-11,4,277.5,235.0,267.5,Stand Aside (Conflicting Signals),,273.95,280.99,271.2,280.53,3318600,QUANT SIGNAL: Breakout
+2026-09-07 22:59:05,VRT,Moomoo Default,High,~28 DTE,Breakout,NEGATIVE GAMMA,280.53,2026-10-02,25,310.0,235.0,280.53,Stand Aside (Conflicting Signals),,273.95,280.99,271.2,280.53,3318600,QUANT SIGNAL: Breakout
+2026-09-07 22:58:52,VRTX,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,546.12,2026-09-11,4,560.0,550.0,530.0,Stand Aside (Conflicting Signals),,549.5,556.99,544.48,546.12,803300,QUANT SIGNAL: Neutral
+2026-09-07 23:00:02,WBD,Moomoo Default,Standard,~7 DTE,Bullish,POSITIVE GAMMA,28.25,2026-09-11,4,30.0,28.0,27.0,Bull Put Credit Spread,Short Put: $28.00,28.32,28.35,28.21,28.25,11491400,QUANT SIGNAL: Bullish
+2026-09-07 23:00:19,WFC,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,89.97,2026-09-11,4,90.0,87.0,87.0,Stand Aside (Conflicting Signals),,88.75,90.13,88.73,89.97,8003900,QUANT SIGNAL: Breakout
+2026-09-07 23:00:23,WMB,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,74.15,2026-09-11,4,75.0,70.0,72.0,Stand Aside (Conflicting Signals),,73.87,74.43,73.37,74.15,7513800,QUANT SIGNAL: Breakout
+2026-09-07 23:00:23,WMB,Moomoo Default,High,~28 DTE,Breakout,POSITIVE GAMMA,74.15,2026-10-02,25,75.0,70.0,70.0,Stand Aside (Conflicting Signals),,73.87,74.43,73.37,74.15,7513800,QUANT SIGNAL: Breakout
+2026-09-07 22:59:29,XLE,Moomoo Default,Standard,~7 DTE,Neutral,NEGATIVE GAMMA,64.06,2026-09-14,7,66.0,65.0,64.06,Stand Aside (Conflicting Signals),,64.04,64.33,63.38,64.06,26281800,QUANT SIGNAL: Neutral
+2026-09-07 23:00:12,XLK,Moomoo Default,High,~7 DTE,Breakout,POSITIVE GAMMA,187.28,2026-09-11,4,195.0,180.0,186.0,Stand Aside (Conflicting Signals),,187.19,188.2,186.42,187.28,5103800,QUANT SIGNAL: Breakout
+2026-09-07 22:59:19,XOP,Moomoo Default,Standard,~7 DTE,Neutral,POSITIVE GAMMA,190.71,2026-09-11,4,207.5,185.0,184.0,Stand Aside (Conflicting Signals),,191.05,191.61,188.2,190.71,1503600,QUANT SIGNAL: Neutral
+2026-09-07 22:59:19,XOP,Moomoo Default,Standard,~28 DTE,Neutral,NEGATIVE GAMMA,190.71,2026-10-02,25,186.0,171.0,190.71,Stand Aside (Conflicting Signals),,191.05,191.61,188.2,190.71,1503600,QUANT SIGNAL: Neutral
