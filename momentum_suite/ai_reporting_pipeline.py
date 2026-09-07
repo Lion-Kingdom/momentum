@@ -268,12 +268,21 @@ def send_email_report(report_content):
 
 
 if __name__ == "__main__":
-    updated_df = append_ohlcv_data("momentum_suite/unified_gex_momentum_main_log.csv")
+    # Check both root and momentum_suite paths so it never misses the file
+    target_path = "unified_gex_momentum_main_log.csv"
+    if not os.path.exists(target_path) and os.path.exists("momentum_suite/unified_gex_momentum_main_log.csv"):
+        target_path = "momentum_suite/unified_gex_momentum_main_log.csv"
+
+    updated_df = append_ohlcv_data(target_path)
 
     ai_report = generate_gemini_report(updated_df)
 
     try:
-        with open("momentum_suite/momentum_summary.txt", "r", encoding="utf-8") as f:
+        summary_path = "momentum_summary.txt"
+        if not os.path.exists(summary_path) and os.path.exists("momentum_suite/momentum_summary.txt"):
+            summary_path = "momentum_suite/momentum_summary.txt"
+
+        with open(summary_path, "r", encoding="utf-8") as f:
             momentum_stats = f.read()
     except FileNotFoundError:
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
