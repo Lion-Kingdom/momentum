@@ -1,42 +1,111 @@
-from datetime import datetime
-import numpy as np
-import pandas as pd
-import scipy.stats as si
-import yfinance as yf
 import os
 import json
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import smtplib
-from email.mime.text import MIMEText
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-spreadsheet_id = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
+import gspread
+import numpy as np
+import pandas as pd
+import requests
+from oauth2client.service_account import ServiceAccountCredentials
 
 
-# --- BLACK-SCHOLES MATHEMATICAL ENGINE ---
-def bs_gamma(s, k, t, r, sigma, q=0.015):
-    """Calculates exact analytical Black-Scholes-Merton Gamma accounting for dividend yield."""
-    if t <= 0 or sigma <= 0 or s <= 0 or k <= 0:
-        return 0
-    # Subtract q from the drift term in d1
-    d1 = (np.log(s / k) + (r - q + 0.5 * sigma**2) * t) / (sigma * np.sqrt(t))
-    # Multiply the numerator by the continuous dividend discount factor
-    gamma = (np.exp(-q * t) * si.norm.pdf(d1)) / (s * sigma * np.sqrt(t))
-    return gamma
+SPREADSHEET_ID = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
+MOOMOO_API_URL = "https://webapi.moomoo.com/api/v1.0"
+
+
+def get_moomoo_headers():
+    """Builds the authorization headers using the OAuth token."""
+    # We use an environment variable so your token stays safe in GitHub Secrets
+    token = os.getenv("MOOMOO_API_TOKEN", "pmXA1MBhzYALw8eYPywVunr714ADHmhhOT4BlKKvr1qPdeLlgNefx2cZnMpACIa5PCoDF2dUeCqd4KkkB4tEj5uvt+qOIiOhGCkF6Q2v0WpTjw7Xhlvxbc1k4HAXr7snf2DSvpPYnOnokZQRFpfHBgbZlJaRgO61GVfQad1DQvfQSsHIAZmwr8Ou0vpUBikbgZnifVHrqWMGESI4BCyI8yTX4Zicte3rLAnfkqEXSaXk")  # noqa: E501
+    return {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {token}"
+    }
+
+
+def map_tickers_to_stock_ids(tickers):
+    """Fetches internal Moomoo stock_ids for a list of standard tickers."""
+    url = f"{MOOMOO_API_URL}/quote/stock-basicinfo"
+    moomoo_codes = [f"US.{ticker}" for ticker in tickers]
+    mapping = {}
+
+    # Moomoo limits basic info queries to 400 codes per request
+    chunk_size = 350
+    for i in range(0, len(moomoo_codes), chunk_size):
+        payload = {
+            "code_list": moomoo_codes[i:i + chunk_size],
+            "market": "US"
+        }
+
+        try:
+            response = requests.post(url, headers=get_moomoo_headers(), json=payload)
+            data = response.json()
+
+            if data.get("ret_code") == 0:
+                securities = data.get("data", {}).get("basic_list", [])
+                for sec in securities:
+                    clean_ticker = sec.get("code", "").replace("US.", "")
+                    stock_id = sec.get("stock_id")
+                    if clean_ticker and stock_id:
+                        mapping[clean_ticker] = stock_id
+            else:
+                print(f"⚠️ Moomoo mapping error: {data.get('ret_msg')}")
+        except Exception as e:
+            print(f"❌ Failed to map chunk: {e}")
+
+    return mapping
+
+
+def get_moomoo_options_data(stock_id):
+    """Pulls the most liquid options and spot price for a given stock_id."""
+    url = f"{MOOMOO_API_URL}/quote/option-screen"
+    payload = {
+        "strategy": {
+            "market_category_list": [0],
+            "filter_group_list": [
+                {"underlying_list": [{"indicator_type": 101, "indicator_value": {"value_list": [stock_id]}}]},
+                {"option_list": [{"indicator_type": 1003, "indicator_value": {"value_list": [1]}}]}
+            ]
+        },
+        "field_filter": {
+            "hp_strike_price": 1,
+            "option_type": 1,
+            "price": 1,
+            "volume": 1,
+            "open_interest": 1,
+            "implied_volatility": 1,
+            "gamma": 1,
+            "delta": 1,
+            "option_name": "x",
+            "underlying_info": {"price": 1}
+        },
+        "sort_obj": {"sort_field": {"volume": 1}},
+        "limit": 500  # Grab the top 500 most liquid options across the chain
+    }
+
+    try:
+        response = requests.post(url, headers=get_moomoo_headers(), json=payload)
+        data = response.json()
+        if data.get("ret_code") == 0:
+            return data.get("data", {}).get("option_list", [])
+        return []
+    except Exception as e:
+        print(f"❌ Failed to pull options for {stock_id}: {e}")
+        return []
 
 
 def export_gex_to_sheets(gex_dataframe):
     """Pushes the final GEX dataframe directly to a Google Sheet."""
     try:
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"] # noqa
         creds_dict = json.loads(os.environ["GCP_SA_KEY"])
         creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
         client = gspread.authorize(creds)
 
-        # Ensure you have a tab named "GEX_Report" created in your sheet
-        sheet = client.open_by_key(spreadsheet_id).worksheet("GEX_Report")
-
+        sheet = client.open_by_key(SPREADSHEET_ID).worksheet("GEX_Report")
         sheet.clear()
         sheet.update([gex_dataframe.columns.values.tolist()] + gex_dataframe.values.tolist())
         print("✅ GEX Report successfully pushed to Google Sheets!")
@@ -53,24 +122,16 @@ def send_email_gex_report(gex_dataframe):
         print("⚠️ Email secrets not configured. Skipping email dispatch.")
         return
 
-    # Update your list with any new subscribers here
-    mailing_list = [
-        sender,
-        "new_being@hotmail.com"
-    ]
-
+    mailing_list = [sender, "new_being@hotmail.com"]
     now_str = datetime.now().strftime("%b %d, %Y - %I:%M %p EDT")
 
     msg = MIMEMultipart()
     msg['From'] = f'"Leon EL Cee" <{sender}>'
-    msg['To'] = sender  # BCC routing
-    msg['Subject'] = f"🎯 Options floor-ceiling Gamma(GEX) Setup Report ({now_str})"
+    msg['To'] = sender
+    msg['Subject'] = f"🎯 Institutional GEX Setup Report ({now_str})"
 
-    # Simple formatted email body
-    body = f"⚡ GEX PIPELINE SNAPSHOT ({now_str})\n"
-    body += f"{'='*50}\n\n"
+    body = f"⚡ MOOMOO API GEX PIPELINE SNAPSHOT ({now_str})\n{'=' * 50}\n\n"
 
-    # Create a clean string representation of the key columns
     if not gex_dataframe.empty:
         for _, row in gex_dataframe.iterrows():
             body += f"🎯 {row['Ticker']} | {row['Timeframe']} | Signal: {row['Momentum_Signal']}\n"
@@ -80,10 +141,7 @@ def send_email_gex_report(gex_dataframe):
     else:
         body += "No active GEX setups found for this session.\n\n"
 
-    body += f"{'='*50}\n"
-    body += f"🔗 Google Sheet Access Link: \n"
-    # REPLACE WITH YOUR SPREADSHEET ID BELOW
-    body += f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit\n" # noqa
+    body += f"{'=' * 50}\n🔗 Google Sheet Access Link: \nhttps://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit\n" # noqa
 
     msg.attach(MIMEText(body, 'plain'))
 
@@ -99,9 +157,7 @@ def send_email_gex_report(gex_dataframe):
 
 
 def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
-    """Reads momentum spreadsheet, calculates multi-timeframe GEX walls (0, 7, 28+ DTE),
-    and logs precise trade support/resistance levels to a master CSV.
-    """
+    """Reads momentum spreadsheet and calculates multi-timeframe GEX walls using Moomoo."""
     if not os.path.exists(momentum_csv_path):
         print(f"⚠️ Momentum spreadsheet '{momentum_csv_path}' not found.")
         return
@@ -109,213 +165,150 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
     print(f"📂 Reading filtered momentum targets from: {momentum_csv_path}...")
     df_momentum = pd.read_csv(momentum_csv_path)
 
-    if "Ticker" not in df_momentum.columns or "Momentum_Signal" not in df_momentum.columns:
-        print("❌ Error: Momentum CSV must contain 'Ticker' and 'Momentum_Signal' columns.")
-        return
-
-    # Keep the rows that have ANY valid string in the Momentum_Signal column
     active_targets = df_momentum[df_momentum["Momentum_Signal"].notna()]
-
     if active_targets.empty:
-        print("⚠️ No active momentum signals found to process in GEX engine.")
+        print("⚠️ No active momentum signals found.")
         return
 
-    print(f"🎯 Found {len(active_targets)} active momentum ticker(s) to evaluate against GEX walls.")
+    raw_tickers = active_targets["Ticker"].str.replace("^", "", regex=False).unique().tolist()
+    print(f"🔗 Mapping {len(raw_tickers)} tickers to Moomoo Stock IDs...")
+    ticker_to_id = map_tickers_to_stock_ids(raw_tickers)
+
     master_results = []
+    today = pd.Timestamp.today().normalize()
 
     for _, row in active_targets.iterrows():
         raw_ticker = str(row["Ticker"]).strip().upper()
+        clean_ticker = raw_ticker.replace("^", "")
         mom_signal = row["Momentum_Signal"]
+        is_index = raw_ticker.startswith("^")
 
-        is_index = False
-        if raw_ticker in ["SPX", "RUT", "NDX", "VIX"]:
-            ticker_symbol = f"^{raw_ticker}" if not raw_ticker.startswith("^") else raw_ticker
-            is_index = True
-        else:
-            ticker_symbol = raw_ticker
-            if raw_ticker.startswith("^"):
-                is_index = True
+        print(f"\n{'=' * 60}\n🔄 Processing: {clean_ticker} | Signal: {mom_signal}\n{'=' * 60}")
 
-        print(f"\n" + "=" * 60)
-        print(f"🔄 Processing Pipeline: {ticker_symbol} | Momentum: {mom_signal}")
-        print("=" * 60)
+        stock_id = ticker_to_id.get(clean_ticker)
+        if not stock_id:
+            print(f"⚠️ {clean_ticker}: Could not resolve Moomoo Stock ID. Skipping.")
+            continue
 
-        try:
-            ticker = yf.Ticker(ticker_symbol)
-            sector = ticker.info.get("sector", "Index/ETF")  # <-- NEW LINE
+        options_data = get_moomoo_options_data(stock_id)
+        if not options_data:
+            print(f"⚠️ {clean_ticker}: No options data returned. Skipping.")
+            continue
+
+        # Extract Spot Price from the first option's underlying info
+        spot_price = options_data[0].get("underlying", {}).get("price", 0.0)
+        if spot_price == 0.0:
+            print(f"⚠️ {clean_ticker}: Missing underlying spot price.")
+            continue
+
+        # Parse Options Data and enrich with DTE
+        parsed_options = []
+        for opt in options_data:
+            opt_name = opt.get("option_name", "")
             try:
-                spot_price = ticker.history(period="1d")["Close"].iloc[-1]
-            except (IndexError, KeyError, TypeError):
-                spot_price = ticker.info.get("regularMarketPrice", ticker.info.get("previousClose"))
+                # Example: "AAPL 260909 325.00C" -> split to get "260909"
+                date_str = opt_name.split(" ")[1]
+                exp_date = pd.to_datetime(date_str, format="%y%m%d")
+                dte = (exp_date - today).days
 
-            if not spot_price or pd.isna(spot_price):
-                print(f"⚠️ Skipping {ticker_symbol}: Unable to resolve valid spot price.")
-                continue
-
-            expirations = ticker.options
-            if not expirations:
-                print(f"⚠️ Skipping {ticker_symbol}: No option chains available.")
-                continue
-
-            # --- DYNAMIC MULTI-TIMEFRAME TARGETING ---
-            # Indexes get 0 DTE, 7 DTE, and 28 DTE. Equities get 7 DTE and 28 DTE.
-            target_buckets = [0, 7, 28] if is_index else [7, 28]
-            today = pd.Timestamp.today().normalize()
-
-            selected_expirations = {}
-
-            for bucket in target_buckets:
-                best_diff = float('inf')
-                best_exp = expirations[0]
-                actual_dte_for_best = 0
-
-                for exp in expirations:
-                    exp_date = pd.to_datetime(exp)
-                    days_out = (exp_date - today).days
-
-                    # Ensure we don't accidentally pick a negative DTE if data is stale
-                    if days_out < 0:
-                        continue
-
-                    if abs(days_out - bucket) < best_diff:
-                        best_diff = abs(days_out - bucket)
-                        best_exp = exp
-                        actual_dte_for_best = days_out
-
-                # Prevent analyzing the exact same chain twice if buckets overlap
-                if best_exp not in [v[0] for v in selected_expirations.values()]:
-                    selected_expirations[f"~{bucket} DTE"] = (best_exp, actual_dte_for_best)
-
-            for bucket_label, (target_expiry, actual_dte) in selected_expirations.items():
-                print(f"   ⏱️ Evaluating {bucket_label} -> Expiry: {target_expiry} ({actual_dte} DTE)")
-                t = max(float(actual_dte), 0.5) / 365.0
-                r = 0.045
-                opt_chain = ticker.option_chain(target_expiry)
-                calls = opt_chain.calls.dropna(subset=["strike", "openInterest", "impliedVolatility"])
-                puts = opt_chain.puts.dropna(subset=["strike", "openInterest", "impliedVolatility"])
-
-                call_data = []
-                for _, opt_row in calls.iterrows():
-                    k, oi, iv = opt_row["strike"], opt_row["openInterest"], opt_row["impliedVolatility"]
-                    if iv < 0.01: continue
-                    gamma = bs_gamma(spot_price, k, t, r, iv)
-                    dollar_gex = gamma * oi * 100 * spot_price
-                    call_data.append({"strike": k, "Call_GEX": dollar_gex / 1_000_000, "Call_OI": oi})
-
-                put_data = []
-                for _, opt_row in puts.iterrows():
-                    k, oi, iv = opt_row["strike"], opt_row["openInterest"], opt_row["impliedVolatility"]
-                    if iv < 0.01: continue
-                    gamma = bs_gamma(spot_price, k, t, r, iv)
-                    dollar_gex = -gamma * oi * 100 * spot_price
-                    put_data.append({"strike": k, "Put_GEX": dollar_gex / 1_000_000, "Put_OI": oi})
-
-                df_calls = pd.DataFrame(call_data)
-                df_puts = pd.DataFrame(put_data)
-
-                if df_calls.empty or df_puts.empty:
-                    print(f"      ⚠️ Insufficient options liquidity data for {target_expiry}.")
-                    continue
-
-                combined = pd.merge(df_calls, df_puts, on="strike", how="outer").fillna(0)
-                combined["Net_GEX_Millions"] = combined["Call_GEX"] + combined["Put_GEX"]
-
-                call_wall_strike = combined.loc[combined["Call_OI"].idxmax(), "strike"]
-                put_wall_strike = combined.loc[combined["Put_OI"].idxmax(), "strike"]
-
-                combined["dist_to_spot"] = abs(combined["strike"] - spot_price)
-                local_zone = combined[combined["dist_to_spot"] < (spot_price * 0.06)].sort_values("strike")
-
-                flip_strike = spot_price
-                for i in range(len(local_zone) - 1):
-                    gex_1 = local_zone["Net_GEX_Millions"].iloc[i]
-                    gex_2 = local_zone["Net_GEX_Millions"].iloc[i + 1]
-                    if np.sign(gex_1) != np.sign(gex_2):
-                        flip_strike = local_zone["strike"].iloc[i]
-                        break
-
-                regime = "POSITIVE GAMMA" if spot_price > flip_strike else "NEGATIVE GAMMA"
-                strategy = "Stand Aside (Conflicting Signals)"
-                targets = "N/A"
-                rationale = "Momentum signal does not align cleanly with structural walls." # noqa
-
-                if mom_signal == "Bullish" and spot_price > put_wall_strike:
-                    valid_puts = combined[combined["strike"] <= put_wall_strike].sort_values("strike", ascending=False)
-                    if not valid_puts.empty:
-                        short_p = valid_puts.iloc[0]["strike"]
-                        strategy = "Bull Put Credit Spread"
-                        targets = f"Short Put: ${short_p:,.2f}" # noqa
-                        rationale = "Bullish momentum supported by Put Wall dealer floor." # noqa
-
-                elif mom_signal == "Bearish" and spot_price < call_wall_strike:
-                    valid_calls = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
-                    if not valid_calls.empty:
-                        short_c = valid_calls.iloc[0]["strike"]
-                        strategy = "Bear Call Credit Spread"
-                        targets = f"Short Call: ${short_c:,.2f}" # noqa
-                        rationale = "Bearish momentum capped by Call Wall dealer ceiling." # noqa
-
-                elif mom_signal == "Breakout" and spot_price >= call_wall_strike * 0.985:
-                    breakout_c = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
-                    if not breakout_c.empty:
-                        target_c = breakout_c.iloc[0]["strike"]
-                    if regime == "NEGATIVE GAMMA":
-                        strategy = "High-Conviction Gamma Squeeze"
-                        targets = f"Buy Strike: ${target_c:,.2f}" # noqa
-                        rationale = "Breakout near Call Wall fueled by Negative Gamma dealer buying." # noqa
-                    else:
-                        strategy = "Stand Aside (Positive Gamma Pin)"
-                        targets = "N/A"
-                        rationale = "Spot approaching Call Wall but Positive Gamma will likely cap the move." # noqa
-
-                # --- NEW CONVICTION LOGIC ---
-                conviction = "Standard"
-                if strategy != "Stand Aside (Conflicting Signals)":
-                    if mom_signal == "Breakout":
-                        conviction = "High"
-                    # Bullish and spot is within 2% of the put wall support
-                    elif mom_signal == "Bullish" and spot_price <= put_wall_strike * 1.02:
-                        conviction = "High"
-                    # Bearish and spot is within 2% of the call wall resistance
-                    elif mom_signal == "Bearish" and spot_price >= call_wall_strike * 0.98:
-                        conviction = "High"
-
-                master_results.append({
-                    "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "Ticker": ticker_symbol,
-                    "Sector": sector,                # <-- NEW COLUMN
-                    "Conviction": conviction,        # <-- NEW COLUMN
-                    "Timeframe": bucket_label,
-                    "Momentum_Signal": mom_signal,
-                    "Market_Regime": regime,
-                    "Spot_Price": spot_price,
-                    "Target_Expiry": target_expiry,
-                    "Actual_DTE": actual_dte,
-                    "Call_Wall_Ceiling": call_wall_strike,
-                    "Put_Wall_Floor": put_wall_strike,
-                    "Gamma_Flip": flip_strike,
-                    "Confirmed_Strategy": strategy,
-                    "Target_Strikes": targets,
+                parsed_options.append({
+                    "strike": opt.get("strike_price", 0.0),
+                    "type": opt.get("option_type", ""),
+                    "gamma": opt.get("gamma", 0.0),
+                    "open_interest": opt.get("open_interest", 0) or 0,
+                    "dte": dte,
+                    "exp_date": exp_date.strftime("%Y-%m-%d")
                 })
+            except Exception:
+                continue
 
-                print(f"      ✅ Verified -> {strategy} | Target: {targets}")
-                print(f"         Levels -> Floor (Put Wall): ${put_wall_strike:,.2f} |" # noqa 
-                      f" Ceiling (Call Wall): ${call_wall_strike:,.2f}") # noqa
+        df_opts = pd.DataFrame(parsed_options)
+        if df_opts.empty:
+            continue
 
-        except Exception as e:
-            print(f"❌ Error processing {ticker_symbol}: {e}")
+        target_buckets = [0, 7, 28] if is_index else [7, 28]
+
+        for bucket in target_buckets:
+            # Find the closest DTE for this bucket
+            closest_dte = df_opts.iloc[(df_opts['dte'] - bucket).abs().argsort()[:1]]['dte'].values[0]
+            if closest_dte < 0:
+                continue
+
+            bucket_df = df_opts[df_opts['dte'] == closest_dte]
+            target_expiry = bucket_df['exp_date'].iloc[0]
+            bucket_label = f"~{bucket} DTE"
+
+            print(f"   ⏱️ Evaluating {bucket_label} -> Expiry: {target_expiry} ({closest_dte} DTE)")
+
+            calls = bucket_df[bucket_df["type"] == "CALL"].copy()
+            puts = bucket_df[bucket_df["type"] == "PUT"].copy()
+
+            if calls.empty or puts.empty:
+                continue
+
+            # Native Dollar GEX Math
+            calls["Call_GEX"] = (calls["gamma"] * calls["open_interest"] * 100 * spot_price) / 1_000_000
+            puts["Put_GEX"] = (-puts["gamma"] * puts["open_interest"] * 100 * spot_price) / 1_000_000
+
+            # Merge and align strikes
+            df_calls = calls[["strike", "Call_GEX", "open_interest"]].rename(columns={"open_interest": "Call_OI"})
+            df_puts = puts[["strike", "Put_GEX", "open_interest"]].rename(columns={"open_interest": "Put_OI"})
+
+            combined = pd.merge(df_calls, df_puts, on="strike", how="outer").fillna(0)
+            combined["Net_GEX_Millions"] = combined["Call_GEX"] + combined["Put_GEX"]
+
+            if combined["Call_OI"].sum() == 0 or combined["Put_OI"].sum() == 0:
+                continue
+
+            call_wall_strike = combined.loc[combined["Call_OI"].idxmax(), "strike"]
+            put_wall_strike = combined.loc[combined["Put_OI"].idxmax(), "strike"]
+
+            # Localized Gamma Flip logic
+            combined["dist_to_spot"] = abs(combined["strike"] - spot_price)
+            local_zone = combined[combined["dist_to_spot"] < (spot_price * 0.06)].sort_values("strike")
+
+            flip_strike = spot_price
+            for i in range(len(local_zone) - 1):
+                gex_1 = local_zone["Net_GEX_Millions"].iloc[i]
+                gex_2 = local_zone["Net_GEX_Millions"].iloc[i + 1]
+                if np.sign(gex_1) != np.sign(gex_2):
+                    flip_strike = local_zone["strike"].iloc[i]
+                    break
+
+            regime = "POSITIVE GAMMA" if spot_price > flip_strike else "NEGATIVE GAMMA"
+            strategy = "Stand Aside (Conflicting Signals)"
+            targets = "N/A"
+
+            if mom_signal == "Bullish" and spot_price > put_wall_strike:
+                valid_puts = combined[combined["strike"] <= put_wall_strike].sort_values("strike", ascending=False)
+                if not valid_puts.empty:
+                    strategy = "Bull Put Credit Spread"
+                    targets = f"Short Put: ${valid_puts.iloc[0]['strike']:,.2f}" # noqa
+            elif mom_signal == "Bearish" and spot_price < call_wall_strike:
+                valid_calls = combined[combined["strike"] >= call_wall_strike].sort_values("strike")
+                if not valid_calls.empty:
+                    strategy = "Bear Call Credit Spread"
+                    targets = f"Short Call: ${valid_calls.iloc[0]['strike']:,.2f}" # noqa
+
+            conviction = "High" if mom_signal == "Breakout" else "Standard"
+
+            master_results.append({
+                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Ticker": raw_ticker, "Sector": "Moomoo Default", "Conviction": conviction,
+                "Timeframe": bucket_label, "Momentum_Signal": mom_signal, "Market_Regime": regime,
+                "Spot_Price": spot_price, "Target_Expiry": target_expiry, "Actual_DTE": closest_dte,
+                "Call_Wall_Ceiling": call_wall_strike, "Put_Wall_Floor": put_wall_strike,
+                "Gamma_Flip": flip_strike, "Confirmed_Strategy": strategy, "Target_Strikes": targets,
+            })
+            print(f"      ✅ Verified -> {strategy} | Target: {targets}")
 
     if master_results:
         master_df = pd.DataFrame(master_results)
-        # Sort so the spreadsheet groups by Ticker first, then by Timeframe (DTE) ascending
         master_df = master_df.sort_values(by=["Ticker", "Actual_DTE"])
         master_filename = "unified_gex_momentum_master_log.csv"
         master_df.to_csv(master_filename, index=False)
-        print("\n" + "=" * 60)
-        print(f"💾 Master Pipeline Log Saved Successfully: {master_filename}")
-        print("=" * 60)
-
-        # --- NEW CODE: PUSH TO SHEETS AND SEND EMAIL ---
+        print(f"\n{'=' * 60}\n💾 Master Pipeline Log Saved: {master_filename}\n{'=' * 60}")
+        # Uncomment below when ready to push live
         # export_gex_to_sheets(master_df)
         # send_email_gex_report(master_df)
 
