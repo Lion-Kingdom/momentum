@@ -25,7 +25,8 @@ MOOMOO_API_URL = "https://webapi.moomoo.com/api/v1.0"
 
 def get_moomoo_headers():
     """Builds the authorization headers using the OAuth token."""
-    token = os.getenv("MOOMOO_API_TOKEN", "")
+    # 🟢 ADDED .strip() to automatically remove hidden newlines or spaces
+    token = os.getenv("MOOMOO_API_TOKEN", "").strip()
     return {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {token}",
@@ -36,11 +37,12 @@ def refresh_moomoo_token():
     """Refreshes the Moomoo API access token using the refresh token."""
     print("🔄 Attempting to refresh Moomoo API token...")
 
-    client_id = os.getenv("MOOMOO_CLIENT_ID")
-    refresh_token = os.getenv("MOOMOO_REFRESH_TOKEN")
+    # 🟢 ADDED .strip() here as well just to be safe!
+    client_id = os.getenv("MOOMOO_CLIENT_ID", "").strip()
+    refresh_token = os.getenv("MOOMOO_REFRESH_TOKEN", "").strip()
 
     if not client_id or not refresh_token:
-        print("❌ Cannot refresh token: Missing Credentials in GitHub Secrets.")  # noqa: E501
+        print("❌ Cannot refresh token: Missing Credentials in GitHub Secrets.")  # noqa
         return False
 
     url = "https://webapi.moomoo.com/oauth2/token"
@@ -56,7 +58,7 @@ def refresh_moomoo_token():
         data = response.json()
 
         if "access_token" in data:
-            os.environ["MOOMOO_API_TOKEN"] = data["access_token"]
+            os.environ["MOOMOO_API_TOKEN"] = data["access_token"].strip()
             print("✅ Successfully refreshed Moomoo API access token!")
             return True
         print(f"❌ Failed to refresh token. Server returned: {data}")
