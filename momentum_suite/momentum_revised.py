@@ -167,7 +167,7 @@ def export_to_google_sheets(df: pd.DataFrame):
 
     counter = 1
     while True:
-        tab_name = f"alpha_momentum_{date_str}_{counter:02d}"
+        tab_name = f"alpha_momentum_{date_str}_{counter: 02d}"
         if tab_name not in worksheets:
             break
         counter += 1
