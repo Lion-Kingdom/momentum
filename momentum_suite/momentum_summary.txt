@@ -1,27 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 66
-Volatility Alerts: 30
+Total Tickers Scanned: 60
+Volatility Alerts: 34
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 44
- - Consolidating: 11
- - Pullback_Reset: 7
+ - Strong_Expansion: 38
+ - Consolidating: 9
+ - Pullback_Reset: 8
  - Exhausted_Trap: 2
  - Regaining: 2
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SNDK | Price: $1783.53 | 1M: 47.13% | RSI: 63.0
+   ➤ Ticker: PSX | Price: $259.14 | 1M: 27.76% | RSI: 77.2
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: LYB | Price: $64.95 | 5D: -0.2% | RSI: 55.3
+   ➤ Ticker: KMI | Price: $31.98 | 5D: -0.81% | RSI: 52.3
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $396.2 | 1D: 1.88% | RSI: 80.4
+   ➤ Ticker: MPC | Price: $397.77 | 1D: 2.28% | RSI: 80.8
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: CRWD | Price: $210.02 | 5D: -9.08% | RSI: 51.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
