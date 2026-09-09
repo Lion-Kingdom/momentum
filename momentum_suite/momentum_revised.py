@@ -69,12 +69,10 @@ def fetch_csv_etfs(filepath: str = ETF_CSV_PATH) -> list:
         return []
 
 
-def process_ticker(
-        ticker: str, data: pd.DataFrame, bench: float
-) -> Optional[dict]:
+def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[dict]:
     """Extract metrics and apply phase filters."""
     try:
-        # Safely extract single ticker dataframe regardless of yfinance MultiIndex orientation
+        # Safely handle multi-index yfinance output
         if isinstance(data.columns, pd.MultiIndex):
             if ticker in data.columns.levels[0]:
                 df = data[ticker].dropna(how="all")
@@ -87,6 +85,7 @@ def process_ticker(
                 return None
             df = data[ticker].dropna(how="all")
 
+        # Ensure Close column exists and convert to Series
         if "Close" not in df.columns:
             return None
 
@@ -120,7 +119,7 @@ def process_ticker(
         if phase == "Consolidating" and c1m < 0.10:
             return None
 
-        # Grab intraday price and volume metrics alongside your phase filters
+        # Grab intraday price and volume metrics alongside phase filters
         return {
             "Ticker": ticker,
             "Price": round(curr_p, 2),
@@ -136,7 +135,7 @@ def process_ticker(
             "Phase": phase,
             "Alert": "VOLATILITY" if abs(c1d) > 0.015 else "",
         }
-    except Exception:
+    except (KeyError, IndexError, ValueError, TypeError):
         return None
 
 
