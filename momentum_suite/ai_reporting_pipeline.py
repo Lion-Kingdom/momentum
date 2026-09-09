@@ -150,7 +150,7 @@ def generate_gemini_report(df):
         return """
         <div style="background-color: #121212; padding: 20px; font-family: Arial, sans-serif;">
             <div style="background-color: #F9F9F9; color: #111111; border-radius: 8px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                <h2 style="text-align: center;">🎯 THE PRECISION TRADER: DAILY ACTION PLAN</h2>
+                <h2 style="text-align: center;">🎯 THE PRECISION TRADER: TODAY'S MARKET FLOW & TRADE SETUPS</h2>
                 <p>The quantitative scanning engine has executed a complete sweep across options telemetry and price action channels. Current market conditions exhibit zero actionable gamma anomalies or options spread alignments.</p>
                 <h3 style="color: #111111; border-bottom: 2px solid #D4AF37; padding-bottom: 5px;">🔥 HIGH-CONVICTION SETUPS</h3>
                 <p style="font-weight: bold; color: #D32F2F;">The engine is flat today. Cash is a position.</p>
@@ -241,7 +241,15 @@ def send_email_report(report_content):
     sender = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASS")
 
-    recipients = [sender, "new_being@hotmail.com"]
+    recipients = [
+        sender,
+        "new_being@hotmail.com",
+        "uroberts54@gmail.com",
+        "sdimi22@aol.com",
+        "lordruckus88@gmail.com",
+        "walterljackson@hotmail.com",
+        "klovebfly620@hotmail.com"
+    ]
 
     if not sender or not pwd:
         print("⚠️ Email secrets not configured. Skipping email dispatch.")
@@ -253,7 +261,10 @@ def send_email_report(report_content):
         msg = MIMEMultipart()
         msg["From"] = f'"Leon EL Cee" <{sender}>'
         msg["To"] = recipient
-        msg["Subject"] = f"🧠 AI Deep Dive Market Report: Gamma Regimes ({now_str})"
+        msg["Subject"] = (
+            f"🎯 The Precision Trader Automation: Today's Market Flow & Trade Setups"
+            f" ({now_str})"
+        )
         msg.attach(MIMEText(report_content, "html"))
 
         try:
@@ -288,13 +299,20 @@ if __name__ == "__main__":
         momentum_stats = "(Momentum detailed stats unavailable for this run)"
 
     final_main_report = f"""
-    <div style="background-color: #121212; padding: 20px; width: 100%;">
+    <div style="background-color: #121212; padding: 20px; width: 100%; font-family: Arial, sans-serif;">
         <div style="max-width: 650px; margin: 0 auto;">
-        {ai_report}
-            <br><hr style="border: 1px solid #333;"><br>
-            <div style="background-color: #1a1a1a; color: #00ff66; padding: 15px; border-radius: 8px; overflow-x: auto;">
-                <h3 style="color: #ffffff; margin-top: 0;">📊 Detailed Momentum & Spread Telemetry</h3>
-                <pre style="font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap;">{momentum_stats}</pre>
+            {ai_report}
+            <br>
+            <div style="background-color: #1a1a1a; border-left: 4px solid #00ff66; border-radius: 6px; padding: 18px; color: #e0e0e0;">
+                <h3 style="color: #00ff66; margin-top: 0; font-size: 16px; letter-spacing: 0.5px;">
+                    ⚡ QUANT SUITE: MULTI-STRATEGY RADAR & BREADTH
+                </h3>
+                <p style="font-size: 13px; color: #a0a0a0; margin-bottom: 12px;">
+                    Alternative strategy angles (Debit expansion & Overbought fades) from the underlying momentum engine:
+                </p>
+                <div style="background-color: #111111; padding: 12px; border-radius: 4px; border: 1px solid #2a2a2a;">
+                    <pre style="font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; color: #00ff66; margin: 0; white-space: pre-wrap; line-height: 1.5;">{momentum_stats}</pre>
+                </div>
             </div>
         </div>
     </div>
