@@ -69,16 +69,24 @@ def fetch_csv_etfs(filepath: str = ETF_CSV_PATH) -> list:
         return []
 
 
-def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[dict]:
+def process_ticker(
+        ticker: str, data: pd.DataFrame, bench: float
+) -> Optional[dict]:
     """Extract metrics and apply phase filters."""
     try:
-        # 1. Safely handle multi-index yfinance output
-        if ticker not in data.columns.levels[0] if isinstance(data.columns, pd.MultiIndex) else ticker not in data:
-            return None
+        # Safely extract single ticker dataframe regardless of yfinance MultiIndex orientation
+        if isinstance(data.columns, pd.MultiIndex):
+            if ticker in data.columns.levels[0]:
+                df = data[ticker].dropna(how="all")
+            elif ticker in data.columns.levels[1]:
+                df = data.xs(ticker, axis=1, level=1).dropna(how="all")
+            else:
+                return None
+        else:
+            if ticker not in data:
+                return None
+            df = data[ticker].dropna(how="all")
 
-        df = data[ticker].dropna(how="all")
-
-        # Ensure Close column exists and convert to Series
         if "Close" not in df.columns:
             return None
 
@@ -292,18 +300,35 @@ def run_worker():
     print(f"[INFO] Scanning {len(tickers)} total tickers...")
 
     # Using SPY as the benchmark for a broader momentum baseline
-    spy = yf.download("SPY", period="1y")["Close"].squeeze()
-    if spy.empty:
-        sys.exit("[ERROR] Failed to download benchmark (SPY).")
+    # Benchmark download
+    spy_data = yf.download(
+        "SPY", period="1y", auto_adjust=True, progress=False
+    )
+    if "Close" in spy_data.columns:
+        close_series = (
+            spy_data["Close"].squeeze()
+            if isinstance(spy_data["Close"], pd.DataFrame)
+            else spy_data["Close"]
+        )
+    else:
+        close_series = spy_data.iloc[:, 0]
 
-    bench = (float(spy.iloc[-1]) - float(spy.iloc[0])) / float(spy.iloc[0])
+    bench = (float(close_series.iloc[-1]) - float(close_series.iloc[0])) / float(
+        close_series.iloc[0]
+    )
 
     data = yf.download(tickers, period="1y", group_by="ticker")
     res = [process_ticker(t, data, bench) for t in tickers]
     df = pd.DataFrame([r for r in res if r])
 
     if df.empty:
-        sys.exit("No symbols met criteria.")
+        print("No symbols met criteria.")
+        # Export empty file so GEX and AI downstream scripts don't break
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        pd.DataFrame(columns=["Ticker", "Momentum_Signal"]).to_csv(
+            os.path.join(script_dir, "momentum_signals.csv"), index=False
+        )
+        sys.exit(0)
 
     # Sorting logic: Bubbles Volatility alerts to the top, then groups by Phase
     df = df.sort_values(
