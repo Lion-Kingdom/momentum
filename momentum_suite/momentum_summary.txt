@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
 Total Tickers Scanned: 60
-Volatility Alerts: 34
+Volatility Alerts: 23
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 38
- - Consolidating: 9
+ - Strong_Expansion: 43
  - Pullback_Reset: 8
- - Exhausted_Trap: 2
+ - Consolidating: 3
+ - Exhausted_Trap: 3
  - Regaining: 2
  - Losing_Momentum_Flush: 1
 
@@ -16,16 +16,16 @@ Volatility Alerts: 34
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: PSX | Price: $259.14 | 1M: 27.76% | RSI: 77.2
+   ➤ Ticker: SNDK | Price: $1774.74 | 1M: 43.36% | RSI: 62.7
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: KMI | Price: $31.98 | 5D: -0.81% | RSI: 52.3
+   ➤ Ticker: EOG | Price: $146.96 | 5D: -0.94% | RSI: 53.8
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $397.77 | 1D: 2.28% | RSI: 80.8
+   ➤ Ticker: MPC | Price: $400.48 | 1D: 0.68% | RSI: 81.6
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: CRWD | Price: $210.02 | 5D: -9.08% | RSI: 51.7
+   ➤ Ticker: DG | Price: $126.07 | 5D: -3.83% | RSI: 51.1
 
 ==================================================
 🔗 Google Sheet Access Link: 
