@@ -1,31 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 54
-Volatility Alerts: 22
+Total Tickers Scanned: 42
+Volatility Alerts: 20
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 36
- - Pullback_Reset: 8
- - Exhausted_Trap: 3
- - Consolidating: 3
- - Regaining: 3
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 20
+ - Consolidating: 6
+ - Pullback_Reset: 6
+ - Exhausted_Trap: 4
+ - Regaining: 4
+ - Losing_Momentum_Flush: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SNDK | Price: $1764.17 | 1M: 42.51% | RSI: 62.2
+   ➤ Ticker: USO | Price: $157.27 | 1M: 23.24% | RSI: 77.4
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: EOG | Price: $147.01 | 5D: -0.9% | RSI: 53.9
+   ➤ Ticker: MO | Price: $68.64 | 5D: -1.32% | RSI: 51.1
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $399.44 | 1D: 0.42% | RSI: 81.3
+   ➤ Ticker: VLO | Price: $389.34 | 1D: 0.1% | RSI: 81.1
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: CTVA | Price: $84.75 | 5D: -3.4% | RSI: 54.1
+   ➤ Ticker: HAL | Price: $36.06 | 5D: -4.16% | RSI: 54.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
