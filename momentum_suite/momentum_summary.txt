@@ -1,14 +1,14 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 60
-Volatility Alerts: 23
+Total Tickers Scanned: 54
+Volatility Alerts: 22
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 43
+ - Strong_Expansion: 36
  - Pullback_Reset: 8
- - Consolidating: 3
  - Exhausted_Trap: 3
- - Regaining: 2
+ - Consolidating: 3
+ - Regaining: 3
  - Losing_Momentum_Flush: 1
 
 ==================================================
@@ -16,16 +16,16 @@ Volatility Alerts: 23
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SNDK | Price: $1774.74 | 1M: 43.36% | RSI: 62.7
+   ➤ Ticker: SNDK | Price: $1764.17 | 1M: 42.51% | RSI: 62.2
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: EOG | Price: $146.96 | 5D: -0.94% | RSI: 53.8
+   ➤ Ticker: EOG | Price: $147.01 | 5D: -0.9% | RSI: 53.9
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $400.48 | 1D: 0.68% | RSI: 81.6
+   ➤ Ticker: MPC | Price: $399.44 | 1D: 0.42% | RSI: 81.3
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: DG | Price: $126.07 | 5D: -3.83% | RSI: 51.1
+   ➤ Ticker: CTVA | Price: $84.75 | 5D: -3.4% | RSI: 54.1
 
 ==================================================
 🔗 Google Sheet Access Link: 
