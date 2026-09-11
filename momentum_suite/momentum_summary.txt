@@ -1,31 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 40
-Volatility Alerts: 16
+Total Tickers Scanned: 51
+Volatility Alerts: 21
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 21
- - Consolidating: 11
- - Pullback_Reset: 5
- - Exhausted_Trap: 1
- - Losing_Momentum_Flush: 1
- - Regaining: 1
+ - Strong_Expansion: 32
+ - Regaining: 9
+ - Consolidating: 6
+ - Exhausted_Trap: 2
+ - Pullback_Reset: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: USO | Price: $158.38 | 1M: 24.11% | RSI: 78.0
+   ➤ Ticker: HPQ | Price: $34.86 | 1M: 20.21% | RSI: 70.4
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: MO | Price: $68.79 | 5D: -1.11% | RSI: 51.7
+   ➤ Ticker: GS | Price: $1031.6 | 5D: -0.61% | RSI: 50.3
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: SWKS | Price: $84.03 | 1D: 9.79% | RSI: 80.3
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: HAL | Price: $36.07 | 5D: -4.15% | RSI: 54.7
+   ➤ Ticker: SWKS | Price: $90.11 | 1D: 7.24% | RSI: 84.4
 
 ==================================================
 🔗 Google Sheet Access Link: 
