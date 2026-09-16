@@ -1,27 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 51
-Volatility Alerts: 21
+Total Tickers Scanned: 44
+Volatility Alerts: 14
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 32
- - Regaining: 9
- - Consolidating: 6
- - Exhausted_Trap: 2
- - Pullback_Reset: 2
+ - Strong_Expansion: 25
+ - Consolidating: 7
+ - Pullback_Reset: 7
+ - Regaining: 4
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: HPQ | Price: $34.86 | 1M: 20.21% | RSI: 70.4
+   ➤ Ticker: RVTY | Price: $143.78 | 1M: 23.77% | RSI: 73.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: GS | Price: $1031.6 | 5D: -0.61% | RSI: 50.3
+   ➤ Ticker: XLK | Price: $185.69 | 5D: -1.16% | RSI: 51.5
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: SWKS | Price: $90.11 | 1D: 7.24% | RSI: 84.4
+   ➤ Ticker: MPC | Price: $410.2 | 1D: -0.16% | RSI: 79.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
