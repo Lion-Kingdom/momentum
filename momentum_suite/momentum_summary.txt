@@ -1,31 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 36
-Volatility Alerts: 22
+Total Tickers Scanned: 59
+Volatility Alerts: 30
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 15
- - Consolidating: 9
+ - Strong_Expansion: 48
  - Regaining: 5
- - Pullback_Reset: 5
- - Losing_Momentum_Flush: 1
- - Exhausted_Trap: 1
+ - Exhausted_Trap: 3
+ - Consolidating: 2
+ - Pullback_Reset: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: RVTY | Price: $145.73 | 1M: 25.45% | RSI: 74.4
+   ➤ Ticker: MRNA | Price: $155.34 | 1M: 146.73% | RSI: 65.0
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: MRVL | Price: $229.71 | 5D: -2.26% | RSI: 52.7
+   ➤ Ticker: SNDK | Price: $1593.08 | 5D: -5.88% | RSI: 51.7
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $413.92 | 1D: 0.75% | RSI: 80.5
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: CF | Price: $131.99 | 5D: -4.43% | RSI: 53.9
+   ➤ Ticker: MPC | Price: $421.82 | 1D: 1.91% | RSI: 82.6
 
 ==================================================
 🔗 Google Sheet Access Link: 
