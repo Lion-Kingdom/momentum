@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
 Total Tickers Scanned: 41
-Volatility Alerts: 19
+Volatility Alerts: 18
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 15
- - Pullback_Reset: 10
- - Consolidating: 9
- - Regaining: 5
+ - Consolidating: 10
+ - Pullback_Reset: 8
+ - Regaining: 6
  - Exhausted_Trap: 2
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 19
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SNDK | Price: $1736.23 | 1M: 10.67% | RSI: 59.1
+   ➤ Ticker: VRSN | Price: $305.33 | 1M: 11.83% | RSI: 65.5
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PWR | Price: $633.28 | 5D: -2.66% | RSI: 50.1
+   ➤ Ticker: PWR | Price: $633.67 | 5D: -2.6% | RSI: 50.2
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $422.66 | 1D: 0.17% | RSI: 82.8
+   ➤ Ticker: MPC | Price: $423.3 | 1D: 0.32% | RSI: 82.9
 
 ==================================================
 🔗 Google Sheet Access Link: 
