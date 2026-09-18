@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 41
-Volatility Alerts: 18
+Total Tickers Scanned: 48
+Volatility Alerts: 24
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 15
+ - Strong_Expansion: 21
  - Consolidating: 10
- - Pullback_Reset: 8
- - Regaining: 6
+ - Regaining: 8
+ - Pullback_Reset: 7
  - Exhausted_Trap: 2
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 18
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: VRSN | Price: $305.33 | 1M: 11.83% | RSI: 65.5
+   ➤ Ticker: AMD | Price: $559.82 | 1M: 20.02% | RSI: 65.4
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PWR | Price: $633.67 | 5D: -2.6% | RSI: 50.2
+   ➤ Ticker: JCI | Price: $143.28 | 5D: -1.87% | RSI: 50.2
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $423.3 | 1D: 0.32% | RSI: 82.9
+   ➤ Ticker: MPC | Price: $424.89 | 1D: 0.69% | RSI: 83.3
 
 ==================================================
 🔗 Google Sheet Access Link: 
