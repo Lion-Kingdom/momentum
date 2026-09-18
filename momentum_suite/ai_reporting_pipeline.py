@@ -1,6 +1,7 @@
 """
 AI Reporting Pipeline for Momentum and Gamma Screener.
-Processes the GEX main log, queries Gemini, and dispatches the HTML email.
+Processes the GEX main log, queries Gemini, dispatches HTML email,
+and includes a mobile-friendly accordion fallback telemetry board.
 """
 
 import json
@@ -114,7 +115,7 @@ def append_ohlcv_data(main_csv_path="unified_gex_momentum_main_log.csv"):
         yf_ticker = (
             f"^{ticker}"
             if ticker in ["SPX", "XSP", "NDX", "RUT", "VIX"]
-               and not ticker.startswith("^")
+            and not ticker.startswith("^")
             else ticker
         )
 
@@ -139,6 +140,116 @@ def append_ohlcv_data(main_csv_path="unified_gex_momentum_main_log.csv"):
     export_gex_to_sheets(df)
 
     return df
+
+
+def generate_raw_telemetry_board(df):
+    """Builds a mobile-friendly accordion dropdown telemetry board grouped by Phase."""
+    if df.empty:
+        return "<p style='color: #aaa;'>No active GEX telemetry records found for this session.</p>"
+
+    phases = [
+        "Strong_Expansion",
+        "Consolidating",
+        "Pullback_Reset",
+        "Regaining",
+        "Exhausted_Trap",
+    ]
+
+    html_sections = []
+    html_sections.append(
+        """
+    <div style="background-color: #121212; color: #fff; padding: 15px; border-radius: 8px; font-family: Arial, sans-serif;">
+        <h3 style="color: #00ff66; margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 8px;">
+          🛰️ Community AI Fallback Telemetry Dashboard
+        </h3>
+        <p style="color: #aaa; font-size: 11px; margin-bottom: 15px;">
+          Interactive phase breakdown. Tap any phase below to expand tickers, view raw pricing metrics, and inspect GEX option walls.
+        </p>
+    """  # noqa
+    )
+
+    for phase in phases:
+        phase_df = (
+            df[df["Phase"].str.strip() == phase]
+            if "Phase" in df.columns
+            else pd.DataFrame()
+        )
+        count = len(phase_df)
+
+        if count == 0:
+            continue
+
+        accent_color = (
+            "#00ff66"
+            if phase in ["Strong_Expansion", "Regaining"]
+            else ("#ffaa00" if phase == "Consolidating" else "#ff4444")
+        )
+
+        html_sections.append(
+            f"""
+        <details style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <summary style="color: {accent_color}; font-weight: bold; cursor: pointer; font-size: 13px; outline: none;">
+                📈 {phase.replace('_', ' ')} ({count} Tickers) — Click to Expand
+            </summary>
+            <div style="margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; overflow-x: auto;">
+        """  # noqa
+        )
+
+        for _, row in phase_df.iterrows():
+            ticker = row.get("Ticker", "UNKNOWN")
+            mom_signal = row.get("Momentum_Signal", "Neutral")
+            price = row.get("Price", 0.0)
+            open_p = row.get("Open", 0.0)
+            high = row.get("High", 0.0)
+            low = row.get("Low", 0.0)
+            vol = row.get("Volume", 0)
+            d1 = row.get("1D%", 0.0)
+            d5 = row.get("5D%", 0.0)
+            m1 = row.get("1M%", 0.0)
+            rsi = row.get("RSI", 0.0)
+            alert = row.get("Alert", "N/A")
+
+            html_sections.append(
+                f"""
+                <div style="background: #222; border-left: 3px solid {accent_color}; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                    <div style="font-family: 'Courier New', monospace; font-size: 11px; color: #00ff66; font-weight: bold; margin-bottom: 4px;">
+                        🔄 {ticker} | Signal: {mom_signal} | Alert: {alert}
+                    </div>
+                    <div style="font-family: 'Courier New', monospace; font-size: 10px; color: #ccc; margin-bottom: 6px;">
+                      Price: ${price:,.2f} | Open: ${open_p:,.2f} | High: ${high:,.2f} | Low: ${low:,.2f} | Vol: {int(vol):,} | 1D: {d1}% | 5D: {d5}% | 1M: {m1}% | RSI: {rsi}
+                    </div>
+            """  # noqa
+            )
+
+            ticker_gex = df[df["Ticker"] == ticker]
+            if not ticker_gex.empty and "Target_Expiry" in ticker_gex.columns:
+                for _, gex_row in ticker_gex.iterrows():
+                    timeframe = gex_row.get("Timeframe", "~7 DTE")
+                    expiry = gex_row.get("Target_Expiry", "N/A")
+                    dte = gex_row.get("Actual_DTE", 0)
+                    call_wall = gex_row.get("Call_Wall_Ceiling", 0.0)
+                    put_wall = gex_row.get("Put_Wall_Floor", 0.0)
+                    flip = gex_row.get("Gamma_Flip", 0.0)
+                    regime = gex_row.get("Market_Regime", "POSITIVE GAMMA")
+                    strategy = gex_row.get("Confirmed_Strategy", "Stand Aside")
+                    targets = gex_row.get("Target_Strikes", "N/A")
+
+                    html_sections.append(
+                        f"""
+                    <div style="font-family: 'Courier New', monospace; font-size: 10px; color: #aaa; margin-left: 10px; margin-top: 4px; border-left: 1px dotted #555; padding-left: 6px;">
+                      ⏱️ {timeframe} -> Expiry: {expiry} ({dte} DTE)<br>
+                      📊 Walls -> Call: ${call_wall:,.2f} | Put: ${put_wall:,.2f} | Flip: ${flip:,.2f}<br>
+                      📈 Regime: {regime} | Strategy: <b>{strategy}</b> ({targets})
+                    </div>
+                    """  # noqa
+                    )
+
+            html_sections.append("</div>")
+
+        html_sections.append("</div></details>")
+
+    html_sections.append("</div>")
+    return "".join(html_sections)
 
 
 def generate_gemini_report(df):
@@ -229,7 +340,7 @@ def generate_gemini_report(df):
                     time.sleep(30)
                 else:
                     print("❌ Max retries reached. Google AI servers are currently down.")  # noqa
-                    return "<h2>Error generating AI report: API unavailable.</h2>"
+                    return "<h2>Error generating AI report: API unavailable. See raw fallback telemetry below.</h2>"  # noqa
             else:
                 print(f"Error calling Gemini: {e}")
                 return f"<h2>Error generating AI report: {e}</h2>"
@@ -287,6 +398,9 @@ if __name__ == "__main__":
     updated_df = append_ohlcv_data(target_path)
 
     ai_report = generate_gemini_report(updated_df)
+    
+    # 🟢 NEW: Generate the Raw Community Telemetry Board
+    raw_telemetry_text = generate_raw_telemetry_board(updated_df)
 
     try:
         summary_path = "momentum_summary.txt"
@@ -302,6 +416,10 @@ if __name__ == "__main__":
     <div style="background-color: #121212; padding: 20px; width: 100%; font-family: Arial, sans-serif;">
         <div style="max-width: 650px; margin: 0 auto;">
             {ai_report}
+            <br>
+            
+            {raw_telemetry_text}
+            
             <br>
             <div style="background-color: #1a1a1a; border-left: 4px solid #00ff66; border-radius: 6px; padding: 18px; color: #e0e0e0;">
                 <h3 style="color: #00ff66; margin-top: 0; font-size: 16px; letter-spacing: 0.5px;">
