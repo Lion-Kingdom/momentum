@@ -143,7 +143,7 @@ def append_ohlcv_data(main_csv_path="unified_gex_momentum_main_log.csv"):
 
 
 def generate_raw_telemetry_board(df):
-    """Builds a mobile-friendly accordion dropdown telemetry board grouped by Phase."""
+    """Builds an Outlook-safe stacked telemetry board grouped by Phase."""
     if df.empty:
         return "<p style='color: #aaa;'>No active GEX telemetry records found for this session.</p>"
 
@@ -163,7 +163,7 @@ def generate_raw_telemetry_board(df):
           🛰️ Community AI Fallback Telemetry Dashboard
         </h3>
         <p style="color: #aaa; font-size: 11px; margin-bottom: 15px;">
-          Interactive phase breakdown. Tap any phase below to expand tickers, view raw pricing metrics, and inspect GEX option walls.
+          Categorized phase breakdown. Use this raw telemetry to prompt your local LLM if the main AI is offline.
         </p>
     """  # noqa
     )
@@ -187,11 +187,11 @@ def generate_raw_telemetry_board(df):
 
         html_sections.append(
             f"""
-        <details style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 12px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-            <summary style="color: {accent_color}; font-weight: bold; cursor: pointer; font-size: 13px; outline: none;">
-                📈 {phase.replace('_', ' ')} ({count} Tickers) — Click to Expand
-            </summary>
-            <div style="margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; overflow-x: auto;">
+        <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 16px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <div style="color: {accent_color}; font-weight: bold; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px;">
+                📈 {phase.replace('_', ' ')} ({count} Tickers)
+            </div>
+            <div style="overflow-x: auto;">
         """  # noqa
         )
 
@@ -246,7 +246,7 @@ def generate_raw_telemetry_board(df):
 
             html_sections.append("</div>")
 
-        html_sections.append("</div></details>")
+        html_sections.append("</div></div>")
 
     html_sections.append("</div>")
     return "".join(html_sections)
