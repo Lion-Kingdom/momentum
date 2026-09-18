@@ -445,6 +445,13 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                     "Gamma_Flip": flip_strike,
                     "Confirmed_Strategy": strategy,
                     "Target_Strikes": targets,
+                    # 🟢 NEW: Pass Phase 1 Technical Data to the CSV for Phase 3 Dropdowns
+                    "Phase": row.get("Phase", "N/A"),
+                    "1D%": row.get("1D%", 0.0),
+                    "5D%": row.get("5D%", 0.0),
+                    "1M%": row.get("1M%", 0.0),
+                    "RSI": row.get("RSI", 0.0),
+                    "Alert": row.get("Alert", "N/A"),
                 }
             )
 
