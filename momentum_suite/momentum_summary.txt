@@ -1,26 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 59
-Volatility Alerts: 34
+Total Tickers Scanned: 38
+Volatility Alerts: 17
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 51
- - Regaining: 4
- - Exhausted_Trap: 3
- - Pullback_Reset: 1
+ - Strong_Expansion: 12
+ - Consolidating: 11
+ - Pullback_Reset: 9
+ - Regaining: 5
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $158.07 | 1M: 151.06% | RSI: 66.0
+   ➤ Ticker: SNDK | Price: $1740.58 | 1M: 10.95% | RSI: 59.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DRAM | Price: $57.78 | 5D: -1.33% | RSI: 52.2
+   ➤ Ticker: ADI | Price: $370.48 | 5D: -2.19% | RSI: 51.9
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $421.96 | 1D: 1.94% | RSI: 82.6
+   ➤ Ticker: MPC | Price: $423.15 | 1D: 0.28% | RSI: 82.9
 
 ==================================================
 🔗 Google Sheet Access Link: 
