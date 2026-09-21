@@ -1,27 +1,23 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 50
-Volatility Alerts: 26
+Total Tickers Scanned: 80
+Volatility Alerts: 54
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 21
- - Consolidating: 11
- - Pullback_Reset: 8
- - Regaining: 8
- - Exhausted_Trap: 2
+ - Strong_Expansion: 73
+ - Consolidating: 3
+ - Pullback_Reset: 3
+ - Regaining: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: AMD | Price: $559.82 | 1M: 20.02% | RSI: 65.4
+   ➤ Ticker: BE | Price: $274.05 | 1M: 35.34% | RSI: 59.9
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: JCI | Price: $143.28 | 5D: -1.87% | RSI: 50.2
-
-🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $424.89 | 1D: 0.69% | RSI: 83.3
+   ➤ Ticker: USO | Price: $147.55 | 5D: -5.82% | RSI: 55.1
 
 ==================================================
 🔗 Google Sheet Access Link: 
