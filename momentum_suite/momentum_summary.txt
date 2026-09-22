@@ -1,23 +1,23 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 80
-Volatility Alerts: 54
+Total Tickers Scanned: 79
+Volatility Alerts: 59
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 73
- - Consolidating: 3
+ - Strong_Expansion: 68
+ - Consolidating: 5
  - Pullback_Reset: 3
- - Regaining: 1
+ - Regaining: 3
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: BE | Price: $274.05 | 1M: 35.34% | RSI: 59.9
+   ➤ Ticker: BE | Price: $272.89 | 1M: 34.77% | RSI: 59.6
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: USO | Price: $147.55 | 5D: -5.82% | RSI: 55.1
+   ➤ Ticker: C | Price: $135.05 | 5D: -0.83% | RSI: 50.4
 
 ==================================================
 🔗 Google Sheet Access Link: 
