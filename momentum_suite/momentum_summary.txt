@@ -1,27 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 69
-Volatility Alerts: 27
+Total Tickers Scanned: 55
+Volatility Alerts: 31
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 57
- - Consolidating: 7
- - Regaining: 2
+ - Strong_Expansion: 43
+ - Consolidating: 4
+ - Regaining: 4
  - Pullback_Reset: 2
- - Losing_Momentum_Flush: 1
+ - Losing_Momentum_Flush: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: BE | Price: $277.78 | 1M: 37.89% | RSI: 61.0
+   ➤ Ticker: CRWD | Price: $260.94 | 1M: 35.94% | RSI: 68.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PM | Price: $190.31 | 5D: -1.96% | RSI: 51.8
+   ➤ Ticker: EG | Price: $375.7 | 5D: -1.01% | RSI: 52.1
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: USO | Price: $146.4 | 5D: -9.55% | RSI: 53.6
+   ➤ Ticker: HPQ | Price: $32.3 | 5D: -4.49% | RSI: 53.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
