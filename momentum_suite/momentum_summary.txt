@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 59
-Volatility Alerts: 34
+Total Tickers Scanned: 56
+Volatility Alerts: 23
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 38
- - Consolidating: 15
- - Pullback_Reset: 3
- - Regaining: 2
+ - Strong_Expansion: 40
+ - Consolidating: 10
+ - Regaining: 4
+ - Pullback_Reset: 1
  - Losing_Momentum_Flush: 1
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 34
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: CRWD | Price: $262.49 | 1M: 36.75% | RSI: 68.7
+   ➤ Ticker: INTC | Price: $125.7 | 1M: 43.69% | RSI: 72.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PM | Price: $190.84 | 5D: -1.68% | RSI: 52.6
+   ➤ Ticker: BE | Price: $266.98 | 5D: -4.91% | RSI: 56.3
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: HPQ | Price: $32.16 | 5D: -4.91% | RSI: 52.5
+   ➤ Ticker: DELL | Price: $535.61 | 5D: -8.97% | RSI: 54.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
