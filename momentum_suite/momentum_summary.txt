@@ -1,27 +1,23 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 57
-Volatility Alerts: 27
+Total Tickers Scanned: 75
+Volatility Alerts: 38
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 39
- - Consolidating: 10
- - Pullback_Reset: 4
- - Losing_Momentum_Flush: 2
+ - Strong_Expansion: 66
+ - Consolidating: 6
  - Regaining: 2
+ - Pullback_Reset: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: INTC | Price: $127.39 | 1M: 45.62% | RSI: 73.0
+   ➤ Ticker: SWKS | Price: $90.0 | 1M: 35.1% | RSI: 63.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: BE | Price: $266.65 | 5D: -5.03% | RSI: 56.2
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: DELL | Price: $536.02 | 5D: -8.9% | RSI: 54.1
+   ➤ Ticker: COHR | Price: $300.11 | 5D: -5.43% | RSI: 50.8
 
 ==================================================
 🔗 Google Sheet Access Link: 
