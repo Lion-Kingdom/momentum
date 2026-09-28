@@ -1,23 +1,26 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 75
-Volatility Alerts: 38
+Total Tickers Scanned: 79
+Volatility Alerts: 34
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 66
- - Consolidating: 6
- - Regaining: 2
- - Pullback_Reset: 1
+ - Strong_Expansion: 67
+ - Consolidating: 8
+ - Regaining: 3
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SWKS | Price: $90.0 | 1M: 35.1% | RSI: 63.1
+   ➤ Ticker: SWKS | Price: $89.34 | 1M: 34.1% | RSI: 62.5
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: COHR | Price: $300.11 | 5D: -5.43% | RSI: 50.8
+   ➤ Ticker: SNDK | Price: $1777.8 | 5D: -0.78% | RSI: 57.3
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: USO | Price: $148.33 | 5D: -3.57% | RSI: 54.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
