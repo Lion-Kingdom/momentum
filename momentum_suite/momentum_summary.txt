@@ -1,12 +1,12 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 79
-Volatility Alerts: 34
+Total Tickers Scanned: 55
+Volatility Alerts: 23
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 67
- - Consolidating: 8
- - Regaining: 3
+ - Strong_Expansion: 33
+ - Pullback_Reset: 11
+ - Consolidating: 10
  - Losing_Momentum_Flush: 1
 
 ==================================================
@@ -14,13 +14,13 @@ Volatility Alerts: 34
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SWKS | Price: $89.34 | 1M: 34.1% | RSI: 62.5
+   ➤ Ticker: P | Price: $130.05 | 1M: 31.05% | RSI: 73.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: SNDK | Price: $1777.8 | 5D: -0.78% | RSI: 57.3
+   ➤ Ticker: QCOM | Price: $189.88 | 5D: -2.24% | RSI: 56.4
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: USO | Price: $148.33 | 5D: -3.57% | RSI: 54.0
+   ➤ Ticker: DELL | Price: $545.18 | 5D: -5.24% | RSI: 54.8
 
 ==================================================
 🔗 Google Sheet Access Link: 
