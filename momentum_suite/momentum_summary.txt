@@ -1,26 +1,26 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 55
-Volatility Alerts: 23
+Total Tickers Scanned: 70
+Volatility Alerts: 27
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 33
- - Pullback_Reset: 11
- - Consolidating: 10
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 43
+ - Pullback_Reset: 13
+ - Consolidating: 8
+ - Losing_Momentum_Flush: 6
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: P | Price: $130.05 | 1M: 31.05% | RSI: 73.1
+   ➤ Ticker: P | Price: $129.4 | 1M: 30.39% | RSI: 72.8
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: QCOM | Price: $189.88 | 5D: -2.24% | RSI: 56.4
+   ➤ Ticker: FFIV | Price: $435.56 | 5D: -3.23% | RSI: 57.0
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: DELL | Price: $545.18 | 5D: -5.24% | RSI: 54.8
+   ➤ Ticker: DELL | Price: $543.43 | 5D: -5.54% | RSI: 54.4
 
 ==================================================
 🔗 Google Sheet Access Link: 
