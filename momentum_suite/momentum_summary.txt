@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 54
-Volatility Alerts: 16
+Total Tickers Scanned: 66
+Volatility Alerts: 14
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 23
- - Pullback_Reset: 14
- - Consolidating: 10
- - Regaining: 6
+ - Strong_Expansion: 37
+ - Pullback_Reset: 11
+ - Consolidating: 9
+ - Regaining: 8
  - Losing_Momentum_Flush: 1
 
 ==================================================
@@ -15,13 +15,13 @@ Volatility Alerts: 16
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $200.92 | 1M: 45.6% | RSI: 75.8
+   ➤ Ticker: MRNA | Price: $203.46 | 1M: 47.45% | RSI: 76.4
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: GLW | Price: $157.76 | 5D: -1.21% | RSI: 52.5
+   ➤ Ticker: EW | Price: $88.08 | 5D: -0.79% | RSI: 50.3
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: QCOM | Price: $184.32 | 5D: -7.04% | RSI: 52.1
+   ➤ Ticker: QCOM | Price: $184.1 | 5D: -7.15% | RSI: 52.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
