@@ -1,27 +1,23 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 61
-Volatility Alerts: 19
+Total Tickers Scanned: 45
+Volatility Alerts: 12
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 38
- - Consolidating: 12
- - Regaining: 5
- - Pullback_Reset: 5
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 26
+ - Consolidating: 11
+ - Pullback_Reset: 4
+ - Regaining: 4
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: P | Price: $130.45 | 1M: 40.34% | RSI: 73.4
+   ➤ Ticker: P | Price: $130.78 | 1M: 40.7% | RSI: 73.5
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: WDC | Price: $458.78 | 5D: -3.15% | RSI: 50.4
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: SWKS | Price: $84.86 | 5D: -7.21% | RSI: 54.8
+   ➤ Ticker: AAPL | Price: $333.02 | 5D: -1.19% | RSI: 54.4
 
 ==================================================
 🔗 Google Sheet Access Link: 
