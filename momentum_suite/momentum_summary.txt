@@ -1,23 +1,23 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 80
-Volatility Alerts: 41
+Total Tickers Scanned: 77
+Volatility Alerts: 45
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 63
- - Pullback_Reset: 8
- - Regaining: 6
- - Consolidating: 3
+ - Strong_Expansion: 64
+ - Pullback_Reset: 10
+ - Consolidating: 2
+ - Regaining: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SOXL | Price: $155.38 | 1M: 46.8% | RSI: 61.9
+   ➤ Ticker: SOXL | Price: $153.69 | 1M: 45.21% | RSI: 61.2
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PH | Price: $966.99 | 5D: -0.82% | RSI: 50.1
+   ➤ Ticker: TMO | Price: $652.51 | 5D: -3.81% | RSI: 55.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
