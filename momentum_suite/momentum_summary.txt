@@ -1,31 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
 Total Tickers Scanned: 91
-Volatility Alerts: 57
+Volatility Alerts: 24
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 69
- - Regaining: 11
- - Pullback_Reset: 6
- - Consolidating: 3
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 60
+ - Consolidating: 19
+ - Regaining: 10
  - Exhausted_Trap: 1
+ - Pullback_Reset: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SOXL | Price: $163.71 | 1M: 54.04% | RSI: 65.1
+   ➤ Ticker: MRNA | Price: $203.65 | 1M: 36.8% | RSI: 70.8
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: GOOGL | Price: $343.5 | 5D: -0.12% | RSI: 50.0
+   ➤ Ticker: IBB | Price: $207.45 | 5D: -1.55% | RSI: 51.1
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $140.14 | 1D: 4.48% | RSI: 78.2
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: SNDK | Price: $1719.99 | 5D: -3.25% | RSI: 52.7
+   ➤ Ticker: P | Price: $141.25 | 1D: 0.79% | RSI: 78.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
