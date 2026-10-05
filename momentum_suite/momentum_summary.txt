@@ -1,13 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 82
-Volatility Alerts: 49
+Total Tickers Scanned: 91
+Volatility Alerts: 57
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 64
- - Regaining: 8
- - Pullback_Reset: 4
- - Consolidating: 4
+ - Strong_Expansion: 69
+ - Regaining: 11
+ - Pullback_Reset: 6
+ - Consolidating: 3
  - Losing_Momentum_Flush: 1
  - Exhausted_Trap: 1
 
@@ -16,16 +16,16 @@ Volatility Alerts: 49
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SOXL | Price: $162.5 | 1M: 52.9% | RSI: 64.7
+   ➤ Ticker: SOXL | Price: $163.71 | 1M: 54.04% | RSI: 65.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: GOOGL | Price: $343.62 | 5D: -0.09% | RSI: 50.1
+   ➤ Ticker: GOOGL | Price: $343.5 | 5D: -0.12% | RSI: 50.0
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $139.77 | 1D: 4.2% | RSI: 78.0
+   ➤ Ticker: P | Price: $140.14 | 1D: 4.48% | RSI: 78.2
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: SNDK | Price: $1719.59 | 5D: -3.27% | RSI: 52.7
+   ➤ Ticker: SNDK | Price: $1719.99 | 5D: -3.25% | RSI: 52.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
