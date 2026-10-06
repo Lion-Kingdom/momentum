@@ -1,12 +1,12 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 91
-Volatility Alerts: 24
+Total Tickers Scanned: 88
+Volatility Alerts: 26
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 60
- - Consolidating: 19
- - Regaining: 10
+ - Strong_Expansion: 59
+ - Consolidating: 16
+ - Regaining: 11
  - Exhausted_Trap: 1
  - Pullback_Reset: 1
 
@@ -15,13 +15,13 @@ Volatility Alerts: 24
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $203.65 | 1M: 36.8% | RSI: 70.8
+   ➤ Ticker: SOXL | Price: $164.27 | 1M: 54.0% | RSI: 65.4
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: IBB | Price: $207.45 | 5D: -1.55% | RSI: 51.1
+   ➤ Ticker: STX | Price: $887.09 | 5D: -3.74% | RSI: 51.6
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $141.25 | 1D: 0.79% | RSI: 78.7
+   ➤ Ticker: P | Price: $143.88 | 1D: 2.67% | RSI: 79.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
