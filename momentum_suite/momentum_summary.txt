@@ -1,31 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 97
-Volatility Alerts: 44
+Total Tickers Scanned: 60
+Volatility Alerts: 25
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 75
- - Consolidating: 10
- - Pullback_Reset: 7
- - Regaining: 3
- - Exhausted_Trap: 1
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 28
+ - Consolidating: 22
+ - Regaining: 6
+ - Pullback_Reset: 2
+ - Exhausted_Trap: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: CIEN | Price: $443.65 | 1M: 38.21% | RSI: 69.7
+   ➤ Ticker: HPE | Price: $72.81 | 1M: 30.27% | RSI: 72.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: JBL | Price: $309.19 | 5D: -3.03% | RSI: 50.3
+   ➤ Ticker: DRAM | Price: $60.18 | 5D: -0.3% | RSI: 51.7
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $147.2 | 1D: 2.31% | RSI: 81.0
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: TMO | Price: $656.58 | 5D: -3.39% | RSI: 54.7
+   ➤ Ticker: P | Price: $151.32 | 1D: 2.8% | RSI: 82.5
 
 ==================================================
 🔗 Google Sheet Access Link: 
