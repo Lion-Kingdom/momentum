@@ -1,27 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 99
-Volatility Alerts: 49
+Total Tickers Scanned: 97
+Volatility Alerts: 44
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 83
+ - Strong_Expansion: 75
+ - Consolidating: 10
  - Pullback_Reset: 7
- - Consolidating: 6
- - Regaining: 2
+ - Regaining: 3
  - Exhausted_Trap: 1
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: SOXL | Price: $166.74 | 1M: 42.27% | RSI: 66.3
+   ➤ Ticker: CIEN | Price: $443.65 | 1M: 38.21% | RSI: 69.7
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: VTRS | Price: $17.52 | 5D: -3.28% | RSI: 55.8
+   ➤ Ticker: JBL | Price: $309.19 | 5D: -3.03% | RSI: 50.3
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $147.54 | 1D: 2.55% | RSI: 81.2
+   ➤ Ticker: P | Price: $147.2 | 1D: 2.31% | RSI: 81.0
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: TMO | Price: $656.58 | 5D: -3.39% | RSI: 54.7
 
 ==================================================
 🔗 Google Sheet Access Link: 
