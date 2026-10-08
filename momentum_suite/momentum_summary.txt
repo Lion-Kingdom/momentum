@@ -1,27 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 60
+Total Tickers Scanned: 58
 Volatility Alerts: 25
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 28
- - Consolidating: 22
- - Regaining: 6
- - Pullback_Reset: 2
- - Exhausted_Trap: 2
+ - Consolidating: 20
+ - Pullback_Reset: 6
+ - Regaining: 2
+ - Exhausted_Trap: 1
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: HPE | Price: $72.81 | 1M: 30.27% | RSI: 72.3
+   ➤ Ticker: MRNA | Price: $196.48 | 1M: 40.01% | RSI: 63.7
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DRAM | Price: $60.18 | 5D: -0.3% | RSI: 51.7
+   ➤ Ticker: PFE | Price: $28.0 | 5D: -1.82% | RSI: 52.2
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $151.32 | 1D: 2.8% | RSI: 82.5
+   ➤ Ticker: P | Price: $152.66 | 1D: 3.71% | RSI: 83.0
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: TWLO | Price: $273.0 | 5D: -6.65% | RSI: 53.1
 
 ==================================================
 🔗 Google Sheet Access Link: 
