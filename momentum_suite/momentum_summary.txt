@@ -1,31 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 58
-Volatility Alerts: 25
+Total Tickers Scanned: 72
+Volatility Alerts: 45
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 28
- - Consolidating: 20
- - Pullback_Reset: 6
+ - Strong_Expansion: 39
+ - Consolidating: 16
+ - Pullback_Reset: 9
+ - Losing_Momentum_Flush: 4
+ - Exhausted_Trap: 2
  - Regaining: 2
- - Exhausted_Trap: 1
- - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $196.48 | 1M: 40.01% | RSI: 63.7
+   ➤ Ticker: VLO | Price: $443.73 | 1M: 14.08% | RSI: 77.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PFE | Price: $28.0 | 5D: -1.82% | RSI: 52.2
+   ➤ Ticker: HST | Price: $22.47 | 5D: -0.19% | RSI: 53.7
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $152.66 | 1D: 3.71% | RSI: 83.0
+   ➤ Ticker: P | Price: $152.26 | 1D: -0.26% | RSI: 82.3
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: TWLO | Price: $273.0 | 5D: -6.65% | RSI: 53.1
+   ➤ Ticker: LRCX | Price: $318.63 | 5D: -6.31% | RSI: 51.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
