@@ -1,31 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 76
-Volatility Alerts: 40
+Total Tickers Scanned: 111
+Volatility Alerts: 49
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 42
- - Consolidating: 20
- - Pullback_Reset: 7
- - Losing_Momentum_Flush: 4
- - Exhausted_Trap: 2
- - Regaining: 1
+ - Strong_Expansion: 92
+ - Regaining: 9
+ - Pullback_Reset: 4
+ - Consolidating: 4
+ - Losing_Momentum_Flush: 1
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $197.0 | 1M: 45.27% | RSI: 63.9
+   ➤ Ticker: MRNA | Price: $219.85 | 1M: 60.92% | RSI: 70.9
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: TWLO | Price: $275.77 | 5D: -8.46% | RSI: 54.2
+   ➤ Ticker: COHR | Price: $310.89 | 5D: -7.76% | RSI: 51.2
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: MPC | Price: $463.34 | 1D: 4.77% | RSI: 79.6
+   ➤ Ticker: P | Price: $153.29 | 1D: 1.81% | RSI: 80.7
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: SOXL | Price: $142.52 | 5D: -7.27% | RSI: 50.7
+   ➤ Ticker: TXN | Price: $282.97 | 5D: -3.69% | RSI: 55.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
