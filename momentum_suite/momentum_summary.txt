@@ -1,13 +1,14 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 106
-Volatility Alerts: 50
+Total Tickers Scanned: 95
+Volatility Alerts: 30
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 91
- - Regaining: 7
- - Consolidating: 5
- - Pullback_Reset: 2
+ - Strong_Expansion: 63
+ - Pullback_Reset: 13
+ - Consolidating: 11
+ - Regaining: 4
+ - Losing_Momentum_Flush: 3
  - Exhausted_Trap: 1
 
 ==================================================
@@ -15,13 +16,16 @@ Volatility Alerts: 50
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $225.0 | 1M: 64.69% | RSI: 72.1
+   ➤ Ticker: MTD | Price: $1563.54 | 1M: 20.87% | RSI: 68.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: ETN | Price: $429.65 | 5D: -1.48% | RSI: 51.4
+   ➤ Ticker: WAB | Price: $288.92 | 5D: -1.01% | RSI: 52.8
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $154.49 | 1D: 2.6% | RSI: 81.2
+   ➤ Ticker: P | Price: $153.3 | 1D: -0.77% | RSI: 79.2
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: AMAT | Price: $497.28 | 5D: -8.3% | RSI: 50.8
 
 ==================================================
 🔗 Google Sheet Access Link: 
