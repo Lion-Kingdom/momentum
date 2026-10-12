@@ -1,14 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 111
-Volatility Alerts: 49
+Total Tickers Scanned: 106
+Volatility Alerts: 50
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 92
- - Regaining: 9
- - Pullback_Reset: 4
- - Consolidating: 4
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 91
+ - Regaining: 7
+ - Consolidating: 5
+ - Pullback_Reset: 2
  - Exhausted_Trap: 1
 
 ==================================================
@@ -16,16 +15,13 @@ Volatility Alerts: 49
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $219.85 | 1M: 60.92% | RSI: 70.9
+   ➤ Ticker: MRNA | Price: $225.0 | 1M: 64.69% | RSI: 72.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: COHR | Price: $310.89 | 5D: -7.76% | RSI: 51.2
+   ➤ Ticker: ETN | Price: $429.65 | 5D: -1.48% | RSI: 51.4
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $153.29 | 1D: 1.81% | RSI: 80.7
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: TXN | Price: $282.97 | 5D: -3.69% | RSI: 55.0
+   ➤ Ticker: P | Price: $154.49 | 1D: 2.6% | RSI: 81.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
