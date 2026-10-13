@@ -1,14 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 95
-Volatility Alerts: 30
+Total Tickers Scanned: 93
+Volatility Alerts: 36
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 63
+ - Strong_Expansion: 66
  - Pullback_Reset: 13
  - Consolidating: 11
- - Regaining: 4
- - Losing_Momentum_Flush: 3
+ - Losing_Momentum_Flush: 2
  - Exhausted_Trap: 1
 
 ==================================================
@@ -16,16 +15,16 @@ Volatility Alerts: 30
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MTD | Price: $1563.54 | 1M: 20.87% | RSI: 68.1
+   ➤ Ticker: MTD | Price: $1563.01 | 1M: 20.83% | RSI: 68.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: WAB | Price: $288.92 | 5D: -1.01% | RSI: 52.8
+   ➤ Ticker: TQQQ | Price: $79.61 | 5D: -4.22% | RSI: 55.1
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $153.3 | 1D: -0.77% | RSI: 79.2
+   ➤ Ticker: P | Price: $155.31 | 1D: 0.53% | RSI: 81.5
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: AMAT | Price: $497.28 | 5D: -8.3% | RSI: 50.8
+   ➤ Ticker: LITE | Price: $995.41 | 5D: -8.82% | RSI: 50.9
 
 ==================================================
 🔗 Google Sheet Access Link: 
