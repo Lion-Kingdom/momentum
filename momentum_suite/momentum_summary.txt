@@ -1,13 +1,14 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 93
-Volatility Alerts: 36
+Total Tickers Scanned: 89
+Volatility Alerts: 17
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 66
- - Pullback_Reset: 13
- - Consolidating: 11
- - Losing_Momentum_Flush: 2
+ - Strong_Expansion: 56
+ - Pullback_Reset: 18
+ - Consolidating: 7
+ - Losing_Momentum_Flush: 4
+ - Regaining: 3
  - Exhausted_Trap: 1
 
 ==================================================
@@ -15,16 +16,16 @@ Volatility Alerts: 36
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MTD | Price: $1563.01 | 1M: 20.83% | RSI: 68.1
+   ➤ Ticker: MRNA | Price: $215.95 | 1M: 47.21% | RSI: 66.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: TQQQ | Price: $79.61 | 5D: -4.22% | RSI: 55.1
+   ➤ Ticker: PANW | Price: $401.45 | 5D: -4.4% | RSI: 55.6
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $155.31 | 1D: 0.53% | RSI: 81.5
+   ➤ Ticker: P | Price: $155.02 | 1D: -0.19% | RSI: 81.0
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: LITE | Price: $995.41 | 5D: -8.82% | RSI: 50.9
+   ➤ Ticker: CIEN | Price: $396.34 | 5D: -10.66% | RSI: 52.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
