@@ -1,31 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
 Total Tickers Scanned: 89
-Volatility Alerts: 17
+Volatility Alerts: 26
 
 📈 PHASE BREADTH:
  - Strong_Expansion: 56
- - Pullback_Reset: 18
+ - Pullback_Reset: 16
  - Consolidating: 7
  - Losing_Momentum_Flush: 4
- - Regaining: 3
- - Exhausted_Trap: 1
+ - Regaining: 4
+ - Exhausted_Trap: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $215.95 | 1M: 47.21% | RSI: 66.3
+   ➤ Ticker: MRNA | Price: $216.25 | 1M: 47.42% | RSI: 66.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: PANW | Price: $401.45 | 5D: -4.4% | RSI: 55.6
+   ➤ Ticker: XLK | Price: $196.28 | 5D: -2.83% | RSI: 55.1
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $155.02 | 1D: -0.19% | RSI: 81.0
+   ➤ Ticker: P | Price: $156.97 | 1D: 1.07% | RSI: 82.1
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: CIEN | Price: $396.34 | 5D: -10.66% | RSI: 52.2
+   ➤ Ticker: CIEN | Price: $400.4 | 5D: -9.75% | RSI: 53.2
 
 ==================================================
 🔗 Google Sheet Access Link: 
