@@ -1,31 +1,26 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 89
-Volatility Alerts: 26
+Total Tickers Scanned: 79
+Volatility Alerts: 40
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 56
- - Pullback_Reset: 16
- - Consolidating: 7
- - Losing_Momentum_Flush: 4
- - Regaining: 4
- - Exhausted_Trap: 2
+ - Strong_Expansion: 66
+ - Pullback_Reset: 7
+ - Consolidating: 5
+ - Exhausted_Trap: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $216.25 | 1M: 47.42% | RSI: 66.3
+   ➤ Ticker: MRNA | Price: $224.42 | 1M: 56.1% | RSI: 68.7
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: XLK | Price: $196.28 | 5D: -2.83% | RSI: 55.1
+   ➤ Ticker: MAGS | Price: $72.85 | 5D: -1.15% | RSI: 55.7
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: P | Price: $156.97 | 1D: 1.07% | RSI: 82.1
-
-📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: CIEN | Price: $400.4 | 5D: -9.75% | RSI: 53.2
+   ➤ Ticker: MPC | Price: $478.45 | 1D: 0.31% | RSI: 78.8
 
 ==================================================
 🔗 Google Sheet Access Link: 
