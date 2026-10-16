@@ -1,27 +1,22 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 121
-Volatility Alerts: 72
+Total Tickers Scanned: 89
+Volatility Alerts: 27
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 111
- - Consolidating: 6
- - Pullback_Reset: 2
- - Exhausted_Trap: 1
- - Regaining: 1
+ - Strong_Expansion: 74
+ - Consolidating: 8
+ - Pullback_Reset: 7
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $236.5 | 1M: 62.41% | RSI: 71.7
+   ➤ Ticker: CBOE | Price: $313.59 | 1M: 17.59% | RSI: 66.3
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DD | Price: $131.6 | 5D: -0.66% | RSI: 51.6
-
-🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: EBAY | Price: $122.91 | 1D: 5.16% | RSI: 78.5
+   ➤ Ticker: CRL | Price: $299.85 | 5D: -0.64% | RSI: 55.3
 
 ==================================================
 🔗 Google Sheet Access Link: 
