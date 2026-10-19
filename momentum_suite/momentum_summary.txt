@@ -1,12 +1,13 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 99
-Volatility Alerts: 39
+Total Tickers Scanned: 59
+Volatility Alerts: 9
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 87
- - Consolidating: 6
- - Pullback_Reset: 5
+ - Strong_Expansion: 40
+ - Consolidating: 12
+ - Regaining: 3
+ - Pullback_Reset: 3
  - Losing_Momentum_Flush: 1
 
 ==================================================
@@ -14,13 +15,13 @@ Volatility Alerts: 39
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: CBOE | Price: $314.98 | 1M: 18.12% | RSI: 66.9
+   ➤ Ticker: MRNA | Price: $225.07 | 1M: 46.11% | RSI: 63.8
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: CRL | Price: $300.15 | 5D: -0.54% | RSI: 55.6
+   ➤ Ticker: TT | Price: $463.75 | 5D: -2.89% | RSI: 53.2
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: HUM | Price: $413.16 | 5D: -4.33% | RSI: 54.3
+   ➤ Ticker: HUM | Price: $408.05 | 5D: -5.87% | RSI: 52.1
 
 ==================================================
 🔗 Google Sheet Access Link: 
