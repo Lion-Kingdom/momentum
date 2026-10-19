@@ -1,22 +1,26 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 89
-Volatility Alerts: 27
+Total Tickers Scanned: 99
+Volatility Alerts: 39
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 74
- - Consolidating: 8
- - Pullback_Reset: 7
+ - Strong_Expansion: 87
+ - Consolidating: 6
+ - Pullback_Reset: 5
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: CBOE | Price: $313.59 | 1M: 17.59% | RSI: 66.3
+   ➤ Ticker: CBOE | Price: $314.98 | 1M: 18.12% | RSI: 66.9
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: CRL | Price: $299.85 | 5D: -0.64% | RSI: 55.3
+   ➤ Ticker: CRL | Price: $300.15 | 5D: -0.54% | RSI: 55.6
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: HUM | Price: $413.16 | 5D: -4.33% | RSI: 54.3
 
 ==================================================
 🔗 Google Sheet Access Link: 
