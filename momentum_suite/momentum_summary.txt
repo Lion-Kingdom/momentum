@@ -1,27 +1,27 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 132
-Volatility Alerts: 51
+Total Tickers Scanned: 148
+Volatility Alerts: 71
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 111
- - Consolidating: 11
- - Exhausted_Trap: 4
- - Regaining: 3
+ - Strong_Expansion: 131
+ - Exhausted_Trap: 6
+ - Consolidating: 6
  - Pullback_Reset: 3
+ - Regaining: 2
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $239.41 | 1M: 38.44% | RSI: 67.6
+   ➤ Ticker: MRNA | Price: $242.08 | 1M: 39.98% | RSI: 68.2
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: IRM | Price: $113.98 | 5D: -0.54% | RSI: 50.1
+   ➤ Ticker: FFIV | Price: $456.71 | 5D: -4.1% | RSI: 54.6
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: HAS | Price: $107.77 | 1D: 9.42% | RSI: 82.0
+   ➤ Ticker: HAS | Price: $109.52 | 1D: 11.2% | RSI: 83.3
 
 ==================================================
 🔗 Google Sheet Access Link: 
