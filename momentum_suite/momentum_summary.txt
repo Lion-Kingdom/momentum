@@ -1,31 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 126
-Volatility Alerts: 32
+Total Tickers Scanned: 117
+Volatility Alerts: 26
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 103
- - Consolidating: 10
- - Pullback_Reset: 6
- - Exhausted_Trap: 5
- - Losing_Momentum_Flush: 1
+ - Strong_Expansion: 96
+ - Consolidating: 11
+ - Pullback_Reset: 4
+ - Exhausted_Trap: 4
  - Regaining: 1
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: MRNA | Price: $246.62 | 1M: 35.09% | RSI: 69.3
+   ➤ Ticker: MRNA | Price: $245.81 | 1M: 34.65% | RSI: 69.1
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: GILD | Price: $153.33 | 5D: -0.14% | RSI: 55.5
+   ➤ Ticker: WMB | Price: $72.8 | 5D: 0.0% | RSI: 54.1
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: HAS | Price: $110.83 | 1D: 1.2% | RSI: 84.2
+   ➤ Ticker: HAS | Price: $114.0 | 1D: 4.09% | RSI: 86.0
 
 📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
-   ➤ Ticker: PM | Price: $196.82 | 5D: -4.26% | RSI: 52.1
+   ➤ Ticker: PM | Price: $197.46 | 5D: -3.95% | RSI: 53.0
 
 ==================================================
 🔗 Google Sheet Access Link: 
