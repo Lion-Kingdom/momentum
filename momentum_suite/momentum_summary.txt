@@ -1,27 +1,31 @@
 📊 DAILY MOMENTUM SUITE - DEEP ANALYSIS REPORT
 ==================================================
-Total Tickers Scanned: 156
-Volatility Alerts: 103
+Total Tickers Scanned: 176
+Volatility Alerts: 124
 
 📈 PHASE BREADTH:
- - Strong_Expansion: 121
- - Exhausted_Trap: 11
- - Pullback_Reset: 11
- - Consolidating: 9
+ - Strong_Expansion: 141
+ - Exhausted_Trap: 14
+ - Consolidating: 10
+ - Pullback_Reset: 6
  - Regaining: 4
+ - Losing_Momentum_Flush: 1
 
 ==================================================
 🎯 TOP OPTIONS SPREAD STRATEGY CANDIDATES
 ==================================================
 
 🟢 BULL CALL SPREAD (Debit - Upside Momentum)
-   ➤ Ticker: CBOE | Price: $329.71 | 1M: 22.63% | RSI: 69.7
+   ➤ Ticker: ^VIX | Price: $20.04 | 1M: 27.89% | RSI: 63.0
 
 🛡️ BULL PUT SPREAD (Credit - Support Bounce)
-   ➤ Ticker: DVA | Price: $182.61 | 5D: -3.46% | RSI: 51.1
+   ➤ Ticker: HSIC | Price: $86.0 | 5D: -1.14% | RSI: 51.7
 
 🛑 BEAR CALL SPREAD (Credit - Overbought Resistance)
-   ➤ Ticker: HAS | Price: $115.29 | 1D: 1.13% | RSI: 86.6
+   ➤ Ticker: HAS | Price: $117.23 | 1D: 2.83% | RSI: 87.5
+
+📉 BEAR PUT SPREAD (Debit - Downtrend Flush)
+   ➤ Ticker: VLO | Price: $426.28 | 5D: -4.0% | RSI: 54.9
 
 ==================================================
 🔗 Google Sheet Access Link: 
