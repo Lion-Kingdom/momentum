@@ -143,112 +143,108 @@ def append_ohlcv_data(main_csv_path="unified_gex_momentum_main_log.csv"):
 
 
 def generate_raw_telemetry_board(df):
-    """Builds an Outlook-safe stacked telemetry board grouped by Phase."""
+    """Builds a curated, dual-desk fallback telemetry board separating Income Base Hits from Swing Breakouts."""
     if df.empty:
         return "<p style='color: #aaa;'>No active GEX telemetry records found for this session.</p>"
 
-    phases = [
-        "Strong_Expansion",
-        "Consolidating",
-        "Pullback_Reset",
-        "Regaining",
-        "Exhausted_Trap",
-    ]
+    # --- DESK 1: INCOME / CREDIT BASE HITS ---
+    income_df = df[
+        df["Phase"].isin(["Pullback_Reset", "Regaining"])
+        | df["Confirmed_Strategy"].str.contains("Bull Put|Credit Spread", case=False, na=False)
+        ].head(4)
+
+    # --- DESK 2: DIRECTIONAL SWING / VCP BREAKOUTS ---
+    swing_df = df[
+        (df["Phase"] == "Strong_Expansion")
+        & (df["Momentum_Signal"] == "Breakout")
+        & (df["Alert"] == "VOLATILITY")
+        ].head(4)
 
     html_sections = []
     html_sections.append(
         """
-    <div style="background-color: #121212; color: #fff; padding: 15px; border-radius: 8px; font-family: Arial, sans-serif;">
+    <div style="background-color: #121212; color: #fff; padding: 16px; border-radius: 8px; font-family: Arial, sans-serif;">
         <h3 style="color: #00ff66; margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 8px;">
-          🛰️ Community AI Fallback Telemetry Dashboard
+          🎯 COMMUNITY FALLBACK STRIKE LIST: DUAL-DESK PLAYBOOK
         </h3>
-        <p style="color: #aaa; font-size: 11px; margin-bottom: 15px;">
-          Categorized phase breakdown. Use this raw telemetry to prompt your local LLM if the main AI is offline.
+        <p style="color: #aaa; font-size: 11px; margin-bottom: 14px;">
+          Main AI offline contingency layout. Categorized strictly into Daily Income Base Hits and Directional Swing Breakouts.
         </p>
-    """  # noqa
+    """
     )
 
-    for phase in phases:
-        phase_df = (
-            df[df["Phase"].str.strip() == phase]
-            if "Phase" in df.columns
-            else pd.DataFrame()
-        )
-        count = len(phase_df)
-
-        if count == 0:
-            continue
-
-        accent_color = (
-            "#00ff66"
-            if phase in ["Strong_Expansion", "Regaining"]
-            else ("#ffaa00" if phase == "Consolidating" else "#ff4444")
-        )
-
-        html_sections.append(
-            f"""
-        <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 16px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-            <div style="color: {accent_color}; font-weight: bold; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px;">
-                📈 {phase.replace('_', ' ')} ({count} Tickers)
-            </div>
-            <div style="overflow-x: auto;">
-        """  # noqa
-        )
-
-        for _, row in phase_df.iterrows():
+    # --- RENDER DESK 1: DAILY INCOME ---
+    html_sections.append(
+        """
+        <div style="margin-bottom: 16px;">
+            <h4 style="color: #00ff66; border-bottom: 1px solid #444; padding-bottom: 4px; margin-bottom: 10px;">
+                💵 DESK 1: DAILY INCOME (PUT WALL CREDIT SPREADS)
+            </h4>
+        """
+    )
+    if income_df.empty:
+        html_sections.append("<p style='font-size: 11px; color: #777;'>No active credit support setups meeting criteria today.</p>")
+    else:
+        for _, row in income_df.iterrows():
             ticker = row.get("Ticker", "UNKNOWN")
-            mom_signal = row.get("Momentum_Signal", "Neutral")
-            price = row.get("Price", 0.0)
-            open_p = row.get("Open", 0.0)
-            high = row.get("High", 0.0)
-            low = row.get("Low", 0.0)
-            vol = row.get("Volume", 0)
-            d1 = row.get("1D%", 0.0)
-            d5 = row.get("5D%", 0.0)
-            m1 = row.get("1M%", 0.0)
+            spot = float(row.get("Price", 0.0))
+            put_wall = float(row.get("Put_Wall_Floor", 0.0))
+            call_wall = float(row.get("Call_Wall_Ceiling", 0.0))
             rsi = row.get("RSI", 0.0)
-            alert = row.get("Alert", "N/A")
+            strategy = row.get("Confirmed_Strategy", "Bull Put Credit Spread")
 
             html_sections.append(
                 f"""
-                <div style="background: #222; border-left: 3px solid {accent_color}; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <div style="font-family: 'Courier New', monospace; font-size: 11px; color: #00ff66; font-weight: bold; margin-bottom: 4px;">
-                        🔄 {ticker} | Signal: {mom_signal} | Alert: {alert}
+                <div style="background: #1e1e1e; border-left: 4px solid #00ff66; padding: 10px; margin-bottom: 8px; border-radius: 4px;">
+                    <div style="font-family: monospace; font-size: 13px; font-weight: bold; color: #00ff66;">
+                        🛡️ {ticker} | Spot: ${spot:,.2f} | RSI: {rsi}
                     </div>
-                    <div style="font-family: 'Courier New', monospace; font-size: 10px; color: #ccc; margin-bottom: 6px;">
-                      Price: ${price:,.2f} | Open: ${open_p:,.2f} | High: ${high:,.2f} | Low: ${low:,.2f} | Vol: {int(vol):,} | 1D: {d1}% | 5D: {d5}% | 1M: {m1}% | RSI: {rsi}
+                    <div style="font-family: monospace; font-size: 11px; color: #ccc; margin-top: 4px;">
+                      📊 Put Wall Floor: <b>${put_wall:,.2f}</b> | Call Wall Ceiling: ${call_wall:,.2f}<br>
+                      💡 Strategy: <b style="color: #fff;">{strategy}</b> (Target 50% - 70% profit)
                     </div>
-            """  # noqa
+                </div>
+                """
             )
-
-            ticker_gex = df[df["Ticker"] == ticker]
-            if not ticker_gex.empty and "Target_Expiry" in ticker_gex.columns:
-                for _, gex_row in ticker_gex.iterrows():
-                    timeframe = gex_row.get("Timeframe", "~7 DTE")
-                    expiry = gex_row.get("Target_Expiry", "N/A")
-                    dte = gex_row.get("Actual_DTE", 0)
-                    call_wall = gex_row.get("Call_Wall_Ceiling", 0.0)
-                    put_wall = gex_row.get("Put_Wall_Floor", 0.0)
-                    flip = gex_row.get("Gamma_Flip", 0.0)
-                    regime = gex_row.get("Market_Regime", "POSITIVE GAMMA")
-                    strategy = gex_row.get("Confirmed_Strategy", "Stand Aside")
-                    targets = gex_row.get("Target_Strikes", "N/A")
-
-                    html_sections.append(
-                        f"""
-                    <div style="font-family: 'Courier New', monospace; font-size: 10px; color: #aaa; margin-left: 10px; margin-top: 4px; border-left: 1px dotted #555; padding-left: 6px;">
-                      ⏱️ {timeframe} -> Expiry: {expiry} ({dte} DTE)<br>
-                      📊 Walls -> Call: ${call_wall:,.2f} | Put: ${put_wall:,.2f} | Flip: ${flip:,.2f}<br>
-                      📈 Regime: {regime} | Strategy: <b>{strategy}</b> ({targets})
-                    </div>
-                    """  # noqa
-                    )
-
-            html_sections.append("</div>")
-
-        html_sections.append("</div></div>")
-
     html_sections.append("</div>")
+
+    # --- RENDER DESK 2: DIRECTIONAL SWINGS & VCP ---
+    html_sections.append(
+        """
+        <div style="margin-top: 16px;">
+            <h4 style="color: #ffaa00; border-bottom: 1px solid #444; padding-bottom: 4px; margin-bottom: 10px;">
+                🚀 DESK 2: DIRECTIONAL SWINGS & VCP BREAKOUTS
+            </h4>
+        """
+    )
+    if swing_df.empty:
+        html_sections.append("<p style='font-size: 11px; color: #777;'>No high-conviction breakout setups flagged today.</p>")
+    else:
+        for _, row in swing_df.iterrows():
+            ticker = row.get("Ticker", "UNKNOWN")
+            spot = float(row.get("Price", 0.0))
+            call_wall = float(row.get("Call_Wall_Ceiling", 0.0))
+            atr = float(row.get("ATR_14", 2.0))
+            min_room = float(row.get("Min_Room_Needed", atr * 2.0))
+            distance_to_wall = max(0.0, call_wall - spot)
+            has_room = distance_to_wall >= min_room
+            room_status = "CLEAN RUNNING ROOM ✅" if has_room else "CONGESTED NEAR WALL ⚠️"
+
+            html_sections.append(
+                f"""
+                <div style="background: #1e1e1e; border-left: 4px solid #ffaa00; padding: 10px; margin-bottom: 8px; border-radius: 4px;">
+                    <div style="font-family: monospace; font-size: 13px; font-weight: bold; color: #ffaa00;">
+                        ⚡ {ticker} | Spot: ${spot:,.2f} | 14D ATR: ${atr:,.2f}
+                    </div>
+                    <div style="font-family: monospace; font-size: 11px; color: #ccc; margin-top: 4px;">
+                      📈 Target Clearance (2x ATR): <b>${min_room:,.2f}</b> | Room to Call Wall: <b>${distance_to_wall:,.2f}</b><br>
+                      🎯 Setup Evaluation: <b style="color: {'#00ff66' if has_room else '#ff4444'};">{room_status}</b>
+                    </div>
+                </div>
+                """
+            )
+    html_sections.append("</div></div>")
+
     return "".join(html_sections)
 
 
