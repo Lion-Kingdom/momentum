@@ -1,5 +1,5 @@
 """
-Dynamic S&P 500 & ETF Momentum Worker with 14-Day ATR & Swing Metrics.
+Dynamic S&P 500 & ETF Momentum Worker with 14-Day ATR & Order Blocks.
 Compliance: Pylint 10/10, Black, PEP 8.
 """
 
@@ -8,7 +8,6 @@ import os
 import sys
 from typing import Optional
 
-import numpy as np
 import pandas as pd
 import requests
 import yfinance as yf
@@ -43,6 +42,48 @@ def calculate_atr(df: pd.DataFrame, period: int = 14) -> float:
     return float(atr_series.iloc[-1]) if not atr_series.empty else 0.0
 
 
+def identify_order_blocks(df: pd.DataFrame, lookback: int = 50) -> dict:
+    """Detects unmitigated bullish and bearish order blocks from historical price action."""
+    df = df.copy()
+    highs = df["High"].values
+    lows = df["Low"].values
+    closes = df["Close"].values
+    opens = df["Open"].values
+
+    bullish_obs = []
+    bearish_obs = []
+
+    for i in range(5, len(df) - lookback):
+        if closes[i] < opens[i]:  # Bearish candle
+            body_size = abs(closes[i] - opens[i])
+            next_move = closes[i + 2] - closes[i]
+            if next_move > (body_size * 1.5):
+                bullish_obs.append({
+                    "Zone_Low": float(lows[i]),
+                    "Zone_High": float(max(opens[i], closes[i])),
+                })
+        elif closes[i] > opens[i]:  # Bullish candle
+            body_size = abs(closes[i] - opens[i])
+            next_move = closes[i] - closes[i + 2]
+            if next_move > (body_size * 1.5):
+                bearish_obs.append({
+                    "Zone_Low": float(min(opens[i], closes[i])),
+                    "Zone_High": float(highs[i]),
+                })
+
+    curr_price = float(closes[-1])
+    active_support = [ob for ob in bullish_obs if ob["Zone_High"] <= curr_price]
+    active_resistance = [ob for ob in bearish_obs if ob["Zone_Low"] >= curr_price]
+
+    nearest_support = max(active_support, key=lambda x: x["Zone_High"]) if active_support else {"Zone_Low": curr_price * 0.92, "Zone_High": curr_price * 0.94}
+    nearest_resistance = min(active_resistance, key=lambda x: x["Zone_Low"]) if active_resistance else {"Zone_Low": curr_price * 1.06, "Zone_High": curr_price * 1.08}
+
+    return {
+        "OB_Support": round(nearest_support["Zone_High"], 2),
+        "OB_Resistance": round(nearest_resistance["Zone_Low"], 2),
+    }
+
+
 def fetch_sp500_tickers() -> list:
     """Scrape live S&P 500 symbols from Wikipedia."""
     url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
@@ -68,7 +109,7 @@ def fetch_csv_etfs(filepath: str = ETF_CSV_PATH) -> list:
 
 
 def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[dict]:
-    """Extract metrics, calculate 14-day ATR, and apply phase filters."""
+    """Extract metrics, calculate 14-day ATR, Order Blocks, and apply phase filters."""
     try:
         if isinstance(data.columns, pd.MultiIndex):
             if ticker in data.columns.levels[0]:
@@ -121,6 +162,11 @@ def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[di
         min_room_to_grow = round(atr_14 * 2.0, 2)
         optimal_target = round(atr_14 * 3.0, 2)
 
+        # --- ORDER BLOCK SUPPORT & RESISTANCE ---
+        ob_data = identify_order_blocks(df)
+        ob_support = ob_data["OB_Support"]
+        ob_resistance = ob_data["OB_Resistance"]
+
         return {
             "Ticker": ticker,
             "Price": round(curr_p, 2),
@@ -138,6 +184,8 @@ def process_ticker(ticker: str, data: pd.DataFrame, bench: float) -> Optional[di
             "ATR_14": round(atr_14, 2),
             "Min_Room_Needed": min_room_to_grow,
             "Optimal_Target_3x": optimal_target,
+            "OB_Support": ob_support,
+            "OB_Resistance": ob_resistance,
             "Phase": phase,
             "Alert": "VOLATILITY" if abs(c1d) > 0.015 else "",
         }
@@ -172,7 +220,6 @@ def run_worker():
         print("[INFO] No tickers qualified today.")
         sys.exit(0)
 
-    # Sort volatility alerts first, followed by phase
     df = df.sort_values(by=["Alert", "Phase", "Price"], ascending=[False, True, False])
 
     def map_signal(row):
