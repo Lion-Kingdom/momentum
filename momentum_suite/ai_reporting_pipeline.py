@@ -147,43 +147,43 @@ def generate_raw_telemetry_board(df):
     if df.empty:
         return "<p style='color: #aaa;'>No active GEX telemetry records found for this session.</p>"
 
-    # --- DESK 1: INCOME / CREDIT BASE HITS ---
+    # Deduplicate Desk 1 and remove head limit
     income_df = df[
         df["Phase"].isin(["Pullback_Reset", "Regaining"])
-        | df["Confirmed_Strategy"].str.contains("Bull Put|Credit Spread", case=False, na=False)
-        ].head(4)
+        | df["Confirmed_Strategy"].astype(str).str.contains("Bull Put|Credit Spread", case=False, na=False)
+        ].drop_duplicates(subset=["Ticker"])
 
-    # --- DESK 2: DIRECTIONAL SWING / VCP BREAKOUTS ---
+    # Sort Desk 2 by momentum, deduplicate, and remove head limit
     swing_df = df[
         (df["Phase"] == "Strong_Expansion")
         & (df["Momentum_Signal"] == "Breakout")
         & (df["Alert"] == "VOLATILITY")
-        ].head(4)
+        ]
+    if not swing_df.empty and "1D%" in swing_df.columns:
+        swing_df = swing_df.sort_values(by="1D%", ascending=False)
+    swing_df = swing_df.drop_duplicates(subset=["Ticker"])
 
-    html_sections = []
-    html_sections.append(
-        """
-    <div style="background-color: #121212; color: #fff; padding: 16px; border-radius: 8px; font-family: Arial, sans-serif;">
+    html_sections = ["""
+    <div style="background-color: #121212; color: #fff; padding: 16px; border-radius: 8px; 
+    font-family: Arial, sans-serif;">
         <h3 style="color: #00ff66; margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 8px;">
           🎯 COMMUNITY FALLBACK STRIKE LIST: DUAL-DESK PLAYBOOK
         </h3>
         <p style="color: #aaa; font-size: 11px; margin-bottom: 14px;">
-          Main AI offline contingency layout. Categorized strictly into Daily Income Base Hits and Directional Swing Breakouts.
+          Main AI offline contingency layout. 
+          Categorized strictly into Daily Income Base Hits and Directional Swing Breakouts.
         </p>
-    """
-    )
-
-    # --- RENDER DESK 1: DAILY INCOME ---
-    html_sections.append(
-        """
+    """, """
         <div style="margin-bottom: 16px;">
             <h4 style="color: #00ff66; border-bottom: 1px solid #444; padding-bottom: 4px; margin-bottom: 10px;">
                 💵 DESK 1: DAILY INCOME (PUT WALL CREDIT SPREADS)
             </h4>
-        """
-    )
+        """]
+
+    # --- RENDER DESK 1: DAILY INCOME ---
     if income_df.empty:
-        html_sections.append("<p style='font-size: 11px; color: #777;'>No active credit support setups meeting criteria today.</p>")
+        html_sections.append("<p style='font-size: 11px; color: #777;"
+                             "'>No active credit support setups meeting criteria today.</p>")
     else:
         for _, row in income_df.iterrows():
             ticker = row.get("Ticker", "UNKNOWN")
@@ -218,11 +218,12 @@ def generate_raw_telemetry_board(df):
         """
     )
     if swing_df.empty:
-        html_sections.append("<p style='font-size: 11px; color: #777;'>No high-conviction breakout setups flagged today.</p>")
+        html_sections.append("<p style='font-size: 11px; color: #777;"
+                             "'>No high-conviction breakout setups flagged today.</p>")
     else:
         for _, row in swing_df.iterrows():
             ticker = row.get("Ticker", "UNKNOWN")
-            spot = float(row.get("Price", 0.0))
+            spot = float(row.get("Price", row.get("Close", 0.0)))
             call_wall = float(row.get("Call_Wall_Ceiling", 0.0))
             atr = float(row.get("ATR_14", 2.0))
             min_room = float(row.get("Min_Room_Needed", atr * 2.0))
