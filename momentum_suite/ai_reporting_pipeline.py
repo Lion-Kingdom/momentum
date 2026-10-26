@@ -143,17 +143,19 @@ def append_ohlcv_data(main_csv_path="unified_gex_momentum_main_log.csv"):
 
 
 def generate_raw_telemetry_board(df):
-    """Builds a curated, dual-desk fallback telemetry board separating Income Base Hits from Swing Breakouts."""
+    """Builds a curated, deduplicated dual-desk fallback telemetry board."""
     if df.empty:
         return "<p style='color: #aaa;'>No active GEX telemetry records found for this session.</p>"
 
-    # Deduplicate Desk 1 and remove head limit
+    # --- DESK 1: INCOME / CREDIT BASE HITS (Deduplicated) ---
     income_df = df[
         df["Phase"].isin(["Pullback_Reset", "Regaining"])
-        | df["Confirmed_Strategy"].astype(str).str.contains("Bull Put|Credit Spread", case=False, na=False)
+        | df["Confirmed_Strategy"].astype(str).str.contains(
+            "Bull Put|Credit Spread", case=False, na=False
+        )
         ].drop_duplicates(subset=["Ticker"])
 
-    # Sort Desk 2 by momentum, deduplicate, and remove head limit
+    # --- DESK 2: DIRECTIONAL SWING / VCP BREAKOUTS (Filtered & Deduplicated) ---
     swing_df = df[
         (df["Phase"] == "Strong_Expansion")
         & (df["Momentum_Signal"] == "Breakout")
@@ -163,45 +165,101 @@ def generate_raw_telemetry_board(df):
         swing_df = swing_df.sort_values(by="1D%", ascending=False)
     swing_df = swing_df.drop_duplicates(subset=["Ticker"])
 
-    html_sections = ["""
-    <div style="background-color: #121212; color: #fff; padding: 16px; border-radius: 8px; 
-    font-family: Arial, sans-serif;">
+    html_sections = []
+    html_sections.append(
+        """
+    <div style="background-color: #121212; color: #fff; padding: 16px; border-radius: 8px; font-family: Arial, sans-serif;">
         <h3 style="color: #00ff66; margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 8px;">
           🎯 COMMUNITY FALLBACK STRIKE LIST: DUAL-DESK PLAYBOOK
         </h3>
         <p style="color: #aaa; font-size: 11px; margin-bottom: 14px;">
-          Main AI offline contingency layout. 
-          Categorized strictly into Daily Income Base Hits and Directional Swing Breakouts.
+          Main AI offline contingency layout. Categorized strictly into Daily Income Base Hits and Directional Swing Breakouts.
         </p>
-    """, """
+    """
+    )
+
+    # --- RENDER DESK 1: DAILY INCOME ---
+    html_sections.append(
+        """
         <div style="margin-bottom: 16px;">
             <h4 style="color: #00ff66; border-bottom: 1px solid #444; padding-bottom: 4px; margin-bottom: 10px;">
                 💵 DESK 1: DAILY INCOME (PUT WALL CREDIT SPREADS)
             </h4>
-        """]
-
-    # --- RENDER DESK 1: DAILY INCOME ---
+        """
+    )
     if income_df.empty:
-        html_sections.append("<p style='font-size: 11px; color: #777;"
-                             "'>No active credit support setups meeting criteria today.</p>")
+        html_sections.append(
+            "<p style='font-size: 11px; color: #777;'>No active credit support setups meeting criteria today.</p>"
+        )
     else:
         for _, row in income_df.iterrows():
             ticker = row.get("Ticker", "UNKNOWN")
-            spot = float(row.get("Price", 0.0))
+            spot = float(
+                row.get("Spot_Price")
+                or row.get("Price")
+                or row.get("Close")
+                or 0.0
+            )
             put_wall = float(row.get("Put_Wall_Floor", 0.0))
             call_wall = float(row.get("Call_Wall_Ceiling", 0.0))
             rsi = row.get("RSI", 0.0)
+            atr = float(row.get("ATR_14", 2.0))
+            ob_support = float(row.get("OB_Support", 0.0))
             strategy = row.get("Confirmed_Strategy", "Bull Put Credit Spread")
+
+            # Volatility-adjusted expected move buffer (1.5x - 2.0x ATR)
+            vol_buffer = atr * 1.5 if spot < 100 else atr * 2.0
+
+            # Structural floor anchors: Put Wall vs Order Block Demand
+            structural_floor = (
+                min(put_wall, ob_support)
+                if (put_wall > 0 and ob_support > 0)
+                else (put_wall or ob_support or (spot - vol_buffer))
+            )
+
+            # High-volatility expansion expands distance to <=0.15-0.20 delta
+            is_high_vol = row.get("Alert") == "VOLATILITY" or (
+                atr / spot if spot > 0 else 0
+            ) > 0.035
+            target_buffer = max(vol_buffer, spot - structural_floor)
+            if is_high_vol:
+                target_buffer = max(target_buffer, atr * 2.5)
+
+            raw_short = max(0.5, spot - target_buffer)
+
+            # Strike increments based on price tier
+            if spot >= 200:
+                short_strike = round(raw_short / 5.0) * 5.0
+                wing_width = 5.0
+            elif spot >= 50:
+                short_strike = round(raw_short)
+                wing_width = 2.0 if is_high_vol else 1.0
+            else:
+                short_strike = round(raw_short)
+                wing_width = 1.0
+
+            long_strike = short_strike - wing_width
+            delta_label = "≤0.15Δ" if is_high_vol else "0.18–0.22Δ"
+
+            setup_line = (
+                f"Sell ${short_strike:,.2f}P / Buy ${long_strike:,.2f}P ({delta_label})"
+            )
+            struct_detail = (
+                f"Put Wall: ${put_wall:,.2f}" if put_wall > 0 else "Put Wall: N/A"
+            )
+            if ob_support > 0:
+                struct_detail += f" | OB Demand: ${ob_support:,.2f}"
 
             html_sections.append(
                 f"""
                 <div style="background: #1e1e1e; border-left: 4px solid #00ff66; padding: 10px; margin-bottom: 8px; border-radius: 4px;">
                     <div style="font-family: monospace; font-size: 13px; font-weight: bold; color: #00ff66;">
-                        🛡️ {ticker} | Spot: ${spot:,.2f} | RSI: {rsi}
+                        🛡️ {ticker} | Spot: ${spot:,.2f} | 14D ATR: ${atr:,.2f} | RSI: {rsi}
                     </div>
                     <div style="font-family: monospace; font-size: 11px; color: #ccc; margin-top: 4px;">
-                      📊 Put Wall Floor: <b>${put_wall:,.2f}</b> | Call Wall Ceiling: ${call_wall:,.2f}<br>
-                      💡 Strategy: <b style="color: #fff;">{strategy}</b> (Target 50% - 70% profit)
+                      📊 Structural Floor: <b>{struct_detail}</b> | Call Ceiling: ${call_wall:,.2f}<br>
+                      ⚡ Recommended Bracket: <b style="color: #fff;">{setup_line}</b><br>
+                      💡 Strategy: <b style="color: #00ff66;">{strategy}</b> (Target 50% - 70% profit)
                     </div>
                 </div>
                 """
@@ -218,18 +276,41 @@ def generate_raw_telemetry_board(df):
         """
     )
     if swing_df.empty:
-        html_sections.append("<p style='font-size: 11px; color: #777;"
-                             "'>No high-conviction breakout setups flagged today.</p>")
+        html_sections.append(
+            "<p style='font-size: 11px; color: #777;'>No high-conviction breakout setups flagged today.</p>"
+        )
     else:
         for _, row in swing_df.iterrows():
             ticker = row.get("Ticker", "UNKNOWN")
-            spot = float(row.get("Price", row.get("Close", 0.0)))
+            spot = float(
+                row.get("Spot_Price")
+                or row.get("Price")
+                or row.get("Close")
+                or 0.0
+            )
             call_wall = float(row.get("Call_Wall_Ceiling", 0.0))
+            ob_resistance = float(row.get("OB_Resistance", 0.0))
             atr = float(row.get("ATR_14", 2.0))
             min_room = float(row.get("Min_Room_Needed", atr * 2.0))
-            distance_to_wall = max(0.0, call_wall - spot)
-            has_room = distance_to_wall >= min_room
-            room_status = "CLEAN RUNNING ROOM ✅" if has_room else "CONGESTED NEAR WALL ⚠️"
+
+            overhead_ceiling = (
+                min(call_wall, ob_resistance)
+                if (call_wall > 0 and ob_resistance > 0)
+                else (call_wall or ob_resistance or (spot + (atr * 3.0)))
+            )
+            distance_to_ceiling = max(0.0, overhead_ceiling - spot)
+            has_room = distance_to_ceiling >= min_room
+            room_status = (
+                "CLEAN RUNNING ROOM ✅" if has_room else "CONGESTED NEAR RESISTANCE ⚠️"
+            )
+
+            res_detail = (
+                f"Call Wall: ${call_wall:,.2f}"
+                if call_wall > 0
+                else "Call Wall: N/A"
+            )
+            if ob_resistance > 0:
+                res_detail += f" | OB Supply: ${ob_resistance:,.2f}"
 
             html_sections.append(
                 f"""
@@ -238,8 +319,9 @@ def generate_raw_telemetry_board(df):
                         ⚡ {ticker} | Spot: ${spot:,.2f} | 14D ATR: ${atr:,.2f}
                     </div>
                     <div style="font-family: monospace; font-size: 11px; color: #ccc; margin-top: 4px;">
-                      📈 Target Clearance (2x ATR): <b>${min_room:,.2f}</b> | Room to Call Wall: <b>${distance_to_wall:,.2f}</b><br>
-                      🎯 Setup Evaluation: <b style="color: {'#00ff66' if has_room else '#ff4444'};">{room_status}</b>
+                      📈 Overhead Supply: <b>{res_detail}</b><br>
+                      🎯 Target Clearance (2x ATR): <b>${min_room:,.2f}</b> | Room to Ceiling: <b>${distance_to_ceiling:,.2f}</b><br>
+                      ⚡ Setup Evaluation: <b style="color: {'#00ff66' if has_room else '#ff4444'};">{room_status}</b>
                     </div>
                 </div>
                 """
