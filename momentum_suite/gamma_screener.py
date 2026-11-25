@@ -22,10 +22,37 @@ from oauth2client.service_account import ServiceAccountCredentials
 SPREADSHEET_ID = "19vJuI1ZE34h1weS8s3_RJEoWz6meVKMliFWvDjm5fc0"
 MOOMOO_API_URL = "https://webapi.moomoo.com/api/v1.0"
 
+MAIN_LOG_COLUMNS = [
+    "Timestamp",
+    "Ticker",
+    "Sector",
+    "Conviction",
+    "Timeframe",
+    "Momentum_Signal",
+    "Market_Regime",
+    "Spot_Price",
+    "Target_Expiry",
+    "Actual_DTE",
+    "Call_Wall_Ceiling",
+    "Put_Wall_Floor",
+    "Gamma_Flip",
+    "Confirmed_Strategy",
+    "Target_Strikes",
+    "Phase",
+    "1D%",
+    "5D%",
+    "1M%",
+    "RSI",
+    "ATR_14",
+    "Min_Room_Needed",
+    "OB_Support",
+    "OB_Resistance",
+    "Alert",
+]
+
 
 def get_moomoo_headers():
     """Builds the authorization headers using the OAuth token."""
-    # 🟢 ADDED .strip() to automatically remove hidden newlines or spaces
     token = os.getenv("MOOMOO_API_TOKEN", "").strip()
     return {
         "Content-Type": "application/json",
@@ -37,7 +64,6 @@ def refresh_moomoo_token():
     """Refreshes the Moomoo API access token using the refresh token."""
     print("🔄 Attempting to refresh Moomoo API token...")
 
-    # 🟢 ADDED .strip() here as well just to be safe!
     client_id = os.getenv("MOOMOO_CLIENT_ID", "").strip()
     refresh_token = os.getenv("MOOMOO_REFRESH_TOKEN", "").strip()
 
@@ -152,8 +178,6 @@ def get_moomoo_options_data(stock_id, ticker=""):
                         }
                     ]
                 }
-                # 🟢 THE FIX: Completely removed the "Option Type" filter block.
-                # By not filtering the type, Moomoo natively returns BOTH Calls and Puts!
             ],
         },
         "field_filter": {
@@ -268,14 +292,38 @@ def send_email_gex_report(gex_dataframe):
         print(f"❌ Email failed: {e}")
 
 
+def write_main_log(main_results, filename="unified_gex_momentum_main_log.csv"):
+    """Writes fresh results or overwrites stale rows with an empty schema."""
+    if main_results:
+        main_df = pd.DataFrame(main_results)
+        for col in MAIN_LOG_COLUMNS:
+            if col not in main_df.columns:
+                main_df[col] = ""
+        main_df = main_df[MAIN_LOG_COLUMNS].sort_values(by=["Ticker", "Actual_DTE"])
+        main_df.to_csv(filename, index=False)
+        print(f"\n{'=' * 60}\n💾 Main Pipeline Log Saved: {filename}\n{'=' * 60}")
+        return main_df
+
+    empty_df = pd.DataFrame(columns=MAIN_LOG_COLUMNS)
+    empty_df.to_csv(filename, index=False)
+    print(
+        f"\n{'=' * 60}\n⚠️ No active setups; cleared stale rows in {filename}.\n{'=' * 60}"
+    )
+    return empty_df
+
+
 def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
     """Reads momentum spreadsheet and calculates GEX walls using Moomoo."""
+    main_filename = "unified_gex_momentum_main_log.csv"
+
     if not verify_moomoo_authentication():
         print("🛑 Pipeline halted: Moomoo authentication failure.")
+        write_main_log([], main_filename)
         return
 
     if not os.path.exists(momentum_csv_path):
         print(f"⚠️ Momentum spreadsheet '{momentum_csv_path}' not found.")
+        write_main_log([], main_filename)
         return
 
     print(f"📂 Reading filtered momentum targets from: {momentum_csv_path}...")
@@ -284,6 +332,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
     active_targets = df_momentum[df_momentum["Momentum_Signal"].notna()]
     if active_targets.empty:
         print("⚠️ No active momentum signals found.")
+        write_main_log([], main_filename)
         return
 
     raw_tickers = (
@@ -313,8 +362,15 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
             print(f"⚠️ {clean_ticker}: No options data returned. Skipping.")
             continue
 
-        spot_price = options_data[0].get("underlying", {}).get("price", 0.0)
-        if spot_price == 0.0:
+        first_opt = options_data[0]
+        spot_price = float(
+            (first_opt.get("underlying_info") or {}).get("price")
+            or (first_opt.get("underlying") or {}).get("price")
+            or row.get("Price")
+            or row.get("Close")
+            or 0.0
+        )
+        if spot_price <= 0.0:
             print(f"⚠️ {clean_ticker}: Missing underlying spot price.")
             continue
 
@@ -330,6 +386,8 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
             else:
                 opt_type = raw_type
 
+            strike_val = opt.get("strike_price", opt.get("hp_strike_price", 0.0))
+
             try:
                 date_str = opt_name.split(" ")[1]
                 exp_date = pd.to_datetime(date_str, format="%y%m%d")
@@ -337,9 +395,9 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
 
                 parsed_options.append(
                     {
-                        "strike": float(opt.get("strike_price", 0.0)),
+                        "strike": float(strike_val or 0.0),
                         "type": opt_type,
-                        "gamma": float(opt.get("gamma", 0.0)),
+                        "gamma": float(opt.get("gamma", 0.0) or 0.0),
                         "open_interest": float(opt.get("open_interest", 0.0) or 0.0),
                         "dte": dte,
                         "exp_date": exp_date.strftime("%Y-%m-%d"),
@@ -415,7 +473,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                 valid_puts = combined[combined["strike"] <= put_wall_strike].sort_values("strike", ascending=False)  # noqa
                 if not valid_puts.empty:
                     strategy = "Bull Put Credit Spread"
-                    targets = f"Short Put: ${valid_puts.iloc[0]['strike']:,.2f}" # noqa
+                    targets = f"Short Put: ${valid_puts.iloc[0]['strike']:,.2f}"  # noqa
             elif mom_signal == "Bearish" and spot_price < call_wall_strike:
                 valid_calls = combined[combined["strike"] >= call_wall_strike].sort_values("strike")  # noqa
                 if not valid_calls.empty:
@@ -425,7 +483,7 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
             conviction = "High" if mom_signal == "Breakout" else "Standard"
 
             print(f"      📊 WALLS & REGIME -> Call Wall: ${call_wall_strike:,.2f} | Put Wall: ${put_wall_strike:,.2f} | Flip: ${flip_strike:,.2f}")  # noqa
-            print(f"      📈 MARKET REGIME -> {regime} (Spot: ${spot_price:,.2f})") # noqa
+            print(f"      📈 MARKET REGIME -> {regime} (Spot: ${spot_price:,.2f})")  # noqa
             print(f"      ✅ Verified -> {strategy} | Target: {targets}")
 
             main_results.append(
@@ -445,27 +503,20 @@ def process_pipeline_batch(momentum_csv_path="momentum_signals.csv"):
                     "Gamma_Flip": flip_strike,
                     "Confirmed_Strategy": strategy,
                     "Target_Strikes": targets,
-                    # 🟢 NEW: Pass Phase 1 Technical Data to the CSV for Phase 3 Dropdowns
                     "Phase": row.get("Phase", "N/A"),
                     "1D%": row.get("1D%", 0.0),
                     "5D%": row.get("5D%", 0.0),
                     "1M%": row.get("1M%", 0.0),
                     "RSI": row.get("RSI", 0.0),
+                    "ATR_14": row.get("ATR_14", 0.0),
+                    "Min_Room_Needed": row.get("Min_Room_Needed", 0.0),
+                    "OB_Support": row.get("OB_Support", 0.0),
+                    "OB_Resistance": row.get("OB_Resistance", 0.0),
                     "Alert": row.get("Alert", "N/A"),
                 }
             )
 
-    if main_results:
-        main_df = pd.DataFrame(main_results)
-        main_df = main_df.sort_values(by=["Ticker", "Actual_DTE"])
-        main_filename = "unified_gex_momentum_main_log.csv"
-        main_df.to_csv(main_filename, index=False)
-        print(f"\n{'=' * 60}\n💾 Main Pipeline Log Saved: {main_filename}\n{'=' * 60}")
-        # Uncomment below when ready to push live
-        # export_gex_to_sheets(main_df)
-        # send_email_gex_report(main_df)
-    else:
-        print(f"\n{'=' * 60}\n⚠️ Pipeline finished but NO active setups to save.\n{'=' * 60}")  # noqa
+    write_main_log(main_results, main_filename)
 
 
 if __name__ == "__main__":
